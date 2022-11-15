@@ -195,67 +195,11 @@ abstract class qtype_multianswer_subq_renderer_base extends qtype_renderer {
             return '';
         }
 
-        return html_writer::tag('span', implode('<br />', $feedback), [
-            'class' => 'feedbackspan',
-        ]);
-    }
-
-    /**
-     * Render the feedback icon for a sub-question which is also the trigger for the feedback popover.
-     *
-     * @param string $icon The feedback icon
-     * @param string $feedbackcontents The feedback contents to be shown on the popover.
-     * @return string
-     */
-    protected function get_feedback_image(string $icon, string $feedbackcontents): string {
-        global $PAGE;
-        if ($icon === '') {
-            return '';
+        $outputfeedback = html_writer::tag('span', implode('<br />', $feedback), array('class' => 'feedbackspan accesshide'));
+        if ($feedbacktext) {
+        $outputfeedback .= html_writer::tag('div', $feedbacktext, array('class' => 'outcome'));
         }
-
-        $PAGE->requires->js_call_amd('qtype_multianswer/feedback', 'initPopovers');
-
-        return html_writer::link('#', $icon, [
-            'role' => 'button',
-            'tabindex' => 0,
-            'class' => 'feedbacktrigger btn btn-link p-0',
-            'data-toggle' => 'popover',
-            'data-container' => 'body',
-            'data-content' => $feedbackcontents,
-            'data-placement' => 'right',
-            'data-trigger' => 'hover focus',
-            'data-html' => 'true',
-        ]);
-    }
-
-    /**
-     * Generates a label for an answer field.
-     *
-     * If the question number is set ({@see qtype_renderer::$questionnumber}), the label will
-     * include the question number in order to indicate which question the answer field belongs to.
-     *
-     * @param string $langkey The lang string key for the lang string that does not include the question number.
-     * @param string $component The Frankenstyle component name.
-     * @return string
-     * @throws coding_exception
-     */
-    protected function get_answer_label(
-        string $langkey = 'answerx',
-        string $component = 'question'
-    ): string {
-        // There may be multiple answer fields for a question, so we need to increment the answer fields in order to distinguish
-        // them from one another.
-        $questionnumber = $this->displayoptions->questionidentifier ?? '';
-        $questionnumberindex = $questionnumber !== '' ? $questionnumber : 0;
-        if (isset(self::$answercount[$questionnumberindex][$langkey])) {
-            self::$answercount[$questionnumberindex][$langkey]++;
-        } else {
-            self::$answercount[$questionnumberindex][$langkey] = 1;
-        }
-
-        $params = self::$answercount[$questionnumberindex][$langkey];
-
-        return $this->displayoptions->add_question_identifier_to_label(get_string($langkey, $component, $params));
+        return $outputfeedback;
     }
 }
 
