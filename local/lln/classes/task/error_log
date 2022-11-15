@@ -1,0 +1,6 @@
+[19-Oct-2022 04:56:16 UTC] PHP Warning:  Module "imagick" is already loaded in Unknown on line 0
+[19-Oct-2022 04:56:16 UTC] PHP Fatal error:  Uncaught Error: Class "core\task\scheduled_task" not found in /home/gses/public_html/local/lln/classes/task/observer.php:4
+Stack trace:
+#0 {main}
+  thrown in /home/gses/public_html/local/lln/classes/task/observer.php on line 4
+[19-Oct-2022 23:59:53 UTC] PHP Warning:  Module "imagick" is already loaded in Unknown on line 0
