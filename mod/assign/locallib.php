@@ -6703,11 +6703,11 @@ class assign {
                                      'assign_notification',
                                      $submission->timemodified);
         } else {
-            $this->send_notification($USER,
-                                     $user,
-                                     'submissionreceiptother',
-                                     'assign_notification',
-                                     $submission->timemodified);
+            // $this->send_notification($USER,
+            //                          $user,
+            //                          'submissionreceiptother',
+            //                          'assign_notification',
+            //                          $submission->timemodified);
         }
     }
 

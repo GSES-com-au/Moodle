@@ -199,7 +199,6 @@ abstract class qtype_multianswer_subq_renderer_base extends qtype_renderer {
             'class' => 'feedbackspan',
         ]);
     }
-
     /**
      * Render the feedback icon for a sub-question which is also the trigger for the feedback popover.
      *
@@ -209,25 +208,26 @@ abstract class qtype_multianswer_subq_renderer_base extends qtype_renderer {
      */
     protected function get_feedback_image(string $icon, string $feedbackcontents): string {
         global $PAGE;
+        if ($feedbacktext) {
         if ($icon === '') {
+        $outputfeedback .= html_writer::tag('div', $feedbacktext, array('class' => 'outcome'));
             return '';
         }
-
+        }
         $PAGE->requires->js_call_amd('qtype_multianswer/feedback', 'initPopovers');
-
         return html_writer::link('#', $icon, [
             'role' => 'button',
             'tabindex' => 0,
             'class' => 'feedbacktrigger btn btn-link p-0',
             'data-toggle' => 'popover',
             'data-container' => 'body',
+        return $outputfeedback;
             'data-content' => $feedbackcontents,
             'data-placement' => 'right',
             'data-trigger' => 'hover focus',
             'data-html' => 'true',
         ]);
     }
-
     /**
      * Generates a label for an answer field.
      *
@@ -252,13 +252,10 @@ abstract class qtype_multianswer_subq_renderer_base extends qtype_renderer {
         } else {
             self::$answercount[$questionnumberindex][$langkey] = 1;
         }
-
         $params = self::$answercount[$questionnumberindex][$langkey];
-
         return $this->displayoptions->add_question_identifier_to_label(get_string($langkey, $component, $params));
     }
 }
-
 
 /**
  * Subclass for generating the bits of output specific to shortanswer
