@@ -1,0 +1,12 @@
+[16-Nov-2022 16:48:36 Australia/Sydney] Default exception handler: Sorry, you may not use this page. Debug: 
+Error code: notlocalisederrormessage
+* line 497 of /lib/setuplib.php: moodle_exception thrown
+* line 33 of /login/signup.php: call to print_error()
+
+[17-Nov-2022 07:04:39 Australia/Sydney] Default exception handler: Sorry, you may not use this page. Debug: 
+Error code: notlocalisederrormessage
+* line 497 of /lib/setuplib.php: moodle_exception thrown
+* line 33 of /login/signup.php: call to print_error()
+
+[17-Nov-2022 09:35:31 Australia/Sydney] [client 27.32.18.162]  https://gsesdev.com  Failed Login:  mcigna  Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36
+[17-Nov-2022 09:35:44 Australia/Sydney] [client 27.32.18.162]  https://gsesdev.com  Failed Login:  mcigna  Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36
