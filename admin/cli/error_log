@@ -1,0 +1,6 @@
+[15-Nov-2022 16:48:20 Australia/Sydney] Default exception handler: Cannot downgrade theme_boost from 2022041903 to 2022041900. Debug: 
+Error code: cannotdowngrade
+* line 737 of /lib/upgradelib.php: downgrade_exception thrown
+* line 1935 of /lib/upgradelib.php: call to upgrade_plugins()
+* line 202 of /admin/cli/upgrade.php: call to upgrade_noncore()
+
