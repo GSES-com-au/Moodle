@@ -20,7 +20,8 @@
 *~
 #
 /config.php
-/local/pending/classes/task/Access.php
+/local/pending/classes/task/access.php
+/local/pending/vendor/
 /lib/editor/tinymce/extra/tools/temp/
 /tags
 /TAGS
@@ -39,7 +40,6 @@ CVS
 phpunit.xml
 # Composer support. Do not ignore composer.json, or composer.lock. These should be shipped by us.
 composer.phar
-/local/pending/vendor/
 /behat.yml
 */yui/build/*/*-coverage.js
 /lib/yuilib/*/build/*/*-coverage.js

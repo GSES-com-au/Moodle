@@ -572,3 +572,49 @@ Error code: invalidsesskey
 * line 497 of /lib/setuplib.php: moodle_exception thrown
 * line 33 of /lib/ajax/setuserpref.php: call to print_error()
 
+[17-Nov-2022 10:20:09 Australia/Sydney] Default exception handler: Coding error detected, it must be fixed by a programmer: Invalid json in request: Syntax error Debug: 
+Error code: codingerror
+* line 63 of /lib/ajax/service.php: coding_exception thrown
+
+[17-Nov-2022 10:22:35 Australia/Sydney] Default exception handler: Coding error detected, it must be fixed by a programmer: Invalid json in request: Syntax error Debug: 
+Error code: codingerror
+* line 63 of /lib/ajax/service.php: coding_exception thrown
+* line 33 of /lib/ajax/service-nologin.php: call to require_once()
+
+[17-Nov-2022 10:47:45 Australia/Sydney] Default exception handler: Coding error detected, it must be fixed by a programmer: Invalid json in request: Syntax error Debug: 
+Error code: codingerror
+* line 63 of /lib/ajax/service.php: coding_exception thrown
+
+[17-Nov-2022 10:50:28 Australia/Sydney] Default exception handler: Coding error detected, it must be fixed by a programmer: Invalid json in request: Syntax error Debug: 
+Error code: codingerror
+* line 63 of /lib/ajax/service.php: coding_exception thrown
+* line 33 of /lib/ajax/service-nologin.php: call to require_once()
+
+[17-Nov-2022 10:51:10 Australia/Sydney] Default exception handler: Coding error detected, it must be fixed by a programmer: Invalid json in request: Syntax error Debug: 
+Error code: codingerror
+* line 63 of /lib/ajax/service.php: coding_exception thrown
+
+[17-Nov-2022 10:51:32 Australia/Sydney] Default exception handler: Coding error detected, it must be fixed by a programmer: Invalid json in request: Syntax error Debug: 
+Error code: codingerror
+* line 63 of /lib/ajax/service.php: coding_exception thrown
+* line 33 of /lib/ajax/service-nologin.php: call to require_once()
+
+[17-Nov-2022 10:51:38 Australia/Sydney] Default exception handler: Coding error detected, it must be fixed by a programmer: Invalid json in request: Syntax error Debug: 
+Error code: codingerror
+* line 63 of /lib/ajax/service.php: coding_exception thrown
+* line 33 of /lib/ajax/service-nologin.php: call to require_once()
+
+[17-Nov-2022 10:53:38 Australia/Sydney] Default exception handler: Coding error detected, it must be fixed by a programmer: Invalid json in request: Syntax error Debug: 
+Error code: codingerror
+* line 63 of /lib/ajax/service.php: coding_exception thrown
+* line 33 of /lib/ajax/service-nologin.php: call to require_once()
+
+[17-Nov-2022 10:55:58 Australia/Sydney] Default exception handler: Coding error detected, it must be fixed by a programmer: Invalid json in request: Syntax error Debug: 
+Error code: codingerror
+* line 63 of /lib/ajax/service.php: coding_exception thrown
+* line 33 of /lib/ajax/service-nologin.php: call to require_once()
+
+[17-Nov-2022 10:56:00 Australia/Sydney] Default exception handler: Coding error detected, it must be fixed by a programmer: Invalid json in request: Syntax error Debug: 
+Error code: codingerror
+* line 63 of /lib/ajax/service.php: coding_exception thrown
+
