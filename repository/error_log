@@ -3,3 +3,8 @@ Error code: requireloginerror
 * line 2759 of /lib/moodlelib.php: require_login_exception thrown
 * line 34 of /repository/draftfiles_ajax.php: call to require_login()
 
+[17-Nov-2022 09:51:28 Australia/Sydney] Default exception handler: Course or activity not accessible. Debug: You are not logged in
+Error code: requireloginerror
+* line 2759 of /lib/moodlelib.php: require_login_exception thrown
+* line 34 of /repository/draftfiles_ajax.php: call to require_login()
+
