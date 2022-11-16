@@ -3,3 +3,8 @@ Error code: requireloginerror
 * line 2759 of /lib/moodlelib.php: require_login_exception thrown
 * line 69 of /lib/editor/atto/autosave-ajax.php: call to require_login()
 
+[16-Nov-2022 15:23:26 Australia/Sydney] Default exception handler: Course or activity not accessible. Debug: You are not logged in
+Error code: requireloginerror
+* line 2759 of /lib/moodlelib.php: require_login_exception thrown
+* line 69 of /lib/editor/atto/autosave-ajax.php: call to require_login()
+

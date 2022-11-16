@@ -1,0 +1,35 @@
+[16-Nov-2022 15:24:50 Australia/Sydney] Default exception handler: core_plugin/err_removing_unremovable_folder Debug: plugin root folder is not removable as expected
+Error code: err_removing_unremovable_folder
+$a contents: Array
+(
+    [plugin] => qformat_examview
+    [rootdir] => [dirroot]/question/format/examview
+)
+
+* line 2085 of /lib/classes/plugin_manager.php: moodle_exception thrown
+* line 160 of /admin/plugins.php: call to core_plugin_manager->remove_plugin_folder()
+
+[16-Nov-2022 15:50:30 Australia/Sydney] PHP Warning:  include_once(): Failed opening '/home/gses/gsesdev.com/public_html/enrol/autoenrol/lib.php' for inclusion (include_path='/home/gses/gsesdev.com/public_html/lib/pear:.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/gses/gsesdev.com/public_html/lib/classes/component.php on line 865
+[16-Nov-2022 15:50:30 Australia/Sydney] Default exception handler: core_plugin/err_removing_unremovable_folder Debug: plugin root folder is not removable as expected
+Error code: err_removing_unremovable_folder
+$a contents: Array
+(
+    [plugin] => enrol_autoenrol
+    [rootdir] => [dirroot]/enrol/autoenrol
+)
+
+* line 2085 of /lib/classes/plugin_manager.php: moodle_exception thrown
+* line 160 of /admin/plugins.php: call to core_plugin_manager->remove_plugin_folder()
+
+[16-Nov-2022 15:50:44 Australia/Sydney] PHP Warning:  include_once(): Failed opening '/home/gses/gsesdev.com/public_html/enrol/autoenrol/lib.php' for inclusion (include_path='/home/gses/gsesdev.com/public_html/lib/pear:.:/opt/cpanel/ea-php74/root/usr/share/pear') in /home/gses/gsesdev.com/public_html/lib/classes/component.php on line 865
+[16-Nov-2022 15:54:48 Australia/Sydney] Default exception handler: core_plugin/err_removing_unremovable_folder Debug: plugin root folder is not removable as expected
+Error code: err_removing_unremovable_folder
+$a contents: Array
+(
+    [plugin] => availability_relativedate
+    [rootdir] => [dirroot]/availability/condition/relativedate
+)
+
+* line 2085 of /lib/classes/plugin_manager.php: moodle_exception thrown
+* line 160 of /admin/plugins.php: call to core_plugin_manager->remove_plugin_folder()
+
