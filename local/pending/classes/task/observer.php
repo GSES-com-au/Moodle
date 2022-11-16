@@ -1,6 +1,7 @@
 <?php
-namespace local_pending\task;                                              //Required to be first on the page
+namespace local_pending\task;                                            //Required to be first on the page
 use Automattic\WooCommerce\Client;                                      //Using woocommerce API
+include 'Access.php';
 class observer //extends \core\task\scheduled_task                        //extends for Cron activation
 {
     // public function get_name()                                          //Only visual difference
@@ -48,10 +49,6 @@ class observer //extends \core\task\scheduled_task                        //exte
 
             //------------------WC API CONNECTION---------------------------------------------------------------------------------------------------
         
-            
-            $consumer_key = 'ck_ff299e6588cc28b30e7adb22b6ede0768b42075f'; // Add your own Consumer Key here
-            $consumer_secret = 'cs_c2496f89e27e3524a1917b2bb7a0463cfb7c9102'; // Add your own Consumer Secret here
-            $store_url = 'https://staging-gsesaustralia.kinsta.cloud/';; 
             
             require '/home/gses/gsesdev.com/public_html/local/pending/vendor/autoload.php';
     
