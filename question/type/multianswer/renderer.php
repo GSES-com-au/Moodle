@@ -195,6 +195,7 @@ abstract class qtype_multianswer_subq_renderer_base extends qtype_renderer {
             return '';
         }
 
+<<<<<<< HEAD
         return html_writer::tag('span', implode('<br />', $feedback), [
             'class' => 'feedbackspan',
         ]);
@@ -256,6 +257,13 @@ abstract class qtype_multianswer_subq_renderer_base extends qtype_renderer {
         $params = self::$answercount[$questionnumberindex][$langkey];
 
         return $this->displayoptions->add_question_identifier_to_label(get_string($langkey, $component, $params));
+=======
+        $outputfeedback = html_writer::tag('span', implode('<br />', $feedback), array('class' => 'feedbackspan accesshide'));
+        if ($feedbacktext) {
+        $outputfeedback .= html_writer::tag('div', $feedbacktext, array('class' => 'outcome'));
+        }
+        return $outputfeedback;
+>>>>>>> cbe70a86265 (All site moodle custom edits)
     }
 }
 
