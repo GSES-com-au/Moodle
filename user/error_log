@@ -1,0 +1,21 @@
+[16-Nov-2022 03:08:09 Australia/Sydney] Default exception handler: Your session has most likely timed out. Please log in again. Debug: 
+Error code: invalidsesskey
+* line 497 of /lib/setuplib.php: moodle_exception thrown
+* line 315 of /lib/formslib.php: call to print_error()
+* line 228 of /lib/formslib.php: call to moodleform->_process_submission()
+* line 40 of /user/contactsitesupport.php: call to moodleform->__construct()
+
+[16-Nov-2022 03:08:21 Australia/Sydney] Default exception handler: Your session has most likely timed out. Please log in again. Debug: 
+Error code: invalidsesskey
+* line 497 of /lib/setuplib.php: moodle_exception thrown
+* line 315 of /lib/formslib.php: call to print_error()
+* line 228 of /lib/formslib.php: call to moodleform->_process_submission()
+* line 40 of /user/contactsitesupport.php: call to moodleform->__construct()
+
+[16-Nov-2022 03:08:40 Australia/Sydney] Default exception handler: Your session has most likely timed out. Please log in again. Debug: 
+Error code: invalidsesskey
+* line 497 of /lib/setuplib.php: moodle_exception thrown
+* line 315 of /lib/formslib.php: call to print_error()
+* line 228 of /lib/formslib.php: call to moodleform->_process_submission()
+* line 40 of /user/contactsitesupport.php: call to moodleform->__construct()
+
