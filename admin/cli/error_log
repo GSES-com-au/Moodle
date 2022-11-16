@@ -1,0 +1,476 @@
+[15-Nov-2022 16:48:20 Australia/Sydney] Default exception handler: Cannot downgrade theme_boost from 2022041903 to 2022041900. Debug: 
+Error code: cannotdowngrade
+* line 737 of /lib/upgradelib.php: downgrade_exception thrown
+* line 1935 of /lib/upgradelib.php: call to upgrade_plugins()
+* line 202 of /admin/cli/upgrade.php: call to upgrade_noncore()
+
+[17-May-2024 01:43:45 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:45 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:45 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:45 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:46 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:46 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:46 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:47 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:47 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:48 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:48 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:49 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:49 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:50 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:50 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:51 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:51 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:51 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:52 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:53 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Coding problem: unsupported modification of PAGE->context from 70 to 70* line 1193 of /lib/pagelib.php: call to debugging()
+* line 89 of /mod/customcert/classes/task/email_certificate_task.php: call to moodle_page->set_context()
+* line 253 of /lib/cronlib.php: call to mod_customcert\task\email_certificate_task->execute()
+* line 120 of /lib/cronlib.php: call to cron_run_inner_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\update_course_progress_data* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\send_scheduled_emails* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\update_course_progress_data* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\send_scheduled_emails* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\update_course_progress_data* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\send_scheduled_emails* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\update_course_progress_data* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\send_scheduled_emails* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\update_course_progress_data* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\send_scheduled_emails* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\update_course_progress_data* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\send_scheduled_emails* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\update_course_progress_data* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\send_scheduled_emails* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\update_course_progress_data* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\send_scheduled_emails* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\update_course_progress_data* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\send_scheduled_emails* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\update_course_progress_data* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\send_scheduled_emails* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Warning:  include_once(/home/gses/moodle.newenergyacademy.com/public_html/mod/booking/classes/task/remove_activity_completion.php): Failed to open stream: No such file or directory in /home/gses/moodle.newenergyacademy.com/public_html/lib/classes/component.php on line 136
+[17-May-2024 01:43:54 Europe/London] PHP Warning:  include_once(): Failed opening '/home/gses/moodle.newenergyacademy.com/public_html/mod/booking/classes/task/remove_activity_completion.php' for inclusion (include_path='/home/gses/moodle.newenergyacademy.com/public_html/lib/pear:.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home/gses/moodle.newenergyacademy.com/public_html/lib/classes/component.php on line 136
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \mod_booking\task\remove_activity_completion* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\update_course_progress_data* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\send_scheduled_emails* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Warning:  include_once(/home/gses/moodle.newenergyacademy.com/public_html/mod/booking/classes/task/remove_activity_completion.php): Failed to open stream: No such file or directory in /home/gses/moodle.newenergyacademy.com/public_html/lib/classes/component.php on line 136
+[17-May-2024 01:43:54 Europe/London] PHP Warning:  include_once(): Failed opening '/home/gses/moodle.newenergyacademy.com/public_html/mod/booking/classes/task/remove_activity_completion.php' for inclusion (include_path='/home/gses/moodle.newenergyacademy.com/public_html/lib/pear:.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home/gses/moodle.newenergyacademy.com/public_html/lib/classes/component.php on line 136
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \mod_booking\task\remove_activity_completion* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\update_course_progress_data* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\send_scheduled_emails* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Warning:  include_once(/home/gses/moodle.newenergyacademy.com/public_html/mod/booking/classes/task/remove_activity_completion.php): Failed to open stream: No such file or directory in /home/gses/moodle.newenergyacademy.com/public_html/lib/classes/component.php on line 136
+[17-May-2024 01:43:54 Europe/London] PHP Warning:  include_once(): Failed opening '/home/gses/moodle.newenergyacademy.com/public_html/mod/booking/classes/task/remove_activity_completion.php' for inclusion (include_path='/home/gses/moodle.newenergyacademy.com/public_html/lib/pear:.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home/gses/moodle.newenergyacademy.com/public_html/lib/classes/component.php on line 136
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \mod_booking\task\remove_activity_completion* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\update_course_progress_data* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\send_scheduled_emails* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Warning:  include_once(/home/gses/moodle.newenergyacademy.com/public_html/mod/booking/classes/task/remove_activity_completion.php): Failed to open stream: No such file or directory in /home/gses/moodle.newenergyacademy.com/public_html/lib/classes/component.php on line 136
+[17-May-2024 01:43:54 Europe/London] PHP Warning:  include_once(): Failed opening '/home/gses/moodle.newenergyacademy.com/public_html/mod/booking/classes/task/remove_activity_completion.php' for inclusion (include_path='/home/gses/moodle.newenergyacademy.com/public_html/lib/pear:.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home/gses/moodle.newenergyacademy.com/public_html/lib/classes/component.php on line 136
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \mod_booking\task\remove_activity_completion* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\update_course_progress_data* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\send_scheduled_emails* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:54 Europe/London] PHP Warning:  include_once(/home/gses/moodle.newenergyacademy.com/public_html/mod/booking/classes/task/remove_activity_completion.php): Failed to open stream: No such file or directory in /home/gses/moodle.newenergyacademy.com/public_html/lib/classes/component.php on line 136
+[17-May-2024 01:43:54 Europe/London] PHP Warning:  include_once(): Failed opening '/home/gses/moodle.newenergyacademy.com/public_html/mod/booking/classes/task/remove_activity_completion.php' for inclusion (include_path='/home/gses/moodle.newenergyacademy.com/public_html/lib/pear:.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home/gses/moodle.newenergyacademy.com/public_html/lib/classes/component.php on line 136
+[17-May-2024 01:43:54 Europe/London] PHP Notice:  Failed to load task: \mod_booking\task\remove_activity_completion* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:55 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\update_course_progress_data* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:55 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\send_scheduled_emails* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:55 Europe/London] PHP Warning:  include_once(/home/gses/moodle.newenergyacademy.com/public_html/mod/booking/classes/task/remove_activity_completion.php): Failed to open stream: No such file or directory in /home/gses/moodle.newenergyacademy.com/public_html/lib/classes/component.php on line 136
+[17-May-2024 01:43:55 Europe/London] PHP Warning:  include_once(): Failed opening '/home/gses/moodle.newenergyacademy.com/public_html/mod/booking/classes/task/remove_activity_completion.php' for inclusion (include_path='/home/gses/moodle.newenergyacademy.com/public_html/lib/pear:.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home/gses/moodle.newenergyacademy.com/public_html/lib/classes/component.php on line 136
+[17-May-2024 01:43:55 Europe/London] PHP Notice:  Failed to load task: \mod_booking\task\remove_activity_completion* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:55 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\update_course_progress_data* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:55 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\send_scheduled_emails* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:55 Europe/London] PHP Warning:  include_once(/home/gses/moodle.newenergyacademy.com/public_html/mod/booking/classes/task/remove_activity_completion.php): Failed to open stream: No such file or directory in /home/gses/moodle.newenergyacademy.com/public_html/lib/classes/component.php on line 136
+[17-May-2024 01:43:55 Europe/London] PHP Warning:  include_once(): Failed opening '/home/gses/moodle.newenergyacademy.com/public_html/mod/booking/classes/task/remove_activity_completion.php' for inclusion (include_path='/home/gses/moodle.newenergyacademy.com/public_html/lib/pear:.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home/gses/moodle.newenergyacademy.com/public_html/lib/classes/component.php on line 136
+[17-May-2024 01:43:55 Europe/London] PHP Notice:  Failed to load task: \mod_booking\task\remove_activity_completion* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:55 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\update_course_progress_data* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:55 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\send_scheduled_emails* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:55 Europe/London] PHP Warning:  include_once(/home/gses/moodle.newenergyacademy.com/public_html/mod/booking/classes/task/remove_activity_completion.php): Failed to open stream: No such file or directory in /home/gses/moodle.newenergyacademy.com/public_html/lib/classes/component.php on line 136
+[17-May-2024 01:43:55 Europe/London] PHP Warning:  include_once(): Failed opening '/home/gses/moodle.newenergyacademy.com/public_html/mod/booking/classes/task/remove_activity_completion.php' for inclusion (include_path='/home/gses/moodle.newenergyacademy.com/public_html/lib/pear:.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home/gses/moodle.newenergyacademy.com/public_html/lib/classes/component.php on line 136
+[17-May-2024 01:43:55 Europe/London] PHP Notice:  Failed to load task: \mod_booking\task\remove_activity_completion* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:55 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\update_course_progress_data* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:55 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\send_scheduled_emails* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:55 Europe/London] PHP Warning:  include_once(/home/gses/moodle.newenergyacademy.com/public_html/mod/booking/classes/task/remove_activity_completion.php): Failed to open stream: No such file or directory in /home/gses/moodle.newenergyacademy.com/public_html/lib/classes/component.php on line 136
+[17-May-2024 01:43:55 Europe/London] PHP Warning:  include_once(): Failed opening '/home/gses/moodle.newenergyacademy.com/public_html/mod/booking/classes/task/remove_activity_completion.php' for inclusion (include_path='/home/gses/moodle.newenergyacademy.com/public_html/lib/pear:.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home/gses/moodle.newenergyacademy.com/public_html/lib/classes/component.php on line 136
+[17-May-2024 01:43:55 Europe/London] PHP Notice:  Failed to load task: \mod_booking\task\remove_activity_completion* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:55 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\update_course_progress_data* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:55 Europe/London] PHP Notice:  Failed to load task: \local_edwiserreports\task\send_scheduled_emails* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 01:43:55 Europe/London] PHP Warning:  include_once(/home/gses/moodle.newenergyacademy.com/public_html/mod/booking/classes/task/remove_activity_completion.php): Failed to open stream: No such file or directory in /home/gses/moodle.newenergyacademy.com/public_html/lib/classes/component.php on line 136
+[17-May-2024 01:43:55 Europe/London] PHP Warning:  include_once(): Failed opening '/home/gses/moodle.newenergyacademy.com/public_html/mod/booking/classes/task/remove_activity_completion.php' for inclusion (include_path='/home/gses/moodle.newenergyacademy.com/public_html/lib/pear:.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home/gses/moodle.newenergyacademy.com/public_html/lib/classes/component.php on line 136
+[17-May-2024 01:43:55 Europe/London] PHP Notice:  Failed to load task: \mod_booking\task\remove_activity_completion* line 348 of /lib/classes/task/manager.php: call to debugging()
+* line 712 of /lib/classes/task/manager.php: call to core\task\manager::scheduled_task_from_record()
+* line 119 of /lib/cronlib.php: call to core\task\manager::get_next_scheduled_task()
+* line 73 of /lib/cronlib.php: call to cron_run_scheduled_tasks()
+* line 178 of /admin/cli/cron.php: call to cron_run()
+ in /home/gses/moodle.newenergyacademy.com/public_html/lib/weblib.php on line 3268
+[17-May-2024 00:44:37 UTC] Resetting core_component cache after core upgrade to version 2022041905
