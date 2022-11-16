@@ -1,0 +1,6 @@
+[16-Nov-2022 15:46:45 Australia/Sydney] Default exception handler: A required parameter (attempt) was missing Debug: 
+Error code: missingparam
+* line 497 of /lib/setuplib.php: moodle_exception thrown
+* line 595 of /lib/moodlelib.php: call to print_error()
+* line 39 of /mod/quiz/processattempt.php: call to required_param()
+
