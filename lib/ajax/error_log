@@ -406,3 +406,29 @@ Error code: codingerror
 * line 261 of /lib/externallib.php: call to core_external::update_inplace_editable()
 * line 81 of /lib/ajax/service.php: call to external_api::call_external_function()
 
+[17-Nov-2022 09:44:56 Australia/Sydney] PHP Notice:  Undefined variable: store_url in /home/gses/gsesdev.com/public_html/local/pending/classes/task/observer.php on line 57
+[17-Nov-2022 09:44:56 Australia/Sydney] PHP Notice:  Undefined variable: consumer_key in /home/gses/gsesdev.com/public_html/local/pending/classes/task/observer.php on line 57
+[17-Nov-2022 09:44:56 Australia/Sydney] PHP Notice:  Undefined variable: consumer_secret in /home/gses/gsesdev.com/public_html/local/pending/classes/task/observer.php on line 57
+[17-Nov-2022 09:44:56 Australia/Sydney] PHP Notice:  Undefined variable: store_url in /home/gses/gsesdev.com/public_html/local/pending/classes/task/observer.php on line 76
+[17-Nov-2022 09:44:56 Australia/Sydney] PHP Notice:  Undefined variable: consumer_key in /home/gses/gsesdev.com/public_html/local/pending/classes/task/observer.php on line 76
+[17-Nov-2022 09:44:56 Australia/Sydney] PHP Notice:  Undefined variable: consumer_secret in /home/gses/gsesdev.com/public_html/local/pending/classes/task/observer.php on line 76
+[17-Nov-2022 09:44:56 Australia/Sydney] Debugging: Exception encountered in event observer '\local_pending\task\observer::group_member_removed': cURL Error: <url> malformed in 
+* line 82 of /local/pending/vendor/automattic/woocommerce/src/WooCommerce/Client.php: call to Automattic\WooCommerce\HttpClient\HttpClient->request()
+* line 77 of /local/pending/classes/task/observer.php: call to Automattic\WooCommerce\Client->get()
+* line ? of unknownfile: call to local_pending\task\observer::group_member_removed()
+* line 155 of /lib/classes/event/manager.php: call to call_user_func()
+* line 75 of /lib/classes/event/manager.php: call to core\event\manager::process_buffers()
+* line 834 of /lib/classes/event/base.php: call to core\event\manager::dispatch()
+* line 233 of /group/lib.php: call to core\event\base->trigger()
+* line 167 of /group/classes/output/user_groups_editable.php: call to groups_remove_member()
+* line 1187 of /group/lib.php: call to core_group\output\user_groups_editable::update()
+* line 8047 of /lib/moodlelib.php: call to core_group_inplace_editable()
+* line 478 of /lib/external/externallib.php: call to component_callback()
+* line 261 of /lib/externallib.php: call to core_external::update_inplace_editable()
+* line 81 of /lib/ajax/service.php: call to external_api::call_external_function()
+
+[17-Nov-2022 09:45:58 Australia/Sydney] Default exception handler: Your session has most likely timed out. Please log in again. Debug: 
+Error code: invalidsesskey
+* line 497 of /lib/setuplib.php: moodle_exception thrown
+* line 33 of /lib/ajax/setuserpref.php: call to print_error()
+
