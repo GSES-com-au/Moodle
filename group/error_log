@@ -1,0 +1,12 @@
+[17-Nov-2022 09:56:54 Australia/Sydney] PHP Notice:  Undefined variable: store_url in /home/gses/gsesdev.com/public_html/local/pending/classes/task/observer.php on line 57
+[17-Nov-2022 09:56:54 Australia/Sydney] PHP Notice:  Undefined variable: consumer_key in /home/gses/gsesdev.com/public_html/local/pending/classes/task/observer.php on line 57
+[17-Nov-2022 09:56:54 Australia/Sydney] PHP Notice:  Undefined variable: consumer_secret in /home/gses/gsesdev.com/public_html/local/pending/classes/task/observer.php on line 57
+[17-Nov-2022 09:56:54 Australia/Sydney] PHP Notice:  Undefined variable: store_url in /home/gses/gsesdev.com/public_html/local/pending/classes/task/observer.php on line 76
+[17-Nov-2022 09:56:54 Australia/Sydney] PHP Notice:  Undefined variable: consumer_key in /home/gses/gsesdev.com/public_html/local/pending/classes/task/observer.php on line 76
+[17-Nov-2022 09:56:54 Australia/Sydney] PHP Notice:  Undefined variable: consumer_secret in /home/gses/gsesdev.com/public_html/local/pending/classes/task/observer.php on line 76
+[17-Nov-2022 10:11:06 Australia/Sydney] Default exception handler: A required parameter (id) was missing Debug: 
+Error code: missingparam
+* line 497 of /lib/setuplib.php: moodle_exception thrown
+* line 595 of /lib/moodlelib.php: call to print_error()
+* line 28 of /group/index.php: call to required_param()
+

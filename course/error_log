@@ -28,3 +28,9 @@ Error code: missingparam
 * line 595 of /lib/moodlelib.php: call to print_error()
 * line 30 of /course/editsection.php: call to required_param()
 
+[17-Nov-2022 10:08:02 Australia/Sydney] Default exception handler: A required parameter (jump) was missing Debug: 
+Error code: missingparam
+* line 497 of /lib/setuplib.php: moodle_exception thrown
+* line 595 of /lib/moodlelib.php: call to print_error()
+* line 29 of /course/jumpto.php: call to required_param()
+
