@@ -2,19 +2,7 @@
 namespace local_autoextension\task;                                              //Required to be first on the page
 
 class observer //extends \core\task\scheduled_task                        //extends for Cron activation
-{
-    // public function get_name()                          //Only visual difference
-    // {
-    //     return get_string('observer', 'local_autoextension');
-    // }
-
-    // /**
-    //  * Execute the task.
-    //  */
-    // public function execute() {                                             //Required for Cron
-    //     submission_graded();
-    // }                                        
-    
+{                                  
     public static function submission_graded(\mod_assign\event\submission_graded $event)
     {
         global $DB, $PAGE;
