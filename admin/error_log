@@ -33,3 +33,4 @@ $a contents: Array
 * line 2085 of /lib/classes/plugin_manager.php: moodle_exception thrown
 * line 160 of /admin/plugins.php: call to core_plugin_manager->remove_plugin_folder()
 
+[17-Nov-2022 12:37:53 Australia/Sydney] Deleted bogus "filter_censor" states and config data.

@@ -13,3 +13,19 @@ Error code: requireloginerror
 * line 2759 of /lib/moodlelib.php: require_login_exception thrown
 * line 69 of /lib/editor/atto/autosave-ajax.php: call to require_login()
 
+[17-Nov-2022 11:56:02 Australia/Sydney] Default exception handler: Course or activity not accessible. Debug: You are not logged in
+Error code: requireloginerror
+* line 2759 of /lib/moodlelib.php: require_login_exception thrown
+* line 69 of /lib/editor/atto/autosave-ajax.php: call to require_login()
+
+[17-Nov-2022 13:12:11 Australia/Sydney] Default exception handler: Course or activity not accessible. Debug: You are not logged in
+Error code: requireloginerror
+* line 2759 of /lib/moodlelib.php: require_login_exception thrown
+* line 69 of /lib/editor/atto/autosave-ajax.php: call to require_login()
+
+[17-Nov-2022 13:13:22 Australia/Sydney] Default exception handler: Your session has most likely timed out. Please log in again. Debug: 
+Error code: invalidsesskey
+* line 497 of /lib/setuplib.php: moodle_exception thrown
+* line 85 of /lib/sessionlib.php: call to print_error()
+* line 73 of /lib/editor/atto/autosave-ajax.php: call to require_sesskey()
+
