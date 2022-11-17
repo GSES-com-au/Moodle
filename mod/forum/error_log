@@ -1,0 +1,5 @@
+[17-Nov-2022 12:54:09 Australia/Sydney] Default exception handler: error/Unable to find forum with id 35 Debug: 
+Error code: Unable to find forum with id 35
+$a contents: 
+* line 59 of /mod/forum/view.php: moodle_exception thrown
+

@@ -618,3 +618,39 @@ Error code: codingerror
 Error code: codingerror
 * line 63 of /lib/ajax/service.php: coding_exception thrown
 
+[17-Nov-2022 12:02:52 Australia/Sydney] Default exception handler: Coding error detected, it must be fixed by a programmer: Invalid json in request: Syntax error Debug: 
+Error code: codingerror
+* line 63 of /lib/ajax/service.php: coding_exception thrown
+
+[17-Nov-2022 12:04:59 Australia/Sydney] Default exception handler: Coding error detected, it must be fixed by a programmer: Invalid json in request: Syntax error Debug: 
+Error code: codingerror
+* line 63 of /lib/ajax/service.php: coding_exception thrown
+
+[17-Nov-2022 12:17:41 Australia/Sydney] Default exception handler: Coding error detected, it must be fixed by a programmer: Invalid json in request: Syntax error Debug: 
+Error code: codingerror
+* line 63 of /lib/ajax/service.php: coding_exception thrown
+
+[17-Nov-2022 12:20:08 Australia/Sydney] Default exception handler: Coding error detected, it must be fixed by a programmer: Invalid json in request: Syntax error Debug: 
+Error code: codingerror
+* line 63 of /lib/ajax/service.php: coding_exception thrown
+
+[17-Nov-2022 12:29:16 Australia/Sydney] Default exception handler: Coding error detected, it must be fixed by a programmer: Invalid json in request: Syntax error Debug: 
+Error code: codingerror
+* line 63 of /lib/ajax/service.php: coding_exception thrown
+
+[17-Nov-2022 12:33:07 Australia/Sydney] Default exception handler: Coding error detected, it must be fixed by a programmer: Invalid json in request: Syntax error Debug: 
+Error code: codingerror
+* line 63 of /lib/ajax/service.php: coding_exception thrown
+
+[17-Nov-2022 12:34:12 Australia/Sydney] Default exception handler: Coding error detected, it must be fixed by a programmer: Invalid json in request: Syntax error Debug: 
+Error code: codingerror
+* line 63 of /lib/ajax/service.php: coding_exception thrown
+
+[17-Nov-2022 12:37:44 Australia/Sydney] Default exception handler: Coding error detected, it must be fixed by a programmer: Invalid json in request: Syntax error Debug: 
+Error code: codingerror
+* line 63 of /lib/ajax/service.php: coding_exception thrown
+
+[17-Nov-2022 12:52:54 Australia/Sydney] Default exception handler: Coding error detected, it must be fixed by a programmer: Invalid json in request: Syntax error Debug: 
+Error code: codingerror
+* line 63 of /lib/ajax/service.php: coding_exception thrown
+
