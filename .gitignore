@@ -19,6 +19,7 @@
 # Temporary files including undo
 *~
 #
+/.htaccess
 /config.php
 error_log
 /local/pending/classes/task/access.php
