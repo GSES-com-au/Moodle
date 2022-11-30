@@ -1797,7 +1797,7 @@ class filter_filtercodes extends moodle_text_filter {
 
                     $coursename = $PAGE->course->fullname;
 
-                    $replace['/\{courseenrolmentend\}/i'] = 'Your online access to this course: '.$coursename.', ends on <mark><b>'.$daybefore.'</b></mark>.';
+                    $replace['/\{courseenrolmentend\}/i'] = 'Your online access to this course: '.$coursename.', ends on <b>'.$daybefore.'</b>.';
                 }
             }
             // Tag: {coursecards} and {coursecards <categoryid>}.
