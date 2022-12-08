@@ -19,8 +19,7 @@ $start_date = optional_param('startdate', '', PARAM_TEXT);
 $obj = new stdClass();
 $obj->month = (int)$month;
 $obj->year = (int)$year;
-$obj->startdate = (string)$startdate;
-
+$obj->startdate = (int)$startdate;
 //F display as month 
 //use month and year to create a time and convert to date in the format of just the month
 $obj->monthname = date('F', strtotime($year."-".$month));
