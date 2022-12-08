@@ -1,31 +1,11 @@
 {{#hasmarkettiles}}
-        <style>
-        .customcolumn {
-            float:left;
-            width:33.33%;
-            border-radius: 10px;
-            padding: 10px;
-            max-height:50%;
-
-        }
-        .row {
-            display: flex;
-            justify-content: center;
-        }
-        .custommarketbtn {
-            margin-bottom:1em;
-            margin-left:40%;
-            margin-right:40%;
-        }
-        </style>
 <div class="markettiles">
     <div class="container-fluid">
     <div class="row">
 
         {{#markettiles}}
         {{#hastile}}
-        {{! <div class="col-md-4 text-center"> }}
-        <div class="customcolumn">
+        <div class="col-md-4 text-center">
         <div class="marketing card">
         
             <div class="card-body market-tile">
@@ -38,7 +18,7 @@
                 <p>{{{content}}}<p>
                 </div>
                 {{#hasbutton}}
-                <div class="custommarketbtn">
+                <div class="marketbtn">
                     {{{button}}}
                 </div>
                 {{/hasbutton}}

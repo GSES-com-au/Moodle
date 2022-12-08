@@ -1,5 +1,6 @@
 <?php
-// This file is part of the Checklist plugin for Moodle - http://moodle.org/
+
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -13,18 +14,14 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
- * Version information
+ * Language EN
  *
- * @copyright Davo Smith <moodle@davosmith.co.uk>
- * @package mod_checklist
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    local_studentmanager
+ * @copyright  2022 GSES
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
-
-$plugin->version = 2022111900;  // The current module version (Date: YYYYMMDDXX).
-$plugin->maturity = MATURITY_STABLE;
-$plugin->release = '3.9.3.2';
-$plugin->requires = 2020061500; // Moodle 3.9.0.
-$plugin->component = 'mod_checklist';
+$string['pluginname'] = 'Student Manager';
+$string['studentmanager'] = 'Student Manager';

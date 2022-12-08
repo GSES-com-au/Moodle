@@ -1,5 +1,14 @@
 // Universal LearnR theme styling
-
+//Meet the Tutors #Page
+.local-staticpage-MeetTutors div#page .main-inner {
+    background-color:#141a2a;
+}
+.local-staticpage-MeetTutors div#page .main-inner div#page-content #region-main{
+    background-color:#141a2a;
+}
+.local-staticpage-MeetTutors #page.drawers #page-header h1.h2 {
+    display:none;
+}
 //Forgot Password
 #page-login-forgot_password div {
     color:#e9ecef
@@ -441,6 +450,8 @@ section.block_starredcourses.block.card.mb-3 {
     padding: 0 1rem;
     /* width: 4rem; */
     font-size: 2rem;
+    margin-left:50%;
+    margin-right:50%;
 }
 
 .marketing.card {
@@ -480,6 +491,7 @@ div.card-body.market-tile .marketingimg {
 .login-container {
     background-color: #00052F;
     border-radius: 2rem;
+    min-width:20%;
 }
 
 // My courses drop down

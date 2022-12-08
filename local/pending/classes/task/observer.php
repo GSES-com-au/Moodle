@@ -7,7 +7,7 @@ class observer //extends \core\task\scheduled_task                        //exte
     public static function group_member_removed(\core\event\group_member_removed $event)
     {
         //Declaring Variables (Database and others)
-        global $DB, $PAGE;
+        global $DB, $PAGE, $CFG;
         
         //--------------Checks groupid matches name = "Pending"-------------------------------------------------------------------
         $objectid = $event->objectid;                               //get groupid
