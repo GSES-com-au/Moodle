@@ -72,10 +72,11 @@ $alertbox = '';
 if ($this->page->pagelayout == 'mydashboard' || $this->page->pagelayout == 'frontpage' || $this->page->pagelayout == 'mycourses' ) {
     $alertbox = (empty($this->page->theme->settings->alertbox)) ? false : format_text($this->page->theme->settings->alertbox);
 }
-
+$options = new stdClass;
+$options->noclean = true;
 $fptextbox =false;
 if ($this->page->pagelayout == 'mydashboard' || $this->page->pagelayout == 'frontpage') {
-$fptextbox = (empty($this->page->theme->settings->fptextbox)) ? false : format_text($this->page->theme->settings->fptextbox);
+$fptextbox = (empty($this->page->theme->settings->fptextbox)) ? false : format_text($this->page->theme->settings->fptextbox, 'FORMAT_MOODLE', $options);
 
 }
 $hasmarketingtiles = false;
