@@ -58,7 +58,7 @@ class contactsitesupport_form extends \moodleform {
         $mform->addElement('textarea', 'message', get_string('message'));
         $mform->addRule('message', $strrequired, 'required', null, 'client');
         $mform->setType('message', PARAM_TEXT);
-
+        
         // If the user is logged in set name and email fields to the current user info.
         if (isloggedin() && !isguestuser()) {
             $mform->setDefault('name', fullname($user));

@@ -24,7 +24,7 @@ class observer //extends \core\task\scheduled_task                        //exte
 
         //String name for Design Task varies between courses, therefore we need a "str_contain"
         if (!function_exists('str_contains')) {
-            if (strpos($assignname, "Design Task Submission") !== false || strpos($assignname, "Preliminary Load Assessment Submission")  !== false) {
+            if (strpos($assignname, "Design Task Submission") !== false || strpos($assignname, "Preliminary Load Assessment Submission")  !== false || strpos($assignname, "Site Plan and Electrical Schematic") !== false){
                 $user = $event->relateduserid; 
 
                 $instance = $DB->get_record('enrol', ['courseid' => $courseid, 'enrol' => 'manual']);
@@ -47,7 +47,7 @@ class observer //extends \core\task\scheduled_task                        //exte
             }
         }
         else{
-                if (str_contains($assignname, "Design Task Submission")|| str_contains($assignname, "Preliminary Load Assessment Submission")) {
+                if (str_contains($assignname, "Design Task Submission")|| str_contains($assignname, "Preliminary Load Assessment Submission")|| strpos($assignname, "Site Plan and Electrical Schematic")) {
                     
                     $user = $event->relateduserid; 
                 

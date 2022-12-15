@@ -23,12 +23,12 @@ $obj->year = (int)$year;
 $obj->startdate = (string)$start_date;
 $obj->enddate = (string)$end_date;
 
-echo '<br/>';
+/*echo '<br/>';
 echo '<br/>';
 echo '<br/>';
 print_r("$obj->startdate");
 echo '<br/>';
-print_r("$obj->enddate");
+print_r("$obj->enddate");*/
 //F display as month 
 //use month and year to create a time and convert to date in the format of just the month
 $obj->monthname = date('F', strtotime($year."-".$month));
@@ -65,38 +65,36 @@ Array
 $start_date_query = mktime(0,0,0, "$start_date_array[mon]", "$start_date_array[mday]", "$start_date_array[year]");
 $end_date_query = mktime(23,59,00, "$end_date_array[mon]", "$end_date_array[mday]", "$end_date_array[year]");
 
-//uncomment later
 //database 
 $table = 'user_enrolments';    
-$user_list = $DB->get_records_sql('SELECT ue.userid '.
+$enrol_user_list = $DB->get_records_sql('SELECT ue.id, ue.userid '.
     'FROM {user_enrolments} ue '.
     'WHERE ue.timecreated >= ? '.
     'AND ue.timecreated <= ? ', array($start_date_query, $end_date_query));
 
 echo '<br/>';
-print_r($user_list);
-/*
+//print_r($enrol_user_list);
+
 $results = new stdClass();
-$results->data = array_values($user_list);*/
-
-
+//$results->data = array_values($user_list);*/
 
 // get all unquie graders for selected month and year
 //finds all grades that have been completed and looks at grade_grades tables
 //user that did the modifiying (grading)
-/*
 
 //gg.usermodified someone actually graded, final grade exits and time modified fits between start and end time of 
-$graders = $DB->get_records_sql($sql);
+//$graders = $DB->get_records_sql($sql);
 
 //sql to get records
 
 //cycle through list of graders $DB moodle specific
-foreach($graders as $key => $value) {
-    $graders[$key] = $DB->get_record('user',['id'=>$graders[$key]->graderid],'firstname, lastname, id, email');
+foreach($enrol_user_list as $key => $value) {
+    $enrolments[$key] = $DB->get_record('user',['id'=>$value->userid],'firstname, lastname, id, email');
 }
-$results->data = array_values($graders);
-*/
+//print_r($enrolments);
+if ($enrolments) {
+    $results->data = array_values($enrolments);
+}
 //resets array values
 
 //output standard moodle header and footer

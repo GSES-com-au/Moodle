@@ -9,6 +9,14 @@
 .local-staticpage-MeetTutors #page.drawers #page-header h1.h2 {
     display:none;
 }
+//Contact Us #Page
+.local-staticpage-supportcontact #page.drawers #page-header h1.h2 {
+    display:none;
+}
+.local-staticpage-MeetTutors #region-main .row .column {
+    box-shadow: 0px 4px 10px 1px #ffffff45;
+}
+
 //Forgot Password
 #page-login-forgot_password div {
     color:#e9ecef
@@ -256,6 +264,7 @@ div.ml-auto.dropdown button.btn.btn-link.btn-icon.icon-size-3.coursemenubtn {
     border-radius:2rem;
 }
 //-----------------------------------------Course Theming Adjustments-----------------------------------------
+
 .text-truncate {
     white-space:normal;
 }
@@ -439,9 +448,6 @@ section.block_starredcourses.block.card.mb-3 {
 
 
 // Marketing Spots
-.marekting.card {
-    box-shadow: 2px 2px 3px rgb(0 0 0 / 10%);
-}
 .marketing .feature {
     display: inline-flex;
     align-items: center;
@@ -450,34 +456,34 @@ section.block_starredcourses.block.card.mb-3 {
     padding: 0 1rem;
     /* width: 4rem; */
     font-size: 2rem;
-    margin-left:50%;
-    margin-right:50%;
 }
 
 .marketing.card {
     border: 0;
     background-color: transparent;
+    height:100%;
 }
 .card-body.market-tile {
-    border: 1px solid $gray-400;
+    border: 1px solid #5c5c5c;
     margin-top:1rem;
     margin-bottom:1rem;
     padding: 0rem;
     background-color: $body-bg;
-    box-shadow: 0 2px 2px 0px rgb(0 0 0 / 20%);
+    box-shadow: 2px 5px 20px 1px #000;
     border-radius:5px;
-    // display: grid;
-    // align-content: stretch;
-    // justify-items: center;
 }
+.card-body.market-tile:hover {
+    box-shadow: 0px 5px 20px #01006e66;
+    transform: translateY(-7px);
+    transition: all 0.5s ease-in-out 0s;
+}
+
 div.card-body.market-tile .marketingimg {
     background-color:$black;
-    border-radius:5px;
-    //width: 100%;
-    //height: 20em;
-    //object-fit: cover;
+    border-top-right-radius:5px;
+    border-top-left-radius:5px;
     height:14em;
-
+    padding:15px;
 } 
 .marketcontent.card-text {
     padding: 0 1rem;
@@ -491,7 +497,6 @@ div.card-body.market-tile .marketingimg {
 .login-container {
     background-color: #00052F;
     border-radius: 2rem;
-    min-width:20%;
 }
 
 // My courses drop down
