@@ -1,4 +1,42 @@
 // Universal LearnR theme styling
+//Customhomepage
+.custommainpage {
+    text-align:center;
+}
+.customcarddeck {
+	flex-flow: row wrap;
+    justify-content: center;
+}
+.custommainpage .btn-primary {
+	$passivecolor:#0070ff;
+    margin: 0.5rem;
+    box-shadow: 0px 7px 14px 1px #000;
+    transition: all 0.3s ease 0s;
+    background-color:$passivecolor;
+    border-color:$passivecolor;
+    font-weight:bold;
+    padding:0.5rem;
+    border-radius:0.7em;
+}
+.custommainpage .btn-primary:hover {
+    background-color: #2EE59D;
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    transform: translateY(-7px);
+}
+.custommainpage .btn-primary:not(:disabled):not(.disabled).active {
+    $activecolour: #000a2a;
+    background-color: $activecolour;
+    border-color: $activecolour;
+}
+.fplogo {
+	display: inline;
+}
+.fplogo img, .card.shadow {
+	transition: transform .5s ease;
+}
+.fplogo:hover img, .card.shadow:hover {
+	transform: scale(1.1);
+}
 
 //Forgot Password
 #page-login-forgot_password div {
@@ -202,7 +240,6 @@ div.w-100.text-truncate div.text-muted.muted.d-flex.flex-wrap span.categoryname.
 div.card.dashboard-card[data-region="course-content"] div.card-footer.dashboard-card-footer{
     background-color: #000a32!important;
     border-radius:2rem;
-    margin-top:5px;
 }
 div.ml-auto.dropdown button.btn.btn-link.btn-icon.icon-size-3.coursemenubtn {
     color:white;
@@ -247,6 +284,7 @@ div.ml-auto.dropdown button.btn.btn-link.btn-icon.icon-size-3.coursemenubtn {
     border-radius:2rem;
 }
 //-----------------------------------------Course Theming Adjustments-----------------------------------------
+
 .text-truncate {
     white-space:normal;
 }
@@ -430,9 +468,6 @@ section.block_starredcourses.block.card.mb-3 {
 
 
 // Marketing Spots
-.marekting.card {
-    box-shadow: 2px 2px 3px rgb(0 0 0 / 10%);
-}
 .marketing .feature {
     display: inline-flex;
     align-items: center;
@@ -446,27 +481,29 @@ section.block_starredcourses.block.card.mb-3 {
 .marketing.card {
     border: 0;
     background-color: transparent;
+    height:100%;
 }
 .card-body.market-tile {
-    border: 1px solid $gray-400;
+    border: 1px solid #5c5c5c;
     margin-top:1rem;
     margin-bottom:1rem;
     padding: 0rem;
     background-color: $body-bg;
-    box-shadow: 0 2px 2px 0px rgb(0 0 0 / 20%);
+    box-shadow: 2px 5px 20px 1px #000;
     border-radius:5px;
-    // display: grid;
-    // align-content: stretch;
-    // justify-items: center;
 }
+.card-body.market-tile:hover {
+    box-shadow: 0px 5px 20px #01006e66;
+    transform: translateY(-7px);
+    transition: all 0.5s ease-in-out 0s;
+}
+
 div.card-body.market-tile .marketingimg {
     background-color:$black;
-    border-radius:5px;
-    //width: 100%;
-    //height: 20em;
-    //object-fit: cover;
+    border-top-right-radius:5px;
+    border-top-left-radius:5px;
     height:14em;
-
+    padding:15px;
 } 
 .marketcontent.card-text {
     padding: 0 1rem;
