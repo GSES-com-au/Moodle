@@ -26,7 +26,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 // Option to enable experimental support for filtercodes in custom navigation menu.
-if ($CFG->branch >= 32 && $CFG->branch <= 34) { // Only supported in Moodle 3.2 to 3.4.
+if (isset($CFG->branch) && $CFG->branch >= 32 && $CFG->branch <= 34) { // Only supported in Moodle 3.2 to 3.4.
     // See https://github.com/michael-milette/moodle-filter_filtercodes/issues/67 for details.
     $default = 0;
     $name = 'filter_filtercodes/enable_customnav';
@@ -66,6 +66,14 @@ $description = get_string('hidecompletedcourses_desc', 'filter_filtercodes');
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
 $settings->add($setting);
 
+// Show hidden custom profile fields.
+$default = '0';
+$name = 'filter_filtercodes/showhiddenprofilefields';
+$title = get_string('showhiddenprofilefields', 'filter_filtercodes');
+$description = get_string('showhiddenprofilefields_desc', 'filter_filtercodes');
+$setting = new admin_setting_configcheckbox($name, $title, $description, $default);
+$settings->add($setting);
+
 // Restrict {ifprofilefied} tag to only access to visible fields.
 $default = '0';
 $name = 'filter_filtercodes/ifprofilefiedonlyvisible';
@@ -79,6 +87,14 @@ $default = 0; // Default is disabled.
 $name = 'filter_filtercodes/enable_scrape';
 $title = get_string('enable_scrape', 'filter_filtercodes');
 $description = get_string('enable_scrape_description', 'filter_filtercodes');
+$setting = new admin_setting_configcheckbox($name, $title, $description, $default);
+$settings->add($setting);
+
+// Option to enable sesskey tag globally.
+$default = 1; // Default is enabled.
+$name = 'filter_filtercodes/enable_sesskey';
+$title = get_string('enable_sesskey', 'filter_filtercodes');
+$description = get_string('enable_sesskey_description', 'filter_filtercodes');
 $setting = new admin_setting_configcheckbox($name, $title, $description, $default);
 $settings->add($setting);
 

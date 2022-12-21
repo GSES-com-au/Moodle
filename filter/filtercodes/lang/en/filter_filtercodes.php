@@ -39,6 +39,8 @@ Note: Is known to be compatible with Clean and Boost based themes in Moodle 3.2 
 $string['disabled_customnav_description'] = '<strong>Note regarding support for custom menu</strong> - To enable support for FilterCodes in your Moodle site\'s custom menu, you may need to customize your theme or Moodle core. <a href="https://github.com/michael-milette/moodle-filter_filtercodes#can-i-use-filtercodes-in-moodles-custom-menus">Information on how to add FilterCodes support in custom menus</a>.';
 $string['enable_scrape'] = 'Scrape tag support';
 $string['enable_scrape_description'] = 'Enable the scrape tag.';
+$string['enable_sesskey'] = 'Sesskey tag support';
+$string['enable_sesskey_description'] = 'Enable the sesskey tag globally. This feature is disabled in forums even when enabled globally.';
 $string['escapebraces'] = 'Escape tags';
 $string['escapebraces_desc'] = 'When this option is checked, you will be able to display FilterCode tags without them being interpreted by this filter by wrapping your tag in [ brackets ]. This can be very useful when creating FilterCodes documentation for the teachers and course creators on your Moodle site.<br><br>Example: [{fullname}] will not display the user\'s full name but display the {fullname} tag instead without the brackets.';
 $string['hidecompletedcourses'] = 'Hide completed courses';
@@ -49,6 +51,8 @@ $string['coursecontactshowdesc'] = 'Show contact\'s profile description.';
 $string['coursecontactshowdesc_desc'] = 'If enabled, will display the contact\'s profile description in {coursecontacts} tags.';
 $string['coursecontactlinktype'] = 'Contact link type';
 $string['coursecontactlinktype_desc'] = 'Choose the type of link for the contact\s link in the {coursecontacts} tags.';
+$string['showhiddenprofilefields'] = 'Show hidden profile fields';
+$string['showhiddenprofilefields_desc'] = 'Enable the {profile_field_...} tag to process all profile fields including ones hidden from the user.';
 $string['ifprofilefiedonlyvisible'] = '{ifprofile_field_} only visible.';
 $string['ifprofilefiedonlyvisible_desc'] = 'When checked, restrict the {ifprofile_field_...} tag to only access visible user profile fields. Hidden fields will behave as if they were empty. If unchecked, this tag will be also able to check hidden fields.';
 $string['categorycardshowpic'] = 'Show {categorycards} background';

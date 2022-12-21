@@ -1,0 +1,100 @@
+<div class = "custommainpage" style="margin:1rem">
+    <h2>Welcome to the GSESDEV online training platform!</h2>
+    <p>You can log in using your personal details, create a new account, or have a look around using Guest access via the link in the top right corner of the page.<p>
+    <br><p>Have technical issues or questions about the platform? Email us at <a href="mailto:admin@newenergyacademy.com">admin@newenergyacademy.com</a></p>
+
+    <br>
+    <h3>Currently available courses</h3>
+    <div id="fpbuttons">
+    <?php
+    $fpcategories = array(
+        "1" => "Miscellaneous",
+    );
+    foreach ($fpcategories as $fpcatid => $fpcatname) {
+    /*echo '<button id="link' . $fpcatid . '" class="btn btn-primary" onclick="cat' . $fpcatid . '();">' . $fpcatname . '</button>';*/
+    echo '<button id="link' . $fpcatid . '" class="btn btn-primary">' . $fpcatname . '</button>';
+    }
+    echo '</div><br>';
+    /*based on FilterCodes plugin {coursecards $fpcatid}*/
+    foreach ($fpcategories as $fpcatid => $fpcatname) {
+    $moodlecatid = core_course_category::get($fpcatid);
+    $courses = $moodlecatid->get_courses();
+    $rcourseids = array_keys($courses);
+    $content = '<div id="cards' . $fpcatid . '" class="customcarddeck" style="display:none">';
+                        if (count($rcourseids) > 0) {
+                            foreach ($rcourseids as $courseid) {
+                                $course = get_course($courseid);
+                                //Load image from course image. If none, generate a course image based on the course ID.
+                                $context = context_course::instance($courseid);
+                                if ($course instanceof stdClass) {
+                                    $course = new \core_course_list_element($course);
+                                }
+                                $coursefiles = $course->get_course_overviewfiles();
+                                $imgurl = '';
+                                foreach ($coursefiles as $file) {
+                                    if ($isimage = $file->is_valid_image()) {
+                                        // The file_encode_url() function is deprecated as per MDL-31071 but still in wide use.
+                                        $imgurl = file_encode_url("/pluginfile.php", '/' . $file->get_contextid() . '/'
+                                                . $file->get_component() . '/' . $file->get_filearea() . $file->get_filepath()
+                                                . $file->get_filename(), !$isimage);
+                                        $imgurl = new moodle_url($imgurl);
+                                        break;
+                                    }
+                                }
+                                if (empty($imgurl)) {
+                                    $imgurl = $OUTPUT->get_generated_image_for_id($courseid);
+                                }
+                                $courseurl = new moodle_url('/course/view.php', ['id' => $courseid]);
+                                $content .= '
+                                    <div class="card shadow mr-4 mb-4 ml-1" style="min-width:300px;max-width:300px;margin-left:1.25rem!important;">
+                                        <a href="' . $courseurl . '" class="text-normal h-100">
+                                        <div class="card-img-top" style="background-image:url(' . $imgurl
+                                                . ');height:100px;max-width:300px;padding-top:50%;background-size:cover;'
+                                                . 'background-repeat:no-repeat;background-position:center;"></div>
+                                        <div class="card-title pt-1 pr-3 pb-1 pl-3 m-0">' . $course->get_formatted_name() . '</div>
+                                        </a>
+                                    </div>
+                                ';
+                            }
+                        }
+                        echo $content;
+    
+    echo '</div>';
+    }
+    ?>
+    <br>
+    <h3>About us</h3>
+    <p>New Energy Academy is a capacity-building collaboration between OpenSolar, New Energy Nexus and Global Sustainable Energy Solutions (GSES).</p>
+    </div>
+    <script>
+    var btnContainer = document.getElementById("fpbuttons")
+    var btns = btnContainer.getElementsByClassName("btn-primary");
+    // Loop through the buttons and add the active class to the current/clicked button
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].addEventListener("click", function() {
+        var current = btnContainer.getElementsByClassName("active");
+        // If there's no active class
+        if (current.length > 0) {
+          current[0].className = current[0].className.replace(" active", "");
+        }
+        // change to display:none if display:flex
+        buttonid = this.id;
+        catid = buttonid.substr(4);
+        if (document.getElementById("cards"+catid).style.display === 'flex'){
+            document.getElementById("cards"+catid).style.display = 'none';
+            
+        } else {
+        // remove all display:flex
+            for (var j = 0; j < btns.length; j++) {
+                allbtn = btns[j].id;
+                allbtnid = allbtn.substr(4);
+                document.getElementById("cards"+allbtnid).style.display = 'none';
+            }
+            //add display:flex to relevant category
+            document.getElementById("cards"+catid).style.display = 'flex';
+            // Add the active class to the current/clicked button
+            this.className += " active";
+        }
+      });
+    }
+    </script>

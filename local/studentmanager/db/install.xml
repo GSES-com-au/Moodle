@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="local/studentmanager/db" VERSION="20221221" COMMENT="XMLDB file for Moodle local/studentmanager"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="local_studentmanager" COMMENT="Default comment for local_studentmanager, please edit me">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="local_enrolment_rates" COMMENT="enrolment rates">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="enrolmentrate" TYPE="number" LENGTH="6" NOTNULL="false" DEFAULT="200" SEQUENCE="false" DECIMALS="2" COMMENT="cost per enrolment"/>
+        <FIELD NAME="annualrate" TYPE="number" LENGTH="10" NOTNULL="false" DEFAULT="2000" SEQUENCE="false" DECIMALS="2" COMMENT="Flat annual fee for hosting of LMS &amp;amp; platform."/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>

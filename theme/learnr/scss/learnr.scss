@@ -1,4 +1,43 @@
 // Universal LearnR theme styling
+//Customhomepage
+.custommainpage {
+    text-align:center;
+}
+.customcarddeck {
+	flex-flow: row wrap;
+    justify-content: center;
+}
+.custommainpage .btn-primary {
+	$passivecolor:#0070ff;
+    margin: 0.5rem;
+    box-shadow: 0px 5px 10px 1px #00000094;
+    transition: all 0.3s ease 0s;
+    background-color:$passivecolor;
+    border-color:$passivecolor;
+    font-weight:bold;
+    padding:0.5rem;
+    border-radius:0.7em;
+}
+.custommainpage .btn-primary:hover {
+    background-color: #2EE59D;
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    transform: translateY(-7px);
+}
+.custommainpage .btn-primary:not(:disabled):not(.disabled).active {
+    $activecolour: #000a2a;
+    background-color: $activecolour;
+    border-color: $activecolour;
+}
+.fplogo {
+	display: inline;
+}
+.fplogo img, .card.shadow {
+	transition: transform .5s ease;
+}
+.fplogo:hover img, .card.shadow:hover {
+	transform: scale(1.1);
+}
+
 //Meet the Tutors #Page
 .local-staticpage-MeetTutors div#page .main-inner {
     background-color:#141a2a;

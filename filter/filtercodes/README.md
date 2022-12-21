@@ -2,8 +2,8 @@
 
 FilterCodes filter plugin for Moodle
 ====================================
-![PHP](https://img.shields.io/badge/PHP-v5.6%20%2F%20v7.0%20%2F%20v7.1%2F%20v7.2%2F%20v7.3%2F%20v7.4-blue.svg)
-![Moodle](https://img.shields.io/badge/Moodle-v2.7%20to%20v4.0-orange.svg)
+![PHP](https://img.shields.io/badge/PHP-v5.6%20%2F%20v7.0%20%2F%20v7.1%2F%20v7.2%2F%20v7.3%2F%20v7.4%2F%20v8.0-blue.svg)
+![Moodle](https://img.shields.io/badge/Moodle-v2.7%20to%20v4.1-orange.svg)
 [![GitHub Issues](https://img.shields.io/github/issues/michael-milette/moodle-filter_filtercodes.svg)](https://github.com/michael-milette/moodle-filter_filtercodes/issues)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-green.svg)](#contributing)
 [![License](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](#license)
@@ -133,12 +133,12 @@ FilterCodes are meant to be entered as regular text in the Moodle WYSIWYG editor
 * {wwwroot} : Root URL of the Moodle site.
 * {supportname} : Support name as seen on Site Administration > Server > Support contact.
 * {supportemail} : Support email address as seen on Site Administration > Server > Support contact.
-* {supporturl} : Support page as seen on Site Administration > Server > Support contact.
+* {supportpage} : Support page URL as seen on Site Administration > Server > Support contact.
 
 ### UI Elements
 
 * {teamcards}: Displays photos, names (optionally linked) and optional descriptions of the users who are teachers. Only Verbose format is suitable for use in a side block.
-* {coursecards} or {coursecards categoryID}: (ALPHA) Display available courses as cards. You can optionally specify the ID number of a category. Example: {coursecards 1} will only display courses in the default Miscellaneous category. Note: The categoryID is not the "Category ID Number" field that you can optionally specify when creating a category.
+* {coursecards} or {coursecards categoryID}: (ALPHA) Display available courses as cards. You can optionally specify the ID number of a category. Example: {coursecards 1} will only display courses in the default Miscellaneous category. Note: The categoryID is not the "Category ID Number" field that you can optionally specify when creating a category. Please also note that the maximum number of courses displayed is controlled by the front page setting called **frontpagecourselimit**.
 * {coursecardsbyenrol} (ALPHA): Display course cards for the most popular courses based on enrolment. The maximum number of cards is configurable in the plugin settings.
 * {courseprogress}: (ALPHA) Displays course progress status in words. Only works within a course.
 * {courseprogresspercent}: Displays course progress percentage as a number without a percentage symbol. Only works within a course.
@@ -163,7 +163,8 @@ FilterCodes are meant to be entered as regular text in the Moodle WYSIWYG editor
 * {coursestartdate dateTimeFormat} : Course star t date. Will display "Open event" if there is no start date. For information on the optional dateTimeFormat format, see Supported dateTimeFormats Formats in the [FAQ](#faq) section of this documentation.
 * {courseenddate dateTimeFormat} : Course end date. Will display "Open event" if there is no end date. For information on the optional dateTimeFormat format, see Supported dateTimeFormats Formats in the [FAQ](#faq) section of this documentation.
 * {coursecompletiondate dateTimeFormat} : Course completion date. If not completed, will display "Not completed". Will also detect if completion is not enabled. For information on the optional dateTimeFormat format, see Supported dateTimeFormats Formats in the [FAQ](#faq) section of this documentation.
-* {courseprogress}: (ALPHA) Displays course progress status in words.
+* {coursegrade} : Display course grade.
+* {courseprogress} : (ALPHA) Displays course progress status in words.
 * {courseprogressbar}: (ALPHA) Displays course progress status as a status bar.
 * {course_fields}: Displays the custom course fields. NOTE: Respects a custom course field's Visible To setting.
 * {course_field_shortname} : Display custom course field. Replace "shortname" with the shortname of a custom course field all in lowercase. NOTE: Respects a custom course field's Visible To setting.
@@ -171,6 +172,7 @@ FilterCodes are meant to be entered as regular text in the Moodle WYSIWYG editor
 * {coursesummary ID} : Display the course summary of the course with the specified course ID number.
 * {courseimage} : Display's the course image.
 * {courseparticipantcount} : Displays the number of students enrolled in the current course.
+* {coursecount students} : Displays the number of students enrolled in a course.
 * {courseid} or %7Bcourseid%7D : Display a course's ID.
 * {coursecontextid} or %7Bcoursecontextid%7D : Display a course's context ID.
 * %7Bcoursemoduleid%7D : Display a course's activity module ID - for use in URLs. Only for use in course activity modules.
@@ -222,7 +224,7 @@ Also, see Courses section below.
 
 ### Content
 
-* {global_...} : Use your own custom FilterCodes tags in the filter's settings. These are sometimes referred to as global blocks. An example of this might be if you wanted to define a standardized copyright or other text, email address, website URL, phone number, name, link, support information and more. Define and centrally manage up to 20 global block tags.
+* {global_...} : Use your own custom FilterCodes tags in the filter's settings. These are sometimes referred to as global blocks. An example of this might be if you wanted to define a standardized copyright or other text, email address, website URL, phone number, name, link, support information and more. Define and centrally manage up to 50 global block tags.
 * {note}content{/note} : Enables you to include a note which will not be displayed.
 * {help}content{/help} : Enables you to create popup help icons just like Moodle does.
 * {info}content{/info} : Enables you to create popup help icons just like the popup Help icons but with an "i" information icon.
@@ -273,6 +275,7 @@ Note: {if*rolename*} and {ifmin*rolename*} type tags are based on role archetype
 * {ifinsection}{/ifinsection} : Will only display the enclosed content if the user is in a section of a course which is not the Frontpage.
 * {ifnotinsection}{/ifnotinsection} : Will only display the enclosed content if the user is not in a section of a course.
 * {ifingroup id|idnumber}{/ifingroup} : Will only display the content if the user is part of the specified course group ID or group ID number.
+* {ifnotingroup id|idnumber}{/ifnotingroup} : Will only display the content if the user is NOT part of the specified course group ID or group ID number.
 * {ifnotvisible}{/ifnotvisible} : Will only display the content if the course visibility is set to Hide.
 * {ifinactivity}{/ifinactivity} : Will only display the content only in course activities.
 * {ifnotinactivity}{/ifnotinactivity} : Will only display the content only when not in a course activity.
@@ -323,7 +326,7 @@ If the condition is not met in the particular context, the specified tag and its
 * {-} : Is substituted for &shy;, a soft hyphen that only appears when needed.
 * {nbsp} : Is substituted for a non-breaking space when displayed.
 * {hr} : Horizontal rule.
-* {details}{summary}{/summary}{/details} : An easy way to create an HTML 5 Details/Summary expandable section in your page. IMPORTANT: {details}{summary}{/summary} must all be on one line (it is ok if the line wraps). The rest of the details can be on multiple lines followed by the {/details}. This is an experimental feature that may result in invalid HTML but it works.
+* {details}{summary}{/summary}{/details} : An easy way to create an HTML 5 Details/Summary expandable section in your page. IMPORTANT: {details}{summary}{/summary} must all be on one line (it is ok if the line wraps). The rest of the details can be on multiple lines followed by the {/details}. This is an experimental feature that may result in invalid HTML but it works. You can optionally add a CSS class name to the opening details tag. Example: {details faq-class}
 * {langx xx}{/langx} : Tag specific text in a particular language by wrapping the text in a plain text pair of {langx xx} {/langx} or {langx xx-XX} {/langx} tags. This makes no visible changes to the content but wraps the content in an HTML <span lang="xx"></span> inline tag. As a result, screen readers will make use of this localization information to apply a particular pronunciation if the text is in a different language than the language of the rest of the page. This is required for compliance with W3C Web Content Accessibility Guidelines (WCAG 2.0)
 
 The opening {langx xx} tag should include two [ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) language code abbreviation letters in lowercase associated with the language's name. French, for example, has the code **fr**:
@@ -346,7 +349,7 @@ The {langx fr-CA}{/langx} filter will convert this into the following HTML
 
 You can define your own global tags, sometimes also called global blocks. This can only be configured by Moodle Administrators by going to **Site Administration** > **Plugins** > **Filters** > **FilterCodes**.
 
-You can create up to 20 custom global tags by specifying the tag name. The tag name will automatically be prefixed by global. For example, if you define a tag called *copyright*, it will create a FilterCodes tag {global_*copyright*}.
+You can create up to 50 custom global tags by specifying the tag name. The tag name will automatically be prefixed by global. For example, if you define a tag called *copyright*, it will create a FilterCodes tag {global_*copyright*}.
 
 The content which you can insert is only limited by your imagination. You can include plain text content, such as one or more words, HTML source code or even a JavaScript snippet (wrap in a script tag). You can also enter almost any content using the WYSIWYG Atto editor by checking the "Pretty HTML format" checkbox. This allows you to create formatted content, uploaded images and more. Note: It does not support PHP code.
 
@@ -479,7 +482,7 @@ Even better, try out the dynamic **{menudev}** tag. It includes all of the above
 
 ## FilterCodes in custom menus
 
-Note: The source code in this section was last updated in April 2022 for Moodle 4.0.
+Note: The source code in this section was last updated in April 2022 for Moodle 4.0 and last tested in December 2022 for Moodle 4.1 compatibility.
 
 FilterCodes can work in custom menus but, unfortunately, only if the theme supports it or you patched Moodle. If it does not work for you, contact the theme's developer and request that they add support for Moodle filters. See the instructions included below.
 
@@ -501,11 +504,12 @@ To patch Moodle to handle this properly for most Moodle themes, cherry-pick the 
 * Moodle 3.10: https://github.com/michael-milette/moodle/tree/MDL-63219-M310
 * Moodle 3.11: https://github.com/michael-milette/moodle/tree/MDL-63219-M311
 * Moodle 4.0: https://github.com/michael-milette/moodle/tree/MDL-63219-M400
+* Moodle 4.1: https://github.com/michael-milette/moodle/tree/MDL-63219-M401
 * Moodle master: https://github.com/michael-milette/moodle/tree/MDL-63219-master
 
 Example: To apply the patch for Moodle using git (change the "M400" for other versions):
 
-    git fetch https://github.com/michael-milette/moodle/tree/MDL-63219-M400 master
+    git fetch https://github.com/michael-milette/moodle MDL-63219-M401
     git cherry-pick FETCH_HEAD
 
 This is usually enough to make the filters work in the custom menu. However, we have noticed it may not work with some Moodle themes, most notably premium themes. Those themes will need to be patched using the technique B.
@@ -514,9 +518,9 @@ This is usually enough to make the filters work in the custom menu. However, we 
 
 ### For themes based on **boost** (Moodle 4.0 and later)
 
-As more 3rd party/contributed Moodle 4.0 themes become available, this section will be updated. Until then, there is no tested patch available for 3rd party Moodle 4.0 themes. It is recommended to use Moodle core patch above which is known to work.
+As more 3rd party/contributed Moodle 4.0/4.1 themes become available, this section will be updated. Until then, there is no tested patch available for 3rd party Moodle 4.0 themes. It is recommended to use Moodle core patch above which is known to work.
 
-The follow ALPHA code is based on information available in the Boost theme for Moodle 4.0. You will **also need** to apply the theme patch **For themes based on boost (Moodle 3.2 and later)** included below.
+The follow ALPHA code is based on information available in the Boost theme for Moodle 4.0/4.1. You will **also need** to apply the theme patch **For themes based on boost (Moodle 3.2 and later)** included below.
 
 Add this code to the core_renderer section (probably located in /theme/yourtheme/classes/navigation/output/primary.php) of your theme. Note: Your theme may even already have such a class (they often do):
 
@@ -744,6 +748,14 @@ Enable or disable the {scrape} tag.
 
 Enable or disable the display of a contact's profile picture in {coursecontacts} tag.
 
+### Show contact's profile description
+
+If enabled, will display the contact's profile description in {coursecontacts} tags.
+
+### Show hidden profile fields
+
+If enabled, custom profile fields that are hidden from the user will be displayed by the {profile_field_...} tag.
+
 ### Contact link type
 
 Choose the type of link for the teacher\s link in the {coursecontacts} tags. Profile, Messaging, Email address or None. Choose None if you don't want just the name without a link.
@@ -754,7 +766,7 @@ Enable or disable the background pattern/image for {categorycards}. You can also
 
 ### Global custom tags
 
-Define your own custom global tags, sometimes also called global blocks. This feature enables you to create FilterCodes tags that are prefixed by **global_** . You can currently have up to 20 custom {global_...} tags.
+Define your own custom global tags, sometimes also called global blocks. This feature enables you to create FilterCodes tags that are prefixed by **global_** . You can currently have up to 50 custom {global_...} tags.
 
 ### Customizing or translating the forms generated by the {form...} tags
 
@@ -985,6 +997,7 @@ Create a Page on your Moodle site, preferably in a course, so that those tags wo
 * Course start date [{coursestartdate strftimedatetime}]: {coursestartdate strftimedatetime}
 * Course end date [{courseenddate strftimedatetime}]: {courseenddate strftimedatetime}
 * Completion date [{coursecompletiondate strftimedatetime}]: {coursecompletiondate strftimedatetime}
+* Your grade in this course is [{coursegrade}]: Your grade in this course is {coursegrade}
 * Course progress (ALPHA) [{courseprogress}]: {courseprogress}
 * Course progress percent number [{courseprogresspercent}]: {courseprogresspercent}
 * Course progress bar (ALPHA) [{courseprogressbar}]: {courseprogressbar}
@@ -1036,6 +1049,7 @@ Create a Page on your Moodle site, preferably in a course, so that those tags wo
 * List of custom course fields [{course_fields}]: {course_fields}
 * Course custom fields [{course_field_location}] (assumes you have created a custom course field called "location"): {course_field_location}
 * Number of participants in the course [{courseparticipantcount}]: {courseparticipantcount}
+* Number of students enrolled in the course {{coursecount students}}: {coursecount students}
 * The base (root) URL of your Moodle site [{wwwroot}]: {wwwroot}
 * Site support name [{supportname}]: {supportname}
 * Site support email address [{supportemail}]: {supportemail}
@@ -1112,7 +1126,7 @@ Create a Page on your Moodle site, preferably in a course, so that those tags wo
 * Is your tenant id 1? [{iftenant 1}]Yes[{/iftenant}]: {iftenant 1}Yes{/iftenant} Note: In Moodle classic, tenant id is assumed to be 1.
 * Is this Moodle Workplace? [{ifworkplace}]Yes[{/ifworkplace}]: {ifworkplace}Yes{/ifworkplace}
 * This is FilterCodes version [{filtercodes}]: {filtercodes} (It be blank if you do not have the Moodle capability to edit this tag.)
-* Are you a member of the ATEAM group [{ifingroup ATEAM}]Yes[{/ifingroup}] ? : {ifingroup ATEAM}Yes{/ifingroup} Note: Only works in courses.
+* Are you a member of the ATEAM group [{ifingroup ATEAM}]Yes[{/ifingroup}][{ifnotingroup ATEAM}]No[{/ifnotingroup}] ? : {ifingroup ATEAM}Yes{/ifingroup}{ifnotingroup ATEAM}No{/ifnotingroup} Note: Only works in courses.
 * [{ifnotvisible}]Warning: Course visibility is set to Hide.[{/ifnotvisible}]: {ifnotvisible}Warning: Course visibility is set to Hide.{/ifnotvisible}
 * Are you in an activity? [{ifinactivity}]Yes[{/ifinactivity}][{ifnotinactivity}]No[{/ifnotinactivity}]: {ifinactivity}Yes{/ifinactivity}{ifnotinactivity}No{/ifnotinactivity}
 * [{ifactivitycompleted 2}]You have completed the activity with ID 2.[{/ifactivitycompleted}]: {ifactivitycompleted id}You have completed the activity with ID 2.{/ifactivitycompleted} (example assumes you have an activity in a course with an ID of 2)
@@ -1248,6 +1262,7 @@ Michael Milette - Author and Lead Developer
 
 Big thank you to the following contributors. (Please let me know if I forgot to include you in the list):
 
+* alexmorrisnz: Add CSS class support for {details} tag (2022).
 * alexmorrisnz: {lastlogin} and fixing issue with {teamcardsformat} setting (2022).
 * 3iPunt and abertranb: New {ifcustomrole} tag (2020).
 * 3iPunt and abertranb: New {ifnotcustomrole} tag (2020).

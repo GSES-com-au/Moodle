@@ -3,11 +3,11 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>Name</th>
-        <th></th>
+        <th>First Name</th>
+        <th>Last Name</th>
         <th>Email</th>
-          <th>Value</th>
-        <th></th>
+        <th>Course</th>
+        <th>Value</th>
       </tr>
     </thead>
     {{#data}}
@@ -15,12 +15,13 @@
         <td>{{{firstname}}}</td>
         <td>{{{lastname}}}</td>
         <td>{{{email}}}</td>
-      <td>${{totalvalue}}</td>
-      <td style="width:20px;"><a href="/local/staffmanager/graderdetail.php?grader={{id}}&month={{month}}&year={{year}}"><i class="fa fa-arrow-circle-right fa-2x"></i></td>
+        <td>{{{coursename}}}</td>
+        <td>{{{startdate}}}</td>
+      <td>$999{{totalvalue}}</td>
       </tr>
     {{/data}}
   </table>
   {{^data}}
-  <div class="card-body"><p>There are no results</p></div>
+  <div class="card-body"><p>There are no results from {{startdate}} to {{enddate}}.</p></div>
     {{/data}}
 </div>

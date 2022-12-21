@@ -1,6 +1,7 @@
 <?php
 namespace local_autoextension\task;                                              //Required to be first on the page
-
+use \DateTime;
+use \DateInterval;
 class observer //extends \core\task\scheduled_task                        //extends for Cron activation
 {                                  
     public static function submission_graded(\mod_assign\event\submission_graded $event)
@@ -36,7 +37,10 @@ class observer //extends \core\task\scheduled_task                        //exte
                 
                 //---------------------------------------------------------------------------------------------------
                 //Extension time = Current date + 2 weeks
-                $extension = time() + 86400*14;
+                date_default_timezone_set('Australia/Sydney');
+                $extension = new DateTime('today midnight');
+                $extension->add(new DateInterval('P' . 14 . 'D'));
+                $extension = $extension->getTimestamp();
 
                 //Checks if course is past expiration date or there is less than 2 weeks until course expiration ~ uses enrol plugin
                 if (time() > $expiration || $extension > $expiration) {
@@ -57,10 +61,16 @@ class observer //extends \core\task\scheduled_task                        //exte
                     //------------Finding course expiration--------------------------------------------------------------
                     $search = $DB->get_record('user_enrolments', ['enrolid' => $enrolid, 'userid' => $user]);
                     $expiration = $search->timeend;
+
                     
                     //---------------------------------------------------------------------------------------------------
                     //Extension time = Current date + 2 weeks
-                    $extension = time() + 86400*14;
+                    date_default_timezone_set('Australia/Sydney');
+                    $extension = new DateTime('today midnight');
+                    $extension->add(new DateInterval('P' . 14 . 'D'));
+                    $extension = $extension->getTimestamp();
+
+
 
                     //Checks if course is past expiration date or there is less than 2 weeks until course expiration ~ uses enrol plugin
                     if (time() > $expiration || $extension > $expiration) {
