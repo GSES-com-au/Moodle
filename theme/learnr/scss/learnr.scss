@@ -1,5 +1,179 @@
 // Universal LearnR theme styling
-
+//Contact us
+#page-user-contactsitesupport .mform {
+    @media (min-width: 1000px) {
+      margin: auto;
+      width: 60%;
+      margin-top: -3%;
+    }
+  }
+  #page-user-contactsitesupport #fitem_id_subject .form-label-addon,
+  #page-user-contactsitesupport #fitem_id_message .form-label-addon,
+  #page-user-contactsitesupport #fitem_id_category .form-label-addon,
+  #page-user-contactsitesupport #fitem_id_course .form-label-addon {
+    margin-left: 10%;
+  }
+  #page-user-contactsitesupport #id_subject {
+    @media (min-width: 1000px) {
+      display: inline-block;
+      margin: 0 0 5px 0;
+      width: 50%;
+    }
+  }
+  #page-user-contactsitesupport #fitem_id_course #id_course,
+  #page-user-contactsitesupport #fitem_id_category #id_category {
+    width: 100%;
+  }
+  #page-user-contactsitesupport #fitem_id_name,
+  #page-user-contactsitesupport #fitem_id_email,
+  #page-user-contactsitesupport #fitem_id_course,
+  #page-user-contactsitesupport #fitem_id_category {
+    @media (min-width: 1000px) {
+      display: inline-block;
+      margin: 0 0 15px 0;
+      width: 50%;
+    }
+  }
+  #page-user-contactsitesupport #fitem_id_name,
+  #page-user-contactsitesupport #fitem_id_category {
+    padding-right: 5px;
+  }
+  #page-user-contactsitesupport #fitem_id_email,
+  #page-user-contactsitesupport #fitem_id_course {
+    padding-left: 5px;
+  }
+  
+  #page-user-contactsitesupport #fitem_id_name .col-form-label,
+  #page-user-contactsitesupport #fitem_id_email .col-form-label,
+  #page-user-contactsitesupport #fitem_id_course .col-form-label,
+  #page-user-contactsitesupport #fitem_id_category .col-form-label {
+    padding: 0;
+  }
+  #page-user-contactsitesupport #fitem_id_name .col-form-label,
+  #page-user-contactsitesupport #fitem_id_email .col-form-label,
+  #page-user-contactsitesupport #fitem_id_subject .col-form-label,
+  #page-user-contactsitesupport #fitem_id_message .col-form-label,
+  #page-user-contactsitesupport #fitem_id_category .col-form-label,
+  #page-user-contactsitesupport #fitem_id_course .col-form-label {
+    font-weight: bold;
+  }
+  #page-user-contactsitesupport #fitem_id_name .form-inline,
+  #page-user-contactsitesupport #fitem_id_email .form-inline,
+  #page-user-contactsitesupport #fitem_id_course .form-inline,
+  #page-user-contactsitesupport #fitem_id_category .form-inline {
+    display: inline-block;
+    padding: 0;
+    max-width: 100%;
+  }
+  #page-user-contactsitesupport #fitem_id_name .form-inline input,
+  #page-user-contactsitesupport #fitem_id_email .form-inline input,
+  #page-user-contactsitesupport #fitem_id_course .form-inline input,
+  #page-user-contactsitesupport #fitem_id_category .form-inline input {
+    width: 100%;
+  }
+  #page-user-contactsitesupport #fitem_id_subject,
+  #page-user-contactsitesupport #fitem_id_message {
+    display: block;
+  }
+  #page-user-contactsitesupport #fitem_id_subject .form-inline,
+  #page-user-contactsitesupport #fitem_id_message .form-inline {
+    display: block;
+    max-width: 100%;
+  }
+  #page-user-contactsitesupport #id_message {
+    height: 200px;
+  }
+  #page-user-contactsitesupport #fgroup_id_buttonar,
+  #page-user-contactsitesupport #fgroup_id_buttonar .form-inline,
+  #page-user-contactsitesupport #fgroup_id_buttonar .d-flex {
+    max-width: 100%;
+    display: inline-block;
+  }
+  #page-user-contactsitesupport #fgroup_id_buttonar [name="submitbutton"] {
+    width: 15rem;
+  }
+//dashboard view my courses
+.pagelayout-mydashboard .card-text .text_to_html .btn-primary {
+    $passivecolor: red;
+    margin: 0.5rem;
+    box-shadow: 0px 5px 10px 1px #00000094;
+    transition: all 0.3s ease 0s;
+    background-color: $passivecolor;
+    border-color: $passivecolor;
+    font-weight: bold;
+    padding: 0.5rem;
+    border-radius: 0.7em;
+    border: 2px solid black;
+  }
+  .pagelayout-mydashboard .card-text .text_to_html .btn-primary:hover {
+    background-color: #bb0000;
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    transform: translateY(-7px);
+  }
+  .pagelayout-mydashboard
+    .card-text
+    .text_to_html
+    .btn-primary:not(:disabled):not(.disabled).active {
+    $activecolour: #000a2a;
+    background-color: $activecolour;
+    border-color: $activecolour;
+  }
+//Customhomepage
+.custommainpage {
+    text-align:center;
+}
+.customcarddeck {
+	flex-flow: row wrap;
+    justify-content: center;
+}
+.custommainpage .btn-primary {
+	$passivecolor:#0070ff;
+    margin: 0.5rem;
+    box-shadow: 0px 5px 10px 1px #00000094;
+    transition: all 0.3s ease 0s;
+    background-color:$passivecolor;
+    border-color:$passivecolor;
+    font-weight:bold;
+    padding:0.5rem;
+    border-radius:0.7em;
+}
+.custommainpage .btn-primary:hover {
+    background-color: #2EE59D;
+    box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+    transform: translateY(-7px);
+}
+.custommainpage .btn-primary:not(:disabled):not(.disabled).active {
+    $activecolour: #000a2a;
+    background-color: $activecolour;
+    border-color: $activecolour;
+}
+.fplogo {
+	display: inline;
+}
+.fplogo img, .card.shadow {
+	transition: transform .5s ease;
+}
+.fplogo:hover img, .card.shadow:hover {
+	transform: scale(1.1);
+}
+.customcarddeck .card {
+    border-top-right-radius:0px;
+    border-top-left-radius:0px;
+}
+.customcarddeck .card-title  {
+    font-weight:bold;
+}
+//Meet the Tutors #Page
+#page-local-meetthetutors-index div#page .main-inner {
+    background-color: #141a2a;
+  }
+  #page-local-meetthetutors-index #region-main {
+    background-color: #141a2a;
+  }
+  
+  #page-local-meetthetutors-index #region-main .row .column {
+    box-shadow: 0px 4px 10px 1px #ffffff45;
+  }
 //Forgot Password
 #page-login-forgot_password div {
     color:#e9ecef
@@ -434,9 +608,6 @@ section.block_starredcourses.block.card.mb-3 {
 
 
 // Marketing Spots
-.marekting.card {
-    box-shadow: 2px 2px 3px rgb(0 0 0 / 10%);
-}
 .marketing .feature {
     display: inline-flex;
     align-items: center;
@@ -450,27 +621,29 @@ section.block_starredcourses.block.card.mb-3 {
 .marketing.card {
     border: 0;
     background-color: transparent;
+    height:100%;
 }
 .card-body.market-tile {
-    border: 1px solid $gray-400;
+    border: 1px solid #5c5c5c;
     margin-top:1rem;
     margin-bottom:1rem;
     padding: 0rem;
     background-color: $body-bg;
-    box-shadow: 0 2px 2px 0px rgb(0 0 0 / 20%);
+    box-shadow: 2px 5px 20px 1px #000;
     border-radius:5px;
-    // display: grid;
-    // align-content: stretch;
-    // justify-items: center;
 }
+.card-body.market-tile:hover {
+    box-shadow: 0px 5px 20px #01006e66;
+    transform: translateY(-7px);
+    transition: all 0.5s ease-in-out 0s;
+}
+
 div.card-body.market-tile .marketingimg {
     background-color:$black;
-    border-radius:5px;
-    //width: 100%;
-    //height: 20em;
-    //object-fit: cover;
+    border-top-right-radius:5px;
+    border-top-left-radius:5px;
     height:14em;
-
+    padding:15px;
 } 
 .marketcontent.card-text {
     padding: 0 1rem;
