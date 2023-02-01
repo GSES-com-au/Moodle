@@ -33,6 +33,8 @@ $PAGE->set_url('/user/contactsitesupport.php');
 $PAGE->set_title(get_string('contactsitesupport', 'admin'));
 $PAGE->set_heading(get_string('contactsitesupport', 'admin'));
 $PAGE->set_pagelayout('standard');
+//user must be logged in to access this page
+require_login();
 
 $user = isloggedin() && !isguestuser() ? $USER : null;
 $renderer = $PAGE->get_renderer('user');
