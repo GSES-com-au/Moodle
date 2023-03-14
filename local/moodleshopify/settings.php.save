@@ -1,0 +1,14 @@
+<?php
+// This file is part of moodle single sign on plugin
+
+
+if ($ADMIN->fulltree) {
+    // Introductory explanation.
+
+ echo "RUNNING";
+
+ 
+
+
+}
+

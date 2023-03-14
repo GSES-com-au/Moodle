@@ -48,6 +48,19 @@ class contactsitesupport_form extends \moodleform {
         $mform->addElement('text', 'email', get_string('email'));
         $mform->addRule('email', get_string('missingemail'), 'required', null, 'client');
         $mform->setType('email', PARAM_EMAIL);
+          //Dropdown Menu
+          $choices = array(
+            'Administrative' => 'Administrative',
+            'Platform Issue' => 'Platform Issue',
+            'Exercise/Assessment Question' => 'Exercise/Assessment Question',
+            'Practical' => 'Practical',
+            'Design Task' => 'Design Task',
+            'Feedback' => 'Feedback',
+            'Functionality Request' => 'Functionality Request',
+            'Miscellaneous' => 'Miscellaneous'
+            );
+        $mform->addElement('select', 'category', "Category", $choices);
+        $mform->addRule('category', $strrequired, 'required', null, 'client');
 
         // Subject.
         $mform->addElement('text', 'subject', get_string('subject'));
