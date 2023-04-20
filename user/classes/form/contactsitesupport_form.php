@@ -43,11 +43,37 @@ class contactsitesupport_form extends \moodleform {
         $mform->addElement('text', 'name', get_string('name'));
         $mform->addRule('name', $strrequired, 'required', null, 'client');
         $mform->setType('name', PARAM_TEXT);
-
+        
         // Email.
         $mform->addElement('text', 'email', get_string('email'));
         $mform->addRule('email', get_string('missingemail'), 'required', null, 'client');
         $mform->setType('email', PARAM_EMAIL);
+
+        //Dropdown Menu
+        //Left hand side appears in email, right hand side appears on form to user
+        $choices = array(
+            'Administrative' => 'Administrative',
+            'Platform Issue' => 'Platform Issue',
+            'Exercise/Assessment Question' => 'Exercise/Assessment Question',
+            'Practical' => 'Practical',
+            'Design Task' => 'Design Task',
+            'Feedback' => 'Feedback',
+            'Miscellaneous' => 'Miscellaneous'
+            );
+        $mform->addElement('select', 'category', "Category", $choices);
+        $mform->addRule('category', $strrequired, 'required', null, 'client');
+        //Course
+        $choices = array(
+            'Grid-Connected PV Systems (GCPV)' => 'Grid-Connected PV Systems (GCPV)',
+            'Batteries for Grid-Connected PV (GCwB)' => 'Batteries for Grid-Connected PV (GCwB)',
+            'Stand-Alone Power Systems (SAPS)' => 'Stand-Alone Power Systems (SAPS)',
+            'Face-to-Face Practicals' => 'Face-to-Face Practicals',
+            'Short/Sprint Courses' => 'Short/Sprint Courses',
+            'Other' => 'Other',
+            );
+        $mform->addElement('select', 'course', "Course", $choices);
+        $mform->addRule('course', $strrequired, 'required', null, 'client');
+
 
         // Subject.
         $mform->addElement('text', 'subject', get_string('subject'));
@@ -58,6 +84,7 @@ class contactsitesupport_form extends \moodleform {
         $mform->addElement('textarea', 'message', get_string('message'));
         $mform->addRule('message', $strrequired, 'required', null, 'client');
         $mform->setType('message', PARAM_TEXT);
+
         
         // If the user is logged in set name and email fields to the current user info.
         if (isloggedin() && !isguestuser()) {

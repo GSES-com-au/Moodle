@@ -16,7 +16,7 @@
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="enrolmentrate" TYPE="number" LENGTH="6" NOTNULL="false" DEFAULT="200" SEQUENCE="false" DECIMALS="2" COMMENT="cost per enrolment"/>
-        <FIELD NAME="annualrate" TYPE="number" LENGTH="10" NOTNULL="false" DEFAULT="2000" SEQUENCE="false" DECIMALS="2" COMMENT="Flat annual fee for hosting of LMS &amp;amp; platform."/>
+        <FIELD NAME="flatcost" TYPE="number" LENGTH="10" NOTNULL="false" DEFAULT="2000" SEQUENCE="false" DECIMALS="2" COMMENT="Flat fee for hosting of LMS &amp;amp; platform."/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>

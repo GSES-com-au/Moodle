@@ -1,6 +1,6 @@
 <div>
   <br>
-  <h4>Enrollment Period</h4>
+  <h4>Enrolment Period</h4>
 </div>
 
 <a href="/local/studentmanager/rates.php" class="btn btn-secondary float-right">Rates</a><br>
@@ -18,10 +18,20 @@
   <input type="date" id="startdate" name="startdate"
     value="2022-07-22"
     min="2016-01-01" max="2023-12-31">
-  <label for="start">to</label>
+  <div class="input-group-prepend">
+    <label class="input-group-text" for="start">to</label>
+  </div>
   <input type="date" id="enddate" name="enddate"
     value="2022-07-22"
     min="2016-01-01" max="2023-12-31">
+
+  <label class="input-group-text" for="inputGroupSelect01">Filter Courses</label>
+  <select style="width:200px;" name="course" id="course">
+      <option value="0" selected>All courses</option>
+    {{#data}}
+      <option value={{{id}}}>{{{fullname}}}</option>
+    {{/data}}
+  </select>
   <div class="input-group-append2">
    <button class="btn btn-outline-secondary" type="button" id="search" name="search">Search</button>
   </div>

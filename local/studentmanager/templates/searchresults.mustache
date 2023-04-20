@@ -1,4 +1,5 @@
-<div class="card">
+<div> 
+{{! class="card" }}
   <br>
   <table class="table table-striped">
     <thead>
@@ -7,7 +8,8 @@
         <th>Last Name</th>
         <th>Email</th>
         <th>Course</th>
-        <th>Value</th>
+        <th>Start Date</th>
+        <th>$</th>
       </tr>
     </thead>
     {{#data}}
@@ -17,11 +19,26 @@
         <td>{{{email}}}</td>
         <td>{{{coursename}}}</td>
         <td>{{{startdate}}}</td>
-      <td>$999{{totalvalue}}</td>
+        <td class="text-left">{{value}}</td>
       </tr>
     {{/data}}
   </table>
   {{^data}}
-  <div class="card-body"><p>There are no results from {{startdate}} to {{enddate}}.</p></div>
-    {{/data}}
+    {{#startdate}}
+      {{#enddate}}
+      <div class="card-body"><p>There are no results from {{startdate}} to {{enddate}}.</p></div>
+      {{/enddate}}
+    {{/startdate}}
+    {{^startdate}}
+     <div class="card-body"><p>Please select a start and end date to query.</p></div>
+    {{/startdate}}
+  {{/data}}
+</div>
+<div>
+  <br>
+  <br>
+    {{#costdata}}
+      <h3>${{{test}}}</h3>
+    {{/costdata}}
+    
 </div>

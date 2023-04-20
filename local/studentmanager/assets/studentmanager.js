@@ -13,6 +13,12 @@ require(['core/first', 'jquery', 'jqueryui', 'core/ajax'], function(core, $, boo
 
         document.getElementById('startdate').value = params['startdate'];
         document.getElementById('enddate').value = params['enddate'];
+        // if (!params['course']) {
+        //     document.getElementById('course').value = params['course'];
+        // }
+        if (params['course'] !== undefined) {
+            document.getElementById('course').value = params['course'];
+        }
         //click function when user clicks search
         $('#search').click(function() {
             searchusers();
@@ -33,7 +39,7 @@ require(['core/first', 'jquery', 'jqueryui', 'core/ajax'], function(core, $, boo
                 end_date_input = convertDate(end_date_input);
                 alert(`Please make sure the start date (${start_date_input}) of the enrolment period is before the end date (${end_date_input}).`);
             } else {
-                window.open("/local/studentmanager/index.php?startdate=" + $('#startdate').val() + "&enddate=" + $('#enddate').val(), '_self');
+                window.open("/local/studentmanager/index.php?startdate=" + $('#startdate').val() + "&enddate=" + $('#enddate').val() + "&course=" + $('#course').val(), '_self');
                 //window.open("/local/studentmanager/index.php?month=" + $('#month').val() + "&year=" + $('#year').val() + "&startdate=" + $('#startdate').val() + "&enddate=" + $('#enddate').val(), '_self');
             }
         }

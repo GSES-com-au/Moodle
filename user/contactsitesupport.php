@@ -31,10 +31,11 @@ if (!empty($CFG->supportpage)) {
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url('/user/contactsitesupport.php');
 $PAGE->set_title(get_string('contactsitesupport', 'admin'));
-$PAGE->set_heading(get_string('contactsitesupport', 'admin'));
+// $PAGE->set_heading(get_string('contactsitesupport', 'admin'));
 $PAGE->set_pagelayout('standard');
 //user must be logged in to access this page
 require_login();
+
 
 $user = isloggedin() && !isguestuser() ? $USER : null;
 $renderer = $PAGE->get_renderer('user');
@@ -46,11 +47,15 @@ if ($form->is_cancelled()) {
     $data = $form->get_data();
 
     $from = $user ?? core_user::get_noreply_user();
+
     $subject = get_string('supportemailsubject', 'admin', format_string($SITE->fullname));
     $data->notloggedinuser = (!$user);
     $message = $renderer->render_from_template('user/contact_site_support_email_body', $data);
+    
+    $replyto = $USER->email;
 
-    if (!email_to_user(core_user::get_support_user(), $from, $subject, $message)) {
+    if (!email_to_user(core_user::get_support_user(), $from, $subject, $message, $messagehtml = '', $attachment = '', $attachname = '',
+    $usetrueaddress = true, $replyto)) {
         $supportemail = $CFG->supportemail;
         $form->set_data($data);
         $templatectx = [
@@ -66,9 +71,9 @@ if ($form->is_cancelled()) {
 } else {
     $output = $form->render();
 }
-
+$obj =[];
 echo $OUTPUT->header();
-
+echo $OUTPUT->render_from_template('user/form', $obj); 
 echo $output;
 
 echo $OUTPUT->footer();

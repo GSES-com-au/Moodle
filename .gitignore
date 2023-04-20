@@ -23,7 +23,8 @@
 # logs
 error_log
 /.htaccess
-/local/pending/classes/task/access.php
+/local/expiryreminders/classes/task/access.php
+**/access.php
 /local/pending/vendor/
 /lib/editor/tinymce/extra/tools/temp/
 /tags

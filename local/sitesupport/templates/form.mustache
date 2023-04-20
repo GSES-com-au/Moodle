@@ -1,0 +1,61 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Contact Us</title>
+</head>
+
+<body>
+<div class="staticpage-wrapper container">
+    <div class="staticpage-content">
+        <div class="contact-wrapper">
+            <div class="contact-intro mb-5">
+            </div>
+            <div class="contact-form-box rounded p-lg-5 mb-5">
+                <form id="contact-form" class="contact-form" action="../sitesupport/index.php" method="post">
+                    <h2 class="text-center mb-3">How Can We Help?</h2>
+                    <p></p>
+                    <p>Remember if you have any queries, please do not hesitate to contact us for assistance using one of the following methods:</p>
+                    <p></p>
+                    <ul>
+                        <li><strong>Live chat:</strong>&nbsp;Available via the chat symbol in the bottom right corner, typically 12pm-7pm AEST Mon-Fri.</li>
+                        <li><strong>Email:&nbsp;</strong>tutor@gses.com.au</li>
+                        <li><strong>SMS:</strong>&nbsp;+61 429 057 096</li>
+                        <li><strong>Phone:</strong>&nbsp;+61 2 9024 5312 (9am-5pm AEST Mon-Fri)<br></li>
+                    </ul>
+                    <p></p>
+                    <p>We encourage you to reach out to us via live chat or email as it goes directly to all the tutor team and is the best way to get support. Someone will respond to you ASAP!</p>
+                    <div class="text-center mb-4">Want to get in touch with us or have a question? Fill out this
+                        form and we will get back to as soon as possible.</div>
+                    <div class="form-row">
+                        <div class="form-group col-12 col-xl-6">
+                            <label class="sr-only" for="name">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Name" minlength="2" maxlength="45" required="required" pattern="[A-zÀ-ž]([A-zÀ-ž\s]){2,}">
+                        </div>
+                        <div class="form-group col-12 col-xl-6">
+                            <label class="sr-only" for="email">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required="required">
+                        </div>
+
+                        <div class="form-group col-12">
+                            <label class="sr-only" for="cmessage">Your message</label>
+                            <textarea class="form-control" id="cmessage" name="message" placeholder="Enter your message" rows="10" required="required" data-initial-value=""></textarea>
+                        </div>
+                        <input type="hidden" id="sesskey" name="sesskey" value="">
+                        <script>
+                            document.getElementById('sesskey').value = M.cfg.sesskey;
+                        </script>
+                        <div class="form-group col-12">
+                            <input type="submit" name="submit" id="submit" value="Send" class="btn btn-block btn-primary py-2">
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

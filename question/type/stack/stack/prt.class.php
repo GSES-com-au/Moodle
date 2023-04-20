@@ -71,8 +71,9 @@ class stack_potentialresponse_tree_lite {
      * @var array
      */
     private $trace = [];
-
+    
     public function __construct($prtdata, $value, $question = null) {
+
         $this->name          = $prtdata->name;
         $this->simplify      = (bool) $prtdata->autosimplify;
         $this->feedbackstyle = (int) $prtdata->feedbackstyle;

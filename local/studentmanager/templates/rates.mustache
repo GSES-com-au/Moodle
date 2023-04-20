@@ -1,23 +1,19 @@
-<div class="card"><div class="card-body"><a href="/local/studentmanager/index.php" class="btn btn-secondary float-right">Student Manager</a> <a href="/local/studentmanager/ratesform.php" class="btn btn-secondary float-right mr-1">New rate</a><br></div></div>
-<div class="card">
+<div class="card-body"><a href="/local/studentmanager/index.php" class="btn btn-secondary float-right">Student Manager</a> <a id="new_rate_button" href="/local/studentmanager/ratesform.php" class="btn btn-secondary float-right mr-1">New rate</a><br><div>
+<div class="card-body">
   <table class="table table-striped">
     <thead>
       <tr>
-        <th>ph</th>
-        <th>ph</th>
-        <th class="text-right">Enrolment Rate ($/Enrolment)</th>
-        <th class="text-right">Flat Annual Fee ($/Year)</th>
-        <th></th>
-
+        <th class="text-center">Enrolment Rate ($/Enrolment)</th>
+        <th class="text-center">Quarterly Flat Admin Fee ($/Year)</th>
+        <th class="text-center">Edit</th>
+        
       </tr>
     </thead>
     {{#data}}
       <tr>
-        <td>bbb</td>
-        <td>aaa</td>
-        <td class="text-right">{{{enrolmentrate}}}</td>
-      <td class="text-right">{{annualrate}}</td>
-      <td><a href="/local/studentmanager/ratesform.php?id={{id}}"><i class="fa fa-edit"></i></td>
+        <td class="text-center">{{{enrolmentrate}}}</td>
+        <td class="text-center">{{flatcost}}</td>
+      <td class="text-center"><a href="/local/studentmanager/ratesform.php?id={{id}}"><i class="fa fa-edit"></i></td>
       </tr>
     {{/data}}
   </table>

@@ -26,3 +26,4 @@
 $string['pluginname'] = 'Student Manager';
 $string['studentmanager'] = 'Student Manager';
 $string['rates'] = 'Rates Manager';
+$string['studentmanager:admin'] = "Student manager admin";

@@ -39,9 +39,9 @@ class rates_form extends moodleform
         $mform->setType('enrolmentrate', PARAM_NUMBER);                   //Set type of element
         $mform->setDefault('enrolmentrate', 0);        //Default value
 
-        $mform->addElement('text', 'annualrate', 'Annual flat fee', ' size="100%" '); // Add elements to your form
-        $mform->setType('annualrate', PARAM_NUMBER);                   //Set type of element
-        $mform->setDefault('annualrate', 0);        //Default value
+        $mform->addElement('text', 'flatcost', 'Quarterly flat fee', ' size="100%" '); // Add elements to your form
+        $mform->setType('flatcost', PARAM_NUMBER);                   //Set type of element
+        $mform->setDefault('flatcost', 0);        //Default value
 
         $buttonarray=array();
         $buttonarray[] = $mform->createElement('submit', 'Submit', 'Save');

@@ -1,0 +1,218 @@
+[18-Apr-2023 13:55:39 Australia/Sydney] 
+[18-Apr-2023 13:56:25 Australia/Sydney] 
+[18-Apr-2023 13:56:50 Australia/Sydney] Default exception handler: Exception - error_log(): Argument #1 ($message) must be of type string, core\event\user_updated given Debug: 
+Error code: generalexceptionmessage
+* line 13 of /local/moodlealert/classes/task/observer.php: TypeError thrown
+* line 13 of /local/moodlealert/classes/task/observer.php: call to error_log()
+* line ? of unknownfile: call to local_moodlealert\task\observer::user_updated()
+* line 155 of /lib/classes/event/manager.php: call to call_user_func()
+* line 75 of /lib/classes/event/manager.php: call to core\event\manager::process_buffers()
+* line 834 of /lib/classes/event/base.php: call to core\event\manager::dispatch()
+* line 285 of /user/editadvanced.php: call to core\event\base->trigger()
+
+[18-Apr-2023 13:57:45 Australia/Sydney] 1
+[18-Apr-2023 13:58:02 Australia/Sydney] 1
+[18-Apr-2023 14:03:43 Australia/Sydney] 1
+[18-Apr-2023 14:03:43 Australia/Sydney] 347
+[18-Apr-2023 14:04:22 Australia/Sydney] 
+[18-Apr-2023 14:04:22 Australia/Sydney] 347
+[18-Apr-2023 14:06:23 Australia/Sydney] Default exception handler: Exception - Call to undefined method core\event\user_updated::data() Debug: 
+Error code: generalexceptionmessage
+* line 13 of /local/moodlealert/classes/task/observer.php: Error thrown
+* line ? of unknownfile: call to local_moodlealert\task\observer::user_updated()
+* line 155 of /lib/classes/event/manager.php: call to call_user_func()
+* line 75 of /lib/classes/event/manager.php: call to core\event\manager::process_buffers()
+* line 834 of /lib/classes/event/base.php: call to core\event\manager::dispatch()
+* line 285 of /user/editadvanced.php: call to core\event\base->trigger()
+
+[18-Apr-2023 14:08:32 Australia/Sydney] null
+[18-Apr-2023 14:08:32 Australia/Sydney] 347
+[18-Apr-2023 14:12:40 Australia/Sydney] core\event\user_updated::__set_state(array(
+   'data' => 
+  array (
+    'eventname' => '\\core\\event\\user_updated',
+    'component' => 'core',
+    'action' => 'updated',
+    'target' => 'user',
+    'objecttable' => 'user',
+    'objectid' => '347',
+    'crud' => 'u',
+    'edulevel' => 0,
+    'contextid' => 2595,
+    'contextlevel' => 30,
+    'contextinstanceid' => '347',
+    'userid' => '17',
+    'courseid' => 0,
+    'relateduserid' => '347',
+    'anonymous' => 0,
+    'other' => NULL,
+    'timecreated' => 1681791160,
+  ),
+   'logextra' => NULL,
+   'context' => 
+  context_user::__set_state(array(
+     '_id' => 2595,
+     '_contextlevel' => 30,
+     '_instanceid' => '347',
+     '_path' => '/1/2595',
+     '_depth' => '2',
+     '_locked' => '0',
+  )),
+   'triggered' => true,
+   'dispatched' => false,
+   'restored' => false,
+   'recordsnapshots' => 
+  array (
+  ),
+))
+[18-Apr-2023 14:12:40 Australia/Sydney] 347
+[18-Apr-2023 14:12:55 Australia/Sydney] core\event\user_updated::__set_state(array(
+   'data' => 
+  array (
+    'eventname' => '\\core\\event\\user_updated',
+    'component' => 'core',
+    'action' => 'updated',
+    'target' => 'user',
+    'objecttable' => 'user',
+    'objectid' => '347',
+    'crud' => 'u',
+    'edulevel' => 0,
+    'contextid' => 2595,
+    'contextlevel' => 30,
+    'contextinstanceid' => '347',
+    'userid' => '17',
+    'courseid' => 0,
+    'relateduserid' => '347',
+    'anonymous' => 0,
+    'other' => NULL,
+    'timecreated' => 1681791175,
+  ),
+   'logextra' => NULL,
+   'context' => 
+  context_user::__set_state(array(
+     '_id' => 2595,
+     '_contextlevel' => 30,
+     '_instanceid' => '347',
+     '_path' => '/1/2595',
+     '_depth' => '2',
+     '_locked' => '0',
+  )),
+   'triggered' => true,
+   'dispatched' => false,
+   'restored' => false,
+   'recordsnapshots' => 
+  array (
+  ),
+))
+[18-Apr-2023 14:12:55 Australia/Sydney] 347
+[18-Apr-2023 14:24:05 Australia/Sydney] core\event\user_updated::__set_state(array(
+   'data' => 
+  array (
+    'eventname' => '\\core\\event\\user_updated',
+    'component' => 'core',
+    'action' => 'updated',
+    'target' => 'user',
+    'objecttable' => 'user',
+    'objectid' => '347',
+    'crud' => 'u',
+    'edulevel' => 0,
+    'contextid' => 2595,
+    'contextlevel' => 30,
+    'contextinstanceid' => '347',
+    'userid' => '17',
+    'courseid' => 0,
+    'relateduserid' => '347',
+    'anonymous' => 0,
+    'other' => NULL,
+    'timecreated' => 1681791845,
+  ),
+   'logextra' => NULL,
+   'context' => 
+  context_user::__set_state(array(
+     '_id' => 2595,
+     '_contextlevel' => 30,
+     '_instanceid' => '347',
+     '_path' => '/1/2595',
+     '_depth' => '2',
+     '_locked' => '0',
+  )),
+   'triggered' => true,
+   'dispatched' => false,
+   'restored' => false,
+   'recordsnapshots' => 
+  array (
+  ),
+))
+[18-Apr-2023 14:24:05 Australia/Sydney] 347
+[18-Apr-2023 14:27:15 Australia/Sydney] Default exception handler: Exception - Call to undefined method core\event\user_updated::is_attribute_updated() Debug: 
+Error code: generalexceptionmessage
+* line 12 of /local/moodlealert/classes/task/observer.php: Error thrown
+* line ? of unknownfile: call to local_moodlealert\task\observer::user_updated()
+* line 155 of /lib/classes/event/manager.php: call to call_user_func()
+* line 75 of /lib/classes/event/manager.php: call to core\event\manager::process_buffers()
+* line 834 of /lib/classes/event/base.php: call to core\event\manager::dispatch()
+* line 285 of /user/editadvanced.php: call to core\event\base->trigger()
+
+[18-Apr-2023 14:28:15 Australia/Sydney] Default exception handler: Exception - array_key_exists(): Argument #2 ($array) must be of type array, null given Debug: 
+Error code: generalexceptionmessage
+* line 12 of /local/moodlealert/classes/task/observer.php: TypeError thrown
+* line 12 of /local/moodlealert/classes/task/observer.php: call to array_key_exists()
+* line ? of unknownfile: call to local_moodlealert\task\observer::user_updated()
+* line 155 of /lib/classes/event/manager.php: call to call_user_func()
+* line 75 of /lib/classes/event/manager.php: call to core\event\manager::process_buffers()
+* line 834 of /lib/classes/event/base.php: call to core\event\manager::dispatch()
+* line 285 of /user/editadvanced.php: call to core\event\base->trigger()
+
+[18-Apr-2023 14:31:50 Australia/Sydney] Default exception handler: Exception - array_key_exists(): Argument #2 ($array) must be of type array, null given Debug: 
+Error code: generalexceptionmessage
+* line 13 of /local/moodlealert/classes/task/observer.php: TypeError thrown
+* line 13 of /local/moodlealert/classes/task/observer.php: call to array_key_exists()
+* line ? of unknownfile: call to local_moodlealert\task\observer::user_updated()
+* line 155 of /lib/classes/event/manager.php: call to call_user_func()
+* line 75 of /lib/classes/event/manager.php: call to core\event\manager::process_buffers()
+* line 834 of /lib/classes/event/base.php: call to core\event\manager::dispatch()
+* line 285 of /user/editadvanced.php: call to core\event\base->trigger()
+
+[18-Apr-2023 14:33:27 Australia/Sydney] Default exception handler: Exception - array_key_exists(): Argument #2 ($array) must be of type array, core\event\user_updated given Debug: 
+Error code: generalexceptionmessage
+* line 13 of /local/moodlealert/classes/task/observer.php: TypeError thrown
+* line 13 of /local/moodlealert/classes/task/observer.php: call to array_key_exists()
+* line ? of unknownfile: call to local_moodlealert\task\observer::user_updated()
+* line 155 of /lib/classes/event/manager.php: call to call_user_func()
+* line 75 of /lib/classes/event/manager.php: call to core\event\manager::process_buffers()
+* line 834 of /lib/classes/event/base.php: call to core\event\manager::dispatch()
+* line 285 of /user/editadvanced.php: call to core\event\base->trigger()
+
+[18-Apr-2023 14:41:32 Australia/Sydney] PHP Warning:  Trying to access array offset on value of type null in /home/gsesdev/public_html/local/moodlealert/classes/task/observer.php on line 17
+[18-Apr-2023 14:41:32 Australia/Sydney] Default exception handler: Exception - property_exists(): Argument #1 ($object_or_class) must be of type object|string, null given Debug: 
+Error code: generalexceptionmessage
+* line 17 of /local/moodlealert/classes/task/observer.php: TypeError thrown
+* line 17 of /local/moodlealert/classes/task/observer.php: call to property_exists()
+* line ? of unknownfile: call to local_moodlealert\task\observer::user_updated()
+* line 155 of /lib/classes/event/manager.php: call to call_user_func()
+* line 75 of /lib/classes/event/manager.php: call to core\event\manager::process_buffers()
+* line 834 of /lib/classes/event/base.php: call to core\event\manager::dispatch()
+* line 285 of /user/editadvanced.php: call to core\event\base->trigger()
+
+[18-Apr-2023 14:43:01 Australia/Sydney] PHP Warning:  Trying to access array offset on value of type null in /home/gsesdev/public_html/local/moodlealert/classes/task/observer.php on line 17
+[18-Apr-2023 14:43:01 Australia/Sydney] Default exception handler: Exception - property_exists(): Argument #1 ($object_or_class) must be of type object|string, null given Debug: 
+Error code: generalexceptionmessage
+* line 17 of /local/moodlealert/classes/task/observer.php: TypeError thrown
+* line 17 of /local/moodlealert/classes/task/observer.php: call to property_exists()
+* line ? of unknownfile: call to local_moodlealert\task\observer::user_updated()
+* line 155 of /lib/classes/event/manager.php: call to call_user_func()
+* line 75 of /lib/classes/event/manager.php: call to core\event\manager::process_buffers()
+* line 834 of /lib/classes/event/base.php: call to core\event\manager::dispatch()
+* line 285 of /user/editadvanced.php: call to core\event\base->trigger()
+
+[18-Apr-2023 14:45:55 Australia/Sydney] first, last or email was updated
+[18-Apr-2023 14:46:44 Australia/Sydney] first, last or email was updated
+[18-Apr-2023 14:49:39 Australia/Sydney] Default exception handler: Exception - Call to undefined method core\event\user_updated::get_old_data() Debug: 
+Error code: generalexceptionmessage
+* line 15 of /local/moodlealert/classes/task/observer.php: Error thrown
+* line ? of unknownfile: call to local_moodlealert\task\observer::user_updated()
+* line 155 of /lib/classes/event/manager.php: call to call_user_func()
+* line 75 of /lib/classes/event/manager.php: call to core\event\manager::process_buffers()
+* line 834 of /lib/classes/event/base.php: call to core\event\manager::dispatch()
+* line 285 of /user/editadvanced.php: call to core\event\base->trigger()
+

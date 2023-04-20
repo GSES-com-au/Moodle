@@ -24,6 +24,15 @@ $PAGE->set_context(context_system::instance());
 
 require_login();
 
+if (!has_capability('local/studentmanager:admin', context_system::instance()))
+{
+    echo $OUTPUT->header();
+    echo "<h3>You do not have permission to view this page.</h3>";
+    echo $OUTPUT->footer();
+    exit;
+}
+
+
 $strpagetitle = get_string('studentmanager', 'local_studentmanager');
 $strpageheading = get_string('rates', 'local_studentmanager');
 
@@ -41,6 +50,14 @@ $results->data = array_values($rates);
 
 echo $OUTPUT->header();
 
-echo $OUTPUT->render_from_template('local_studentmanager/rates', $results);
+//hide new rate button if database is not empty
+$hide = $DB->get_record('local_enrolment_rates', ['id'=>'1']);
+if ($hide) {
+    echo $OUTPUT->render_from_template('local_studentmanager/rates2', $results);
+} else {
+    echo $OUTPUT->render_from_template('local_studentmanager/rates', $results);
+}
+
+
 
 echo $OUTPUT->footer();

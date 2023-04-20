@@ -1,0 +1,323 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Course Extension</title>
+  </head>
+
+  <body>
+    <div class="staticpage-wrapper container">
+      <div class="staticpage-content">
+        <div class="contact-wrapper">
+          <div class="contact-intro mb-5"></div>
+          <div class="contact-form-box rounded p-lg-5 mb-5">
+            <form
+              id="contact-form"
+              class="contact-form"
+              action="../courseextension/index.php"
+              method="post"
+            >
+              <h2 class="text-center mb-3">Course Extension</h2>
+              <p></p>
+              <p>
+                Please note, we only offer course extensions to our
+                <b>accreditation courses</b>. If you have any questions, please don't hesitate to contact us through one of the following methods below:
+              </p>
+              <p></p>
+              <ul>
+                <li>
+                  <strong>Live chat:</strong>&nbsp;Available via the chat symbol
+                  in the bottom right corner, typically 12pm-7pm AEST Mon-Fri.
+                </li>
+                <li><strong>Email:&nbsp;</strong>tutor@gses.com.au</li>
+                <li><strong>SMS:</strong>&nbsp;+61 429 057 096</li>
+                <li>
+                  <strong>Phone:</strong>&nbsp;+61 2 9024 5312 (9am-5pm AEST
+                  Mon-Fri)<br />
+                </li>
+              </ul>
+              <p></p>
+              <h3>Information about extensions</h3>
+              <p></p>
+              <p>
+                If you require a course extension, an administration fee of
+                <b>$137.50 per month</b> of extension purchased will be incurred to
+                extend the course. Extensions begin from the previous date of
+                expiry, not the date of payment. Please note the maximum
+                extension permitted is six (6) months from the original date of
+                expiry as per the course policies. If you would like to proceed,
+                fill out the below details to proceed with the payment, you can
+                specify the desired number of months in the quantity field.
+              </p>
+              <p>
+                We will send you an email confirmation once this has been
+                processed.
+              </p>
+              <div class="form-row">
+                <div class="form-group col-12 col-xl-6">
+                  <label for="firstname"><b>First name</b></label>
+                  <input disabled
+                    type="text"
+                    class="form-control"
+                    id="firstname"
+                    name="firstname"
+                    value = "{{{firstname}}}"
+                  />
+                </div>
+                <div class="form-group col-12 col-xl-6">
+                  <label for="lastname"><b>Last name</b></label>
+                  <input disabled
+                    type="text"
+                    class="form-control"
+                    id="lastname"
+                    name="lastname"
+                    value = "{{{lastname}}}"
+                  />
+                </div>
+                <div class="form-group col-12 col-xl-6">
+                  <label for="email"><b>Email</b></label>
+                  <input disabled
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    value = "{{{email}}}"
+                  />
+                </div>
+                <div class="form-group col-12 col-xl-6">
+                  <label for="course"><b>Course<span class="course"> *</span></b></label>
+                  <select name="course" id="course" class="form-control" onchange = "updateexpiration(this.value)">
+                    <option disabled selected value> -- select an option --</option>
+                    {{#usercourseprofile}}
+                        <option value="{{{id}}}" data-timeend="{{{timeend}}}" data-maxexpiration="{{{maximumexpiration}}}">{{{fullname}}}</option>
+                    {{/usercourseprofile}}
+                  </select>
+                </div>
+                <div class="form-group col-12 col-xl-6">
+                  <label for="expiration"><b>Expiration Date</b></label>
+                  <input disabled
+                    type="text"
+                    class="form-control"
+                    id="expiration"
+                    name="expiration"
+                    value = ""
+                  />
+                </div>  
+                <div class="form-group col-12 col-xl-6">
+                  <label for="maxexpiration"><b>Maximum Permissible Expiration Date</b></label>
+                  <input disabled
+                    type="text"
+                    class="form-control"
+                    id="maxexpiration"
+                    name="maxexpiration"
+                    value = ""
+                  />
+                </div>
+                <div class="form-group col-12 col-xl-6">
+                  <label for="reason"><b>Reason<span class="course"> *</span></b></label>
+                  <select name="reason" id="reason" class="form-control" onchange = "additionaltext(this.value)">
+                      <option disabled selected value> -- select an option --</option>
+                        {{#excuse}}
+                              <option value="{{{excuse}}}">{{{excuse}}}</option>
+                        {{/excuse}}
+                    </select>
+                </div>
+                <div class="form-group col-12 col-xl-6">
+                  <label for="quantity"><b>Quantity<span class="course"> *</span></b></label>
+                  <select name="quantity" id="quantity" class="form-control" disabled require>
+                    </select>
+                </div>
+                <div class="form-group col-12 col-xl-6">
+                  <label for="newexpiration"><b>New Expiration Date</b></label>
+                  <input disabled
+                    type="text"
+                    class="form-control"
+                    id="newexpiration"
+                    name="newexpiration"
+                    value = ""
+                  />
+                </div>
+
+                <div class="form-group col-12 col-xl-6">
+                  <input
+                    disabled
+                    type="text"
+                    style="display:none;"
+                  />
+                </div>
+                <div id ="reasontext" style="display:none">
+                <p>If sickness or illness has prevented you from completing a course for a prolonged period of time please send us an email <b>tutor@gses.com.au </b>. 
+                This exception only applies in special circumstances and is assessed on a case by case basis. 
+                You will need to provide a doctors certificate and an acceptable reason for failing to completing the course within the given timeframe. </p>
+                </div>
+                <div class="form-group col-12 col-xl-6 proceedbutton">
+                  <input
+                    onclick="if(validateForm()) {
+                      updateurl();
+                      }"
+                    type="button"
+                    name="proceed"
+                    id="submit"
+                    value="Proceed"
+                    class="btn btn-block btn-primary py-2"
+                  >
+                  </div>
+                  <div class="form-group col-12 col-xl-6 cancelbutton">
+                  <input
+                    onclick="window.location.href='https://gsesdev.com/my/'"
+                    type="button"
+                    name="cancel"
+                    id="cancel"
+                    value="Cancel"
+                    class="btn btn-block btn-primary py-2"
+                    >
+                </div>
+                <input type="hidden" id="sesskey" name="sesskey" value="" />
+                <script>
+                  document.getElementById("sesskey").value = M.cfg.sesskey;
+                  //Button listener code that triggers post request to wordpress
+                    function updateurl(courseid) {
+                    // Get the selected course ID and update the URL string with it
+                    var url = 'https://staging-gsesaustralia.kinsta.cloud/product/course-extension-1-month/';
+
+                    // Get the other form fields and add their values to the URL string as well
+                    var courseid = document.getElementById('course').value;
+                    var reason = document.getElementById('reason').value;
+                    var email = document.getElementById('email').value;
+                    var lastname = document.getElementById('lastname').value;
+                    var firstname = document.getElementById('firstname').value;
+                    var coursename = document.getElementById('course').options[document.getElementById('course').selectedIndex].text;
+                    var quantity = document.getElementById('quantity').value;
+                    url +='?courseid_extension=' + encodeURIComponent(courseid) +
+                          '&student_email_extension=' + encodeURIComponent(email) +
+                          '&reason_extension=' + encodeURIComponent(reason) +
+                          '&student_last_name_extension=' + encodeURIComponent(lastname) +
+                          '&student_first_name_extension=' + encodeURIComponent(firstname) +
+                          '&course_name_extension=' + encodeURIComponent(coursename) +
+                          '&quantity=' + quantity;
+
+                    // Open the new URL in a new window
+                    window.open(url, '_blank');
+                  }
+                    //Checks if they have selected a dropdown menu choice
+                    function validateForm() {
+                      // Replace these with the IDs or names of the required form fields
+                      var requiredFields = ["course", "reason"];
+
+                      for (var i = 0; i < requiredFields.length; i++) {
+                        var field = document.getElementById(requiredFields[i]);
+
+                        if (!field.value) {
+                          alert("Please fill out all required fields."); // Replace this with your own error message
+                          return false;
+                        }
+                      }
+
+                      return true;
+                    }
+
+                    function updateexpiration() {
+                        var selectedIndex = document.getElementById("course").selectedIndex;
+                        var option = document.getElementById("course").options;
+                        var selectedOption = option[selectedIndex];
+
+                        var exp = selectedOption.dataset.timeend;
+                        expiration = convertEpochToDate(exp) + '';
+                        document.getElementById("expiration").value = expiration;
+                        
+                        
+                        var maxexp = selectedOption.dataset.maxexpiration;
+                        maxExpiration = convertEpochToDate(maxexp) + '';
+                        document.getElementById("maxexpiration").value = maxExpiration;
+
+                        limitQuantity(expiration, maxExpiration);
+                        document.getElementById("quantity").removeAttribute("disabled");
+
+                    }
+                      function limitQuantity(expiration, maxExpiration) {
+                        var date1 = expiration;
+                        var date2 = maxExpiration;               
+                        dateParts1 = date1.split("/");
+                        dateParts2 = date2.split("/");
+                        // Create new date object using day, month, and year
+                        date1 = new Date(dateParts1[2], dateParts1[1] - 1, dateParts1[0]);
+                        date2 = new Date(dateParts2[2], dateParts2[1] - 1, dateParts2[0]);
+                        
+                        var quantity = document.getElementById("quantity");
+                        var months = getMonthDifference(date1, date2);
+
+                        // Remove all options from the quantity dropdown
+                        while (quantity.options.length > 0) {
+                          quantity.remove(0);
+                        }
+                          // Add options to the quantity dropdown
+                          for (var i = 1; i <= months; i++) {
+                            var option = document.createElement("option");
+                            option.value = i;
+                            option.text = i;
+                            quantity.add(option);
+                          }
+                        }
+                    document.getElementById("course").addEventListener("change", function() {
+                    var expiration = document.getElementById("expiration").value; 
+                    newexpiration(expiration)
+                    });
+
+                  document.getElementById("quantity").addEventListener("change", function() {
+                    var expiration = document.getElementById("expiration").value; 
+                    newexpiration(expiration)
+                    });
+
+                    function newexpiration(expiration){
+                      var selectedQuantity = document.getElementById("quantity").value;
+                      var expirationParts = expiration.split("/");
+                      var expirationDate = new Date(expirationParts[2], expirationParts[1] - 1, expirationParts[0]);
+                      let newDate = new Date(expirationDate.getTime());
+
+                      newDate.setMonth(newDate.getMonth() + parseInt(selectedQuantity));
+
+                      let day = newDate.getDate().toString().padStart(2, "0");
+                      let month = (newDate.getMonth() + 1).toString().padStart(2, "0");
+                      let year = newDate.getFullYear();
+                      let formattedDate = `${day}/${month}/${year}`;
+                      console.log(expiration);
+                      console.log(expirationDate);
+                      console.log(selectedQuantity);
+                      console.log(formattedDate);
+
+                      document.getElementById("newexpiration").value = formattedDate;
+                  }
+
+
+                    function getMonthDifference(date1, date2) {
+                      return (
+                        (date2.getFullYear() - date1.getFullYear()) * 12 +
+                        (date2.getMonth() - date1.getMonth())
+                      );
+                    }
+
+                    function convertEpochToDate(epoch) {
+                      var date = new Date(epoch * 1000);
+                      var day = date.getDate().toString().padStart(2, '0');
+                      var month = (date.getMonth() + 1).toString().padStart(2, '0');
+                      var year = date.getFullYear();
+                      return day + '/' + month + '/' + year;
+                    }
+                    document.getElementById("course").addEventListener("change", updateexpiration);
+                    
+                    var select = document.getElementById("reason");
+                    select.onchange = function() {
+                      if (select.value === "Sickness or illness") {
+                        document.getElementById("reasontext").style.display = "block";
+                      } else {
+                        document.getElementById("reasontext").style.display = "none";
+                      }
+                    }
+                </script>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -13,7 +13,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 //$plugin->version  = yyyymmddxx;
-$plugin->version = 2022120204;
+$plugin->version = 2022120213;
 $plugin->requires = 2022041905.01;   
 $plugin->component = 'local_studentmanager';
 

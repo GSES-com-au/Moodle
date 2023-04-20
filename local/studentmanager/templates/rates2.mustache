@@ -1,0 +1,23 @@
+<div class="card-body"><a href="/local/studentmanager/index.php" class="btn btn-secondary float-right">Student Manager</a><br></div>
+<div class="card-body">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th class="text-center">Enrolment Rate ($/Enrolment)</th>
+        <th class="text-center">Flat Quarterly Fee ($/Year)</th>
+        <th class="text-center">Edit</th>
+        
+      </tr>
+    </thead>
+    {{#data}}
+      <tr>
+        <td class="text-center">{{{enrolmentrate}}}</td>
+        <td class="text-center">{{flatcost}}</td>
+      <td class="text-center"><a href="/local/studentmanager/ratesform.php?id={{id}}"><i class="fa fa-edit"></i></td>
+      </tr>
+    {{/data}}
+  </table>
+  {{^data}}
+  <div class="card-body"><p>There are no results.</p></div>
+    {{/data}}
+</div>

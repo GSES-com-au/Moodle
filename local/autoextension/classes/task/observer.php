@@ -51,7 +51,7 @@ class observer //extends \core\task\scheduled_task                        //exte
             }
         }
         else{
-                if (str_contains($assignname, "Design Task Submission")|| str_contains($assignname, "Preliminary Load Assessment Submission")|| strpos($assignname, "Site Plan and Electrical Schematic")) {
+                if (str_contains($assignname, "Design Task Submission")|| str_contains($assignname, "Preliminary Load Assessment Submission")|| str_contains($assignname, "Site Plan and Electrical Schematic")) {
                     
                     $user = $event->relateduserid; 
                 
@@ -72,10 +72,31 @@ class observer //extends \core\task\scheduled_task                        //exte
 
 
 
+
                     //Checks if course is past expiration date or there is less than 2 weeks until course expiration ~ uses enrol plugin
                     if (time() > $expiration || $extension > $expiration) {
                         $enrolplugin = enrol_get_plugin($instance->enrol);
                         $enrolplugin->update_user_enrol($instance, $user,'', NULL,$extension, NULL);
+                                            //---------------------------------------------EMAIL TEMPLATE---------------------------------------------
+                    $conditions = ['id' => $user];
+                    $table = 'user';            
+                    $user_object = $DB->get_record($table, $conditions, $fields='*', $strictness=IGNORE_MISSING);
+                    $emailuser = new \stdClass();
+                    $emailuser->email = $user_object->email;
+                    $emailuser->firstname = $user_object->firstname;
+                    $emailuser->lastname = $user_object->lastname;
+                    $emailuser->maildisplay = $user_object->maildisplay;
+                    $emailuser->mailformat = 1;
+                    $emailuser->id = $user_object->id;
+                    $emailuser->firstnamephonetic = $user_object->firstnamephonetic;
+                    $emailuser->lastnamephonetic = $user_object->lastnamephonetic;
+                    $emailuser->middlename = $user_object->middlename;
+                    $emailuser->alternatename = $user_object->alternatename;
+                    $first = $emailuser->firstname;
+                    $last = $emailuser->lastname;
+                    $messageHtml = get_string('emailmessage', 'local_autoextension');
+                    $subject = "GSES Design Task";
+                    email_to_user($emailuser, '',$subject, '',$messageHtml, '', '', false);
 
                     }
                 }

@@ -1,0 +1,5 @@
+[12-Apr-2023 02:36:54 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/gsesdev/public_html/local/courseextension/templates/update-product.php on line 43
+[12-Apr-2023 02:58:43 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function add_query_arg() in /home/gsesdev/public_html/local/courseextension/templates/update-product.php:13
+Stack trace:
+#0 {main}
+  thrown in /home/gsesdev/public_html/local/courseextension/templates/update-product.php on line 13
