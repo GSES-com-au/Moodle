@@ -1,5 +1,7 @@
-# sundayd-moodle-event-listener
-This is a local Moodle plug-in that observes events occuring inside Moodle.
-To run it on your Moodle site, place the test folder in "local" folder by going to your Moodle directory and navigating as follows; server > moodle > local. Inside the “local” folder is where all local plug-ins are created.
+This plugin uses the courseid provided by the 'auto-enrol' plugin on wordpress.
 
-Copying this plugin to production requires a few changes namely.....
+Summary: This plugin grabs the course id of the user enrolment being updated or created and sends the expiration details to active campaign.
+
+Reasons for errors:
+
+- Courseid doesn't match the active campaign course id fields, this could be due to auto-enrol failing or there being not enough fields for the courseid to placed. This means that the user must be enrolled in at least 3 courses all within 18 months of their respective start dates.

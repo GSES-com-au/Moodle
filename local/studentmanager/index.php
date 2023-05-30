@@ -16,22 +16,6 @@ if (!has_capability('local/studentmanager:admin', context_system::instance()))
     exit;
 }
 
-//grab url parameters
-$start_date = optional_param('startdate', '', PARAM_TEXT);
-$end_date = optional_param('enddate', '', PARAM_TEXT);
-$course_filter = optional_param('course', '', PARAM_TEXT);
-
-$course = $DB->get_records('course', $conditions = [], $sort='', $fields='id,fullname', $limitfrom=0, $limitnum=0); 
-
-$course = (array) $course;
-
-$obj = new stdClass();
-$obj->startdate = (string)$start_date;
-$obj->enddate = (string)$end_date;
-$obj->data = array_values($course);
-//$obj->data = array_values($course_list);
-//$obj->monthname = date('F', strtotime($year."-".$month)); converting time to str
-
 //grab page title from language
 $strpagetitle = get_string('studentmanager', 'local_studentmanager'); 
 $strpageheading = get_string('studentmanager', 'local_studentmanager'); 
@@ -39,6 +23,20 @@ $strpageheading = get_string('studentmanager', 'local_studentmanager');
 //title as page
 $PAGE->set_title($strpagetitle);
 $PAGE->set_heading($strpageheading);
+
+//  starting from this section copy pasted  into download.php 
+//grab url parameters
+$start_date = optional_param('startdate', '', PARAM_TEXT);
+$end_date = optional_param('enddate', '', PARAM_TEXT);
+$course_filter = optional_param('course', '', PARAM_TEXT);
+
+$course = $DB->get_records('course', $conditions = [], $sort='', $fields='id,fullname', $limitfrom=0, $limitnum=0); 
+$course = (array) $course;
+
+$obj = new stdClass();
+$obj->startdate = (string)$start_date;
+$obj->enddate = (string)$end_date;
+$obj->data = array_values($course);
 
 $results = new stdClass();
 $resultsbot = new stdClass();
@@ -77,7 +75,6 @@ if (!empty($start_date)) {
     
     //get cost per student
     $cost = $DB->get_record('local_enrolment_rates', ['id'=>'1']);
-    
     $totalcost = 0;
     
     //apply course filter if not all courses was selected
@@ -101,11 +98,12 @@ if (!empty($start_date)) {
         #$courseidlist[$key] = $DB->get_record('enrol', ['id'=>$value->enrolid], 'courseid'); original
        
         $coursename_object = $DB->get_record('course',['id'=>$courseidlist[$key]->courseid], 'fullname');
-        $startdate_object = $DB->get_record('user_enrolments',['id'=>$value->userid],'timecreated');
+        #$startdate_object = $DB->get_record('user_enrolments',['id'=>$value->userid],'timecreated');
+        $startdate_object = $DB->get_record('user_enrolments',['enrolid'=>$value->enrolid, 'userid'=>$value->userid],'timecreated');
         $enrolments[$key]->coursename = $coursename_object->fullname;
         error_log(print_r($startdate_object,true));
-        #$enrolments[$key]->startdate = date("Y-m-d", $startdate_object->timecreated);
-        $enrolments[$key]->startdate = "2222-05-01";
+        $enrolments[$key]->startdate = date("d-m-Y", $startdate_object->timecreated);
+        #$enrolments[$key]->startdate = "2222-05-01";
         $enrolments[$key]->value = $cost->enrolmentrate;
         $totalcost += 1;
     }
@@ -117,11 +115,17 @@ if (!empty($start_date)) {
     $totalenrolcost = $totalcost*$cost->enrolmentrate;
     $totalenrolcost = number_format((float)$totalenrolcost, 2, '.', '');
     
+    //time difference between start and end_date in days
+    $startDate_datetime = new DateTime($start_date);
+    $endDate_date_time = new DateTime($end_date);
+    $interval = $startDate_datetime->diff($endDate_date_time);
+    $no_days = (int)$interval->days;
 
-    $no_days = date("d",strtotime($end_date) - strtotime($start_date));
-    $no_days = (int)$no_days;
+
+    // $no_days = date("d",strtotime($end_date) - strtotime($start_date));
+    // $no_days = (int)$no_days;
     $cost_per_day = $flatcost / 365;
-    $cost_per_day = number_format((float)$cost_per_day, 2, '.', '');
+    $cost_per_day = number_format((float)$cost_per_day, 4, '.', '');
     $flatcost_for_period = number_format((float)$no_days * $cost_per_day,2,'.', '');;
 
     $totalcost = $totalenrolcost + $flatcost_for_period;
@@ -129,7 +133,7 @@ if (!empty($start_date)) {
     $cost_object = $DB->get_record('local_enrolment_rates', ['id'=>'1'], 'enrolmentrate');
     $cost_object->flatcost_for_period = $flatcost_for_period;
     $cost_object->bill_period = $no_days;
-    $cost_object->cost_per_day = $no_days;
+    $cost_object->cost_per_day = $cost_per_day;
     $cost_object->totalenrolcost = $totalenrolcost;
     $cost_object->totalcost = $totalcost;
     $cost_object->enrolmentnumber = $enrolmentamount;
@@ -141,7 +145,7 @@ if (!empty($start_date)) {
         $resultsbot->data = $cost_object;
     }
 }
-
+//from this section and before copy pasted  into download
 
 
 echo '<br/>';
@@ -170,7 +174,7 @@ if (empty($start_date)) {
 } else {
     echo $OUTPUT->render_from_template('local_studentmanager/searchresults', $results); //[]
     echo $OUTPUT->render_from_template('local_studentmanager/searchresultsbot', $resultsbot);
-    echo $OUTPUT->download_dataformat_selector('Download', 'download.php', 'dataformat', array('startdate' => $start_date, 'enddate' => $end_date));
+    echo $OUTPUT->download_dataformat_selector('Download', 'download.php', 'dataformat', array('startdate' => $start_date, 'enddate' => $end_date, 'course' => $course_filter));
 }
 
 echo $OUTPUT->footer();

@@ -50,7 +50,10 @@
               </p>
               <p>
                 We will send you an email confirmation once this has been
-                processed.
+                processed. 
+              </p>
+              <p>
+              Please note the course will expire at <b>midnight (11:59pm) at the expiration date</b>, so if your course expiration date is 11/03/2024 then you would have up until 11:59pm 11/03/2024 to complete your course.
               </p>
               <div class="form-row">
                 <div class="form-group col-12 col-xl-6">
@@ -87,9 +90,9 @@
                   <label for="course"><b>Course<span class="course"> *</span></b></label>
                   <select name="course" id="course" class="form-control" onchange = "updateexpiration(this.value)">
                     <option disabled selected value> -- select an option --</option>
-                    {{#usercourseprofile}}
-                        <option value="{{{id}}}" data-timeend="{{{timeend}}}" data-maxexpiration="{{{maximumexpiration}}}">{{{fullname}}}</option>
-                    {{/usercourseprofile}}
+                    {{#results}}
+                      <option value="{{{course_id}}}" data-timestart="{{timestart}}" data-timeend="{{timeend}}" data-maxexpiration="{{maximumexpiration}}">{{{fullname}}}</option>
+                    {{/results}}
                   </select>
                 </div>
                 <div class="form-group col-12 col-xl-6">
@@ -172,13 +175,15 @@
                     >
                 </div>
                 <input type="hidden" id="sesskey" name="sesskey" value="" />
+                                <div id ="contactus" style="display:none;color:red;">
+                <p>It looks like you have reached the maximum permissible expiration date of your course, please contact us at <b>tutor@gses.com.au</b> to discuss the best pathway moving forward</p>
+                </div>
                 <script>
                   document.getElementById("sesskey").value = M.cfg.sesskey;
                   //Button listener code that triggers post request to wordpress
-                    function updateurl(courseid) {
+                  function updateurl() {
                     // Get the selected course ID and update the URL string with it
                     var url = 'https://staging-gsesaustralia.kinsta.cloud/product/course-extension-1-month/';
-
                     // Get the other form fields and add their values to the URL string as well
                     var courseid = document.getElementById('course').value;
                     var reason = document.getElementById('reason').value;
@@ -187,17 +192,38 @@
                     var firstname = document.getElementById('firstname').value;
                     var coursename = document.getElementById('course').options[document.getElementById('course').selectedIndex].text;
                     var quantity = document.getElementById('quantity').value;
-                    url +='?courseid_extension=' + encodeURIComponent(courseid) +
-                          '&student_email_extension=' + encodeURIComponent(email) +
-                          '&reason_extension=' + encodeURIComponent(reason) +
-                          '&student_last_name_extension=' + encodeURIComponent(lastname) +
-                          '&student_first_name_extension=' + encodeURIComponent(firstname) +
-                          '&course_name_extension=' + encodeURIComponent(coursename) +
-                          '&quantity=' + quantity;
+                    var newexpiration = document.getElementById('newexpiration').value;
+                    //encoded in base64
+                    url +='?courseid_extension=' + btoa(courseid) +
+                    '&student_email_extension=' + btoa(email) +
+                    '&reason_extension=' + btoa(reason) +
+                    '&student_last_name_extension=' + btoa(lastname) +
+                    '&student_first_name_extension=' + btoa(firstname) +
+                    '&course_name_extension=' + btoa(coursename) +
+                    '&quantity=' + btoa(quantity) +
+                    '&newexpiration=' + btoa(newexpiration) +
+                    '&timestart=' + btoa(get_start_date()) +
+                    '&maxexpiration=' + btoa(get_max_date());
 
                     // Open the new URL in a new window
                     window.open(url, '_blank');
                   }
+                  function get_start_date() {
+                    var selectedIndex = document.getElementById("course").selectedIndex;
+                    var option = document.getElementById("course").options;
+                    var selectedOption = option[selectedIndex];
+                    var starttime = selectedOption.dataset.timestart;
+                    var timestart = convertEpochToDate(starttime) + '';
+                    return timestart;
+                    }
+                  function get_max_date() {
+                        var selectedIndex = document.getElementById("course").selectedIndex;
+                        var option = document.getElementById("course").options;
+                        var selectedOption = option[selectedIndex];
+                        var maxexp = selectedOption.dataset.maxexpiration;
+                        var maxexpiration = convertEpochToDate(maxexp) + '';
+                    return maxexpiration;
+                    }
                     //Checks if they have selected a dropdown menu choice
                     function validateForm() {
                       // Replace these with the IDs or names of the required form fields
@@ -214,23 +240,22 @@
 
                       return true;
                     }
-
+                  
+                    
                     function updateexpiration() {
                         var selectedIndex = document.getElementById("course").selectedIndex;
                         var option = document.getElementById("course").options;
                         var selectedOption = option[selectedIndex];
 
-                        var exp = selectedOption.dataset.timeend;
-                        expiration = convertEpochToDate(exp) + '';
-                        document.getElementById("expiration").value = expiration;
-                        
-                        
                         var maxexp = selectedOption.dataset.maxexpiration;
-                        maxExpiration = convertEpochToDate(maxexp) + '';
-                        document.getElementById("maxexpiration").value = maxExpiration;
+                        var maxexpiration = convertEpochToDate(maxexp) + '';
 
-                        limitQuantity(expiration, maxExpiration);
-                        document.getElementById("quantity").removeAttribute("disabled");
+                        var exp = selectedOption.dataset.timeend;
+                        var expiration = convertEpochToDate(exp) + '';
+
+                        document.getElementById("expiration").value = expiration;
+                        document.getElementById("maxexpiration").value = maxexpiration;
+                        limitQuantity(expiration, maxexpiration);
 
                     }
                       function limitQuantity(expiration, maxExpiration) {
@@ -250,11 +275,30 @@
                           quantity.remove(0);
                         }
                           // Add options to the quantity dropdown
-                          for (var i = 1; i <= months; i++) {
+                          if (months == 0) {
                             var option = document.createElement("option");
-                            option.value = i;
-                            option.text = i;
+                            option.value = 0;
+                            option.text = 'Not eligible for an extension';
                             quantity.add(option);
+                            document.getElementById("quantity").setAttribute("disabled",true);
+                            document.getElementById("submit").setAttribute("disabled",true);
+                          document.getElementById("contactus").style.display = "block";
+                          }else{
+                            for (var i = 1; i <= months; i++) {
+                              if (i > 6) {
+                                break;
+                              }else{
+                              var option = document.createElement("option");
+                              option.value = i;
+                              option.text = i;
+                              quantity.add(option);
+                              document.getElementById("quantity").removeAttribute("disabled");
+                              document.getElementById("submit").removeAttribute("disabled");
+                              document.getElementById("contactus").style.display = "none";
+                            }
+
+
+                            }
                           }
                         }
                     document.getElementById("course").addEventListener("change", function() {
@@ -279,10 +323,7 @@
                       let month = (newDate.getMonth() + 1).toString().padStart(2, "0");
                       let year = newDate.getFullYear();
                       let formattedDate = `${day}/${month}/${year}`;
-                      console.log(expiration);
-                      console.log(expirationDate);
-                      console.log(selectedQuantity);
-                      console.log(formattedDate);
+
 
                       document.getElementById("newexpiration").value = formattedDate;
                   }

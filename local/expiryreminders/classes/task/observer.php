@@ -11,11 +11,13 @@ class observer
       $courseid = $event->courseid;
       $course = get_course($courseid);
       $coursename = $course->fullname;
+      //Change tutorid when moving to production
+      global $tutoruserid;
+      $tutoruserid = 17;
 
       if 
       (str_contains($coursename, "Grid Connected PV Systems")
       || str_contains($coursename, "Battery Storage Systems for Grid-Connected PV Systems")
-      || str_contains($coursename, "Stand Alone Power Systems")
       || str_contains($coursename, "Stand Alone Power Systems")
       || str_contains($coursename, "Electrical Basics Examination")) 
       { 
@@ -28,10 +30,13 @@ class observer
       $courseid = $event->courseid;
       $course = get_course($courseid);
       $coursename = $course->fullname;
+      //Change tutorid when moving to production
+      global $tutoruserid;
+      $tutoruserid = 17;
+
       if 
       (str_contains($coursename, "Grid Connected PV Systems")
       || str_contains($coursename, "Battery Storage Systems for Grid-Connected PV Systems")
-      || str_contains($coursename, "Stand Alone Power Systems")
       || str_contains($coursename, "Stand Alone Power Systems")
       || str_contains($coursename, "Electrical Basics Examination")) 
       { 
@@ -41,8 +46,8 @@ class observer
 
     private static function handle_enrolment_event($event, $courseid) {
       require 'access.php';
-      global $DB;
-      // var_dump($event);
+      global $DB, $tutoruserid, $fstartdate, $fenddate, $contact_id, $student_email;
+
       // error_log(var_export($event, true));
       $user = $event->relateduserid; 
       //finding studentemail
@@ -66,7 +71,6 @@ class observer
       //---------------------------------------------------------------------------------------------------
 
 
-      
       $api_url = 'https://gses.api-us1.com/api/3/contacts';
       $contact_id = '';
       
@@ -92,23 +96,16 @@ class observer
 
       //error handling
       if ($err) {
-      error_log("cURL Error #:" . $err);
-      error_log("Student id not found");
+        error_log("cURL Error #:" . $err);
+        error_log("Student id not found");
       } 
       else {
-      $data = json_decode($response, true);
-      //finds the contactid
-      if (count($data['contacts']) > 0) {
+        $data = json_decode($response, true);
+      
+      //Ensures the contact exists
+      if (!empty($data['contacts'])) {
           $contact_id = $data['contacts'][0]['id'];
-
-          //Active Campaign Course_ids
-          $course_id_1 = 57;
-          $course_id_2 = 58;
-          $course_id_3 = 59;
-          $course_id_array = array($course_id_1, $course_id_2, $course_id_3);
-          
-          //Loops through course_ids until the id matches the selected courseid the enrolment is updated/created for
-          foreach ($course_id_array as $id) {
+ 
 
             //Gets an array of fieldValues for all customfield ids of the specified $contact_id
             $curl = curl_init();
@@ -133,111 +130,272 @@ class observer
               echo "cURL Error #:" . $err;
               error_log("There was a problem with the GET request for the field value");
             } else {
-              //Finds the value for $course_id fieldid
-              $fieldValues = json_decode($response, true)['fieldValues'];
-              foreach ($fieldValues as $fieldValue) {
-                  if ($fieldValue['field'] == $id) {
-                      $value = $fieldValue['value'];
-                      break;
-                  }
-              }
+              //Active Campaign courseid field ids
+              $course_id_1 = 57;
+              $course_id_2 = 58;
+              $course_id_3 = 59;
+              $course_id_array = array($course_id_1, $course_id_2, $course_id_3);
+              
+              //Finds the courseid values for all fields
+              $fieldvalues = json_decode($response, true)['fieldValues'];
+              $hasduplicateid = false;
+              $coursevalues=[];
+              foreach ($fieldvalues as $fieldvalue) {
+                if (in_array($fieldvalue['field'], $course_id_array)) {
+                    $value = $fieldvalue['value'];
+                    if (in_array($value, array_column($coursevalues, 'value'))) {
+                        // Error: Value exists more than once
+                        error_log( "Error: courseid '$value' exists more than once.");
+                        $hasduplicateid = true;
+                        break; // Exit the loop if error occurs
+                    }
+                    $coursevalues[] = array(
+                        'field' => $fieldvalue['field'],
+                        'value' => $value
+                    );
+                }
+            }
             }
 
-            //Field ids required for active campaign API
-            //$COURSE_ENROLMENT_START_DATE_1 = 47
-            //$COURSE_ENROLMENT_END_DATE_1 = 48
-            //$COURSE_ENROLMENT_START_DATE_2 = 50
-            //$COURSE_ENROLMENT_END_DATE_2 = 52
-            //$COURSE_ENROLMENT_START_DATE_3 = 55
-            //$COURSE_ENROLMENT_END_DATE_3 = 56
-
-            //If $courseid matches courseid number on active campaign, update enrolment start and end dates
-            if ($value == $courseid) {
-              //If iteration over a specific fieldid is true then update those enrolment start and end date fields
-              if ($id == 57) {
-                $COURSE_ENROLMENT_START_DATE = 47;
-                $COURSE_ENROLMENT_END_DATE = 48;
-              }
-              elseif ($id == 58) {
-                $COURSE_ENROLMENT_START_DATE = 50;
-                $COURSE_ENROLMENT_END_DATE = 52;
-              }
-              else {
-                $COURSE_ENROLMENT_START_DATE = 55;
-                $COURSE_ENROLMENT_END_DATE = 56;
-              }
-
-                $curl = curl_init();
-
-                //updates the course enrolment start date
-                curl_setopt_array($curl, [
-                  CURLOPT_URL => "https://gses.api-us1.com/api/3/fieldValues",
-                  CURLOPT_RETURNTRANSFER => true,
-                  CURLOPT_ENCODING => "",
-                  CURLOPT_MAXREDIRS => 10,
-                  CURLOPT_TIMEOUT => 30,
-                  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                  CURLOPT_CUSTOMREQUEST => "POST",
-                  CURLOPT_POSTFIELDS => "{\"fieldValue\":{\"contact\":\"$contact_id\",\"field\":\"$COURSE_ENROLMENT_START_DATE\",\"value\":\"$fstartdate\"},\"useDefaults\":false}",
-                  CURLOPT_HTTPHEADER => [
-                    "Api-Token:". $api_token,
-                    "accept: application/json",
-                    "content-type: application/json"
-                  ],
-                ]);
-        
-                $response = curl_exec($curl);
-                $err = curl_error($curl);
-                curl_close($curl);
-        
-                if ($err) {
-                  echo "cURL Error #:" . $err;
-                } else {
-                  echo $response;
-                }
-        
-                $curl = curl_init();
-        
-                //updates the course enrolment end date
-                curl_setopt_array($curl, [
-                  CURLOPT_URL => "https://gses.api-us1.com/api/3/fieldValues",
-                  CURLOPT_RETURNTRANSFER => true,
-                  CURLOPT_ENCODING => "",
-                  CURLOPT_MAXREDIRS => 10,
-                  CURLOPT_TIMEOUT => 30,
-                  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                  CURLOPT_CUSTOMREQUEST => "POST",
-                  CURLOPT_POSTFIELDS => "{\"fieldValue\":{\"contact\":\"$contact_id\",\"field\":\"$COURSE_ENROLMENT_END_DATE\",\"value\":\"$fenddate\"},\"useDefaults\":false}",
-                  CURLOPT_HTTPHEADER => [
-                    "Api-Token:". $api_token,
-                    "accept: application/json",
-                    "content-type: application/json"
-                  ],
-                ]);
-
-                $response = curl_exec($curl);
-                $err = curl_error($curl);
-        
-                curl_close($curl);
-        
-                if ($err) {
-                  echo "cURL Error #:" . $err;
-                } else {
-                  echo $response;
-                } 
-                break;
-              } elseif ($id == $course_id_3 AND $value !== $courseid ) {
+              if (!$hasduplicateid) {
+                self::checkcoursevalues($coursevalues, $courseid);
+              }else{
                 error_log("
-                The CourseId of $courseid does not match any Active Campaign course ids. Please see user information:
+                ERROR: Duplicate courseids exist for active campaign user below:
                   ActiveCampaign ContactId: $contact_id
                   Moodle UserId: $user
                   Moodle Email: $student_email
                   Course Expiration Start Date: $fstartdate
                   Course Expiration End Date: $fenddate
                   ");
+                  //Tutor account ID
+                  $conditions = ['id' => $tutoruserid];
+                  $table = 'user';            
+                  $user_object = $DB->get_record($table, $conditions, $fields='*', $strictness=IGNORE_MISSING);
+                  $emailuser = new \stdClass();
+                  $emailuser->email = $user_object->email;
+                  $emailuser->firstname = $user_object->firstname;
+                  $emailuser->lastname = $user_object->lastname;
+                  $emailuser->maildisplay = $user_object->maildisplay;
+                  $emailuser->mailformat = 1;
+                  $emailuser->id = $user_object->id;
+                  $emailuser->firstnamephonetic = $user_object->firstnamephonetic;
+                  $emailuser->lastnamephonetic = $user_object->lastnamephonetic;
+                  $emailuser->middlename = $user_object->middlename;
+                  $emailuser->alternatename = $user_object->alternatename;
+                  $first = $emailuser->firstname;
+                  $last = $emailuser->lastname;
+                    $messageHtml = "
+                    <p><b>ERROR:</b> Duplicate courseids exist for active campaign user below:</p>
+                    <br />
+                    <b>Debugging log</b>
+                    <br />
+                    <p><i>Beep..Boop..Beep..</i>Human Brain Required!:</p>
+                      <ul>
+                      <li>ActiveCampaign ContactID: ". $contact_id . "</li>
+                      <li>Moodle UserID: " . $user . "</li>
+                      <li>Moodle CourseID: " . $courseid . "</li>
+                      <li>Moodle Email: " . $student_email . "</li>
+                      <li>Course Expiration Start Date: " . $fstartdate . "</li>
+                      <li>Course Expiration End Date: " . $fenddate ."</li>
+                      </ul>
+                      <br />
+                    <b>Possible Solutions</b>
+                    <ul>
+                    <li>Check the active campaign contact information and ensure there is a courseid of ".$courseid ." in one of the available slots.</li>
+                    <li>Check if all enrolments are within 18 months of the start date and the contact is enrolled in 3 or more accreditation courses</li>
+                    </ul>
+                      ";
+                    $subject = "Expiry reminder failed";
+                    email_to_user($emailuser, '',$subject, '',$messageHtml, '', '', false);    
               }
+            
+            }else {
+              //error for if student email doesn't exist in Active Campaign
+              error_log("
+              The contact with email of $student_email does not exist in Active Campaign. Please see user information:
+                ActiveCampaign ContactId: $contact_id
+                Moodle UserId: $user
+                Moodle Email: $student_email
+                Course Expiration Start Date: $fstartdate
+                Course Expiration End Date: $fenddate
+                ");
+                //Tutor account ID
+                $conditions = ['id' => $tutoruserid];
+                $table = 'user';            
+                $user_object = $DB->get_record($table, $conditions, $fields='*', $strictness=IGNORE_MISSING);
+                $emailuser = new \stdClass();
+                $emailuser->email = $user_object->email;
+                $emailuser->firstname = $user_object->firstname;
+                $emailuser->lastname = $user_object->lastname;
+                $emailuser->maildisplay = $user_object->maildisplay;
+                $emailuser->mailformat = 1;
+                $emailuser->id = $user_object->id;
+                $emailuser->firstnamephonetic = $user_object->firstnamephonetic;
+                $emailuser->lastnamephonetic = $user_object->lastnamephonetic;
+                $emailuser->middlename = $user_object->middlename;
+                $emailuser->alternatename = $user_object->alternatename;
+                $first = $emailuser->firstname;
+                $last = $emailuser->lastname;
+                  $messageHtml = "
+                  <p>Contact could not be found!</p>
+                  <br />
+                  <b>Debugging log</b>
+                  <br />
+                  </p>The contact with email of " . $student_email . " does not exist in Active Campaign. Please see user information:
+                    <ul>
+                    <li>ActiveCampaign ContactID: ". $contact_id . "</li>
+                    <li>Moodle UserID: " . $user . "</li>
+                    <li>Moodle CourseID: " . $courseid . "</li>
+                    <li>Moodle Email: " . $student_email . "</li>
+                    <li>Course Expiration Start Date: " . $fstartdate . "</li>
+                    <li>Course Expiration End Date: " . $fenddate ."</li>
+                    </ul>
+                    ";
+                  $subject = "Expiry Reminder Failed";
+                  email_to_user($emailuser, '',$subject, '',$messageHtml, '', '', false);
             }
-          }
         }
-  }
+  
+      }
+      //checks which start and end date fields to update based on the courseid value and field id, once found timestart and timeend are sent to Active Campaign
+      private static function checkcoursevalues($coursevalues, $courseid) {
+        global $DB, $tutoruserid, $fstartdate, $fenddate, $contact_id, $api_token, $student_email;
+        $COURSE_ENROLMENT_START_DATE = null;
+        $COURSE_ENROLMENT_END_DATE = null;
+    
+        foreach ($coursevalues as $fieldvalue) {
+            if ($fieldvalue['value'] == $courseid && $fieldvalue['field'] == 57) {
+                //Active Campaign enrolment start and end date field ids
+                $COURSE_ENROLMENT_START_DATE = 47;
+                $COURSE_ENROLMENT_END_DATE = 48;
+                break;
+            }
+            elseif ($fieldvalue['value'] == $courseid && $fieldvalue['field'] == 58) {
+                //Active Campaign enrolment start and end date field ids
+                $COURSE_ENROLMENT_START_DATE = 50;
+                $COURSE_ENROLMENT_END_DATE = 52;
+                break;
+            }
+            elseif ($fieldvalue['value'] == $courseid && $fieldvalue['field'] == 59) {
+                //Active Campaign enrolment start and end date field ids
+                $COURSE_ENROLMENT_START_DATE = 55;
+                $COURSE_ENROLMENT_END_DATE = 56;
+                break;
+            }
+            else {
+              error_log("
+              The CourseId of $courseid does not match any Active Campaign course ids. Please see user information:
+                ActiveCampaign ContactId: $contact_id
+                Moodle UserId: $user
+                Moodle Email: $student_email
+                Course Expiration Start Date: $fstartdate
+                Course Expiration End Date: $fenddate
+                ");
+                //Tutor account ID
+                $conditions = ['id' => $tutoruserid];
+                $table = 'user';            
+                $user_object = $DB->get_record($table, $conditions, $fields='*', $strictness=IGNORE_MISSING);
+                $emailuser = new \stdClass();
+                $emailuser->email = $user_object->email;
+                $emailuser->firstname = $user_object->firstname;
+                $emailuser->lastname = $user_object->lastname;
+                $emailuser->maildisplay = $user_object->maildisplay;
+                $emailuser->mailformat = 1;
+                $emailuser->id = $user_object->id;
+                $emailuser->firstnamephonetic = $user_object->firstnamephonetic;
+                $emailuser->lastnamephonetic = $user_object->lastnamephonetic;
+                $emailuser->middlename = $user_object->middlename;
+                $emailuser->alternatename = $user_object->alternatename;
+                $first = $emailuser->firstname;
+                $last = $emailuser->lastname;
+                  $messageHtml = "
+                  <p>Plugin failed to get student enrolment dates, please see moodle error logs for more information.</p>
+                  <br />
+                  <b>Debugging log</b>
+                  <br />
+                  </p>The CourseId of " . $courseid . " does not match any Active Campaign course ids. Please see user information:
+                    <ul>
+                    <li>ActiveCampaign ContactID: ". $contact_id . "</li>
+                    <li>Moodle UserID: " . $user . "</li>
+                    <li>Moodle CourseID: " . $courseid . "</li>
+                    <li>Moodle Email: " . $student_email . "</li>
+                    <li>Course Expiration Start Date: " . $fstartdate . "</li>
+                    <li>Course Expiration End Date: " . $fenddate ."</li>
+                    </ul>
+                    <br />
+                  <b>Possible Solutions</b>
+                  <ul>
+                  <li>Check the enrolments for courseid: " . $courseid . " to see if this is a re-enrolment</li>
+                  <li>Check if the customer accidentally double ordered the course/li>
+                  <li>Check if the customer is enrolling in Electrical Basics Exam again/li>
+                  <li>Check if the customer is enrolling in design or install version of the course in which they were previously enrolled in/li>
+                  </ul>
+                    ";
+                  $subject = "Expiry reminder failed";
+                  email_to_user($emailuser, '',$subject, '',$messageHtml, '', '', false);                  
+                }
+        }
+
+        error_log('Startdate: ' . $COURSE_ENROLMENT_START_DATE . ' Enddate: ' . $COURSE_ENROLMENT_END_DATE);
+        $curl = curl_init();
+        //updates the course enrolment start date
+        curl_setopt_array($curl, [
+          CURLOPT_URL => "https://gses.api-us1.com/api/3/fieldValues",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => "{\"fieldValue\":{\"contact\":\"$contact_id\",\"field\":\"$COURSE_ENROLMENT_START_DATE\",\"value\":\"$fstartdate\"},\"useDefaults\":false}",
+          CURLOPT_HTTPHEADER => [
+            "Api-Token:". $api_token,
+            "accept: application/json",
+            "content-type: application/json"
+          ],
+        ]);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        curl_close($curl);
+
+        if ($err) {
+          echo "cURL Error #:" . $err;
+        } else {
+          echo $response;
+        }
+
+        $curl = curl_init();
+
+        //updates the course enrolment end date
+        curl_setopt_array($curl, [
+          CURLOPT_URL => "https://gses.api-us1.com/api/3/fieldValues",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 30,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS => "{\"fieldValue\":{\"contact\":\"$contact_id\",\"field\":\"$COURSE_ENROLMENT_END_DATE\",\"value\":\"$fenddate\"},\"useDefaults\":false}",
+          CURLOPT_HTTPHEADER => [
+            "Api-Token:". $api_token,
+            "accept: application/json",
+            "content-type: application/json"
+          ],
+        ]);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+          echo "cURL Error #:" . $err;
+        } else {
+          echo $response;
+        } 
+      }
 }
+
+

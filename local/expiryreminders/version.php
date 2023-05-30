@@ -2,6 +2,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version = 2022041907;
+$plugin->version = 2023050800;
 $plugin->requires = 2022041904.01;
 $plugin->component = 'local_expiryreminders';

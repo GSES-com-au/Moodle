@@ -25,6 +25,7 @@ error_log
 /.htaccess
 /local/expiryreminders/classes/task/access.php
 **/access.php
+**/error.log
 /local/pending/vendor/
 /lib/editor/tinymce/extra/tools/temp/
 /tags

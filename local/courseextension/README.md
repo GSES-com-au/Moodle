@@ -1,2 +1,1 @@
-# sundayd-moodle-event-listener
-Student Extension automation
+Allows students to purchase the course extension from Moodle, communicates with wordpress via url webhook
