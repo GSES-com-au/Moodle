@@ -1,8 +1,47 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. 
+All notable changes to this project will be documented in this file.
 
 Note - All hash comments refer to the issue number. Eg. #169 refers to https://github.com/mdjnelson/moodle-mod_customcert/issues/169.
+
+## [4.0.5] - 2023-06-08
+
+### Fixed
+
+- Fix TCPDF error when viewing an example PDF from the manage templates page (#558).
+- Fix images not displaying on the reposition element page (#562).
+
+### Added
+
+- Added new events (#518).
+  - An event for when an element is created.
+  - An event for when an element is updated.
+  - An event for when an element is deleted.
+  - An event for when a page is created.
+  - An event for when a page is updated.
+  - An event for when a page is deleted.
+  - An event for when a template is created. 
+  - An event for when a template is updated.
+  - An event for when a template is deleted.
+
+## [4.0.4] - 2023-05-30
+
+### Fixed
+
+- Fix course settings error on single activity format (#544).
+- Remove debugging message caused by the user field element listing the Skype field (#478).
+
+## [4.0.3] - 2023-02-07
+
+### Added
+
+- You can now optionally force the language of a certificate (#532).
+
+## [4.0.2] - 2023-01-26
+
+### Fixed
+
+- Fix problem repositioning elements (#500).
 
 ## [4.0.1] - 2022-11-07
 
@@ -29,7 +68,7 @@ Note - All hash comments refer to the issue number. Eg. #169 refers to https://g
 - You can now choose the course short or full name to display (#415).
 - You can now select the alignment for all text elements (#121).
 - Ability to add a relative date (#389).
- 
+
 ## [3.11.1] - 2021-06-13
 
 ### Fixed
@@ -224,15 +263,15 @@ Note - All hash comments refer to the issue number. Eg. #169 refers to https://g
     their certificate. It also allows teachers to view the
     list of issued certificates, with the ability to revoke
     any.
-    
-    This is for the soon-to-be released Moodle Mobile v3.5.0 
+
+    This is for the soon-to-be released Moodle Mobile v3.5.0
     (not to be confused with your Moodle site version) and
     will not work on Mobile versions earlier than this.
-    
+
     If you are running a Moodle site on version 3.4 or below
     you will need to install the local_mobile plugin in order
     for this to work.
-    
+
     If you are running a Moodle site on version 3.0 or below
     then you will need to upgrade.
 ```

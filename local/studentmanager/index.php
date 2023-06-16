@@ -120,6 +120,7 @@ if (!empty($start_date)) {
     $endDate_date_time = new DateTime($end_date);
     $interval = $startDate_datetime->diff($endDate_date_time);
     $no_days = (int)$interval->days;
+    $no_days = $no_days + 1; //ensure period is inclusive date wise
 
 
     // $no_days = date("d",strtotime($end_date) - strtotime($start_date));
@@ -141,7 +142,6 @@ if (!empty($start_date)) {
 
     if ($enrolments) {
         $results->data = array_values($enrolments);
-        //$results->costdata = $test;
         $resultsbot->data = $cost_object;
     }
 }

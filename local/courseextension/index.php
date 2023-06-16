@@ -35,7 +35,7 @@ $results = $DB->get_records_sql($sql, $params);
 foreach ($results as $key => $value) {
     date_default_timezone_set('Australia/Sydney');
     $currenttime = new DateTime('now');
-
+    
     $results[$key]->timeend = strtotime('-1 day', $value->timeend);
     $extension = strtotime('+1 year 6 months', $value->timestart);
     $results[$key]->maximumexpiration = $extension;

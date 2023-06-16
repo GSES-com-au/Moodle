@@ -175,8 +175,11 @@
                     >
                 </div>
                 <input type="hidden" id="sesskey" name="sesskey" value="" />
-                                <div id ="contactus" style="display:none;color:red;">
+                <div id ="contactus" style="display:none;color:red;">
                 <p>It looks like you have reached the maximum permissible expiration date of your course, please contact us at <b>tutor@gses.com.au</b> to discuss the best pathway moving forward</p>
+                </div>
+                <div id ="contactus2" style="display:none;color:red;">
+                <p>It looks like your courses start date or end date haven't been set. Please contact us at <b>tutor@gses.com.au</b> to discuss the best pathway moving forward</p>
                 </div>
                 <script>
                   document.getElementById("sesskey").value = M.cfg.sesskey;
@@ -253,9 +256,28 @@
                         var exp = selectedOption.dataset.timeend;
                         var expiration = convertEpochToDate(exp) + '';
 
-                        document.getElementById("expiration").value = expiration;
-                        document.getElementById("maxexpiration").value = maxexpiration;
-                        limitQuantity(expiration, maxexpiration);
+                        if (expiration == "31/12/1969" || expiration == "01/01/1970"){
+                            document.getElementById("expiration").value = "Not eligible for an extension";
+                            document.getElementById("maxexpiration").value = "Not eligible for an extension";
+                            document.getElementById("newexpiration").value = "";
+                            document.getElementById("contactus2").style.display = "block";
+                            document.getElementById("reason").setAttribute("disabled",true);
+                            document.getElementById("quantity").setAttribute("disabled",true);
+                            document.getElementById("submit").setAttribute("disabled",true);
+
+                        }
+                        else {
+                            document.getElementById("expiration").value = expiration;
+                            document.getElementById("maxexpiration").value = maxexpiration;
+                            document.getElementById("contactus2").style.display = "none";
+                            document.getElementById("submit").removeAttribute("disabled");
+                            document.getElementById("reason").removeAttribute("disabled",true);
+                            document.getElementById("quantity").removeAttribute("disabled",true);
+                            limitQuantity(expiration, maxexpiration);
+
+
+
+                        }
 
                     }
                       function limitQuantity(expiration, maxExpiration) {
@@ -282,7 +304,8 @@
                             quantity.add(option);
                             document.getElementById("quantity").setAttribute("disabled",true);
                             document.getElementById("submit").setAttribute("disabled",true);
-                          document.getElementById("contactus").style.display = "block";
+                            document.getElementById("reason").setAttribute("disabled",true);
+                            document.getElementById("contactus").style.display = "block";
                           }else{
                             for (var i = 1; i <= months; i++) {
                               if (i > 6) {
@@ -294,6 +317,7 @@
                               quantity.add(option);
                               document.getElementById("quantity").removeAttribute("disabled");
                               document.getElementById("submit").removeAttribute("disabled");
+                              document.getElementById("reason").removeAttribute("disabled",true);
                               document.getElementById("contactus").style.display = "none";
                             }
 
@@ -301,6 +325,7 @@
                             }
                           }
                         }
+
                     document.getElementById("course").addEventListener("change", function() {
                     var expiration = document.getElementById("expiration").value; 
                     newexpiration(expiration)
