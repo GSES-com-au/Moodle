@@ -18,12 +18,14 @@
 [._]sw[a-p]
 # Temporary files including undo
 *~
-#
+#GSES Edits
+**/access.php
+**/error.log
+**/error_log
 /.htaccess
-/config.php
-/local/pending/classes/task/access.php
 /local/pending/vendor/
-error_log
+#
+/config.php
 /lib/editor/tinymce/extra/tools/temp/
 /tags
 /TAGS
