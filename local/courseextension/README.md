@@ -1,0 +1,1 @@
+Allows students to purchase the course extension from Moodle, communicates with wordpress via url webhook
