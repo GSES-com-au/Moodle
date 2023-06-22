@@ -195,9 +195,11 @@ abstract class qtype_multianswer_subq_renderer_base extends qtype_renderer {
             return '';
         }
 
-        return html_writer::tag('span', implode('<br />', $feedback), [
-            'class' => 'feedbackspan',
-        ]);
+        $outputfeedback = html_writer::tag('span', implode('<br />', $feedback), array('class' => 'feedbackspan accesshide'));
+        if ($feedbacktext) {
+        $outputfeedback .= html_writer::tag('div', $feedbacktext, array('class' => 'outcome'));
+        }
+        return $outputfeedback;
     }
 
     /**
