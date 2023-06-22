@@ -1,0 +1,109 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Course Extension Settings</title>
+  </head>
+
+  <body>
+    <div class="staticpage-wrapper container">
+      <div class="staticpage-content">
+        <div class="contact-wrapper">
+          <div class="contact-intro mb-5"></div>
+          <div class="contact-form-box rounded p-lg-5 mb-5">
+            <form
+              id="contact-form"
+              class="contact-form"
+              action="../courseextension/dashboard.php"
+              method="post"
+            >
+              <h2 class="text-center mb-3">Course Extension Settings</h2>
+              <p></p>
+              <p></p>
+              <div class="form-row">
+                <div class="form-group col-12 col-xl-6">
+                  <label for="apitoken"><b>API-TOKEN</b></label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="apitoken"
+                    name="apitoken"
+                    value = ""
+                  />
+                </div>
+                <div class="form-group col-12 col-xl-6">
+                  <label for="secretkeys"><b>Secret Keys</b></label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="secretkeys"
+                    name="secretkeys"
+                    value = ""
+                  />
+                </div>
+                <div class="form-group col-12 col-xl-6">
+                  <label for="producturl"><b>Product URL</b></label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="producturl"
+                    name="producturl"
+                    value = ""
+                  />
+                </div>
+                <div class="form-group col-12 col-xl-6">
+                  <label for="coursecategories"><b>Course Categories</b></label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="coursecategories"
+                    name="coursecategories"
+                    value = ""
+                  />
+                </div>
+                <div class="form-group col-12 col-xl-6 savebutton">
+                  <input
+                  onclick="saveData()"
+                    type="button"
+                    name="save"
+                    id="save"
+                    value="Save"
+                    class="btn btn-block btn-primary py-2"
+                  >
+                  </div>
+                  <div class="form-group col-12 col-xl-6 cancelbutton">
+                  <input
+                    onclick="window.location.href='https://gsesdev.com/my/'"
+                    type="button"
+                    name="cancel"
+                    id="cancel"
+                    value="Cancel"
+                    class="btn btn-block btn-primary py-2"
+                    >
+                </div>
+                <script>
+                function saveData() {
+                  // Send an AJAX request to the PHP script
+                  var xhr = new XMLHttpRequest();
+                  xhr.open("GET", "/home/gsesdev/public_html/local/courseextension/templates/script.php", true);
+                  xhr.send();
+                  
+                  // Handle the response from the PHP script
+                  xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                      if (xhr.status === 200) {
+                        // Request successful, do something if needed
+                      } else {
+                        // Request failed, handle error if needed
+                      }
+                    }
+                  };
+                }
+                </script>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
