@@ -20,7 +20,7 @@
               <p></p>
               <p>
                 Please note, we only offer course extensions to our
-                <b>accreditation courses</b>. If you have any questions, please don't hesitate to contact us through one of the following methods below:
+                <b>accreditation courses</b>. If you have any questions, contact us through one of the following methods:
               </p>
               <p></p>
               <ul>
@@ -39,22 +39,24 @@
               <h3>Information about extensions</h3>
               <p></p>
               <p>
-                If you require a course extension, an administration fee of
-                <b>$137.50 per month</b> of extension purchased will be incurred to
+                An administration fee of
+                <b>$137.50 per month</b> will be payable to
                 extend the course. Extensions begin from the previous date of
-                expiry, not the date of payment. Please note the maximum
+                expiry, not the date of payment.</p><p>The maximum
                 extension permitted is six (6) months from the original date of
-                expiry as per the course policies. If you would like to proceed,
-                fill out the below details to proceed with the payment, you can
-                specify the desired number of months in the quantity field.
+                expiry as per the course policies.</p><p>If you would like to proceed,
+                please use the form below. Specify the number of months of extension in the quantity field.
               </p>
               <p>
                 We will send you an email confirmation once this has been
                 processed. 
               </p>
               <p>
-              Please note the course will expire at <b>midnight (11:59pm) at the expiration date</b>, so if your course expiration date is 11/03/2024 then you would have up until 11:59pm 11/03/2024 to complete your course.
+              Please note the course will expire at <b>midnight (11:59pm AEST/AEDT) at the expiration date</b>, so if your course expiration date is 11 June 2024 then you would have up until 11:59pm AEST 11 June 2024 to complete your course.
               </p>
+              <p>If sickness or illness has prevented you from completing a course for a <b>prolonged</b> period of time please send us an email <b>tutor@gses.com.au </b>. 
+                This exception only applies in special circumstances and is assessed on a case by case basis. 
+                You will need to provide documentation.</p>
               <div class="form-row">
                 <div class="form-group col-12 col-xl-6">
                   <label for="firstname"><b>First name</b></label>
@@ -96,7 +98,7 @@
                   </select>
                 </div>
                 <div class="form-group col-12 col-xl-6">
-                  <label for="expiration"><b>Expiration Date</b></label>
+                  <label for="expiration"><b>Current course expiry date</b></label>
                   <input disabled
                     type="text"
                     class="form-control"
@@ -106,7 +108,7 @@
                   />
                 </div>  
                 <div class="form-group col-12 col-xl-6">
-                  <label for="maxexpiration"><b>Maximum Permissible Expiration Date</b></label>
+                  <label for="maxexpiration"><b>Maximum permissible course end date</b></label>
                   <input disabled
                     type="text"
                     class="form-control"
@@ -116,21 +118,12 @@
                   />
                 </div>
                 <div class="form-group col-12 col-xl-6">
-                  <label for="reason"><b>Reason<span class="course"> *</span></b></label>
-                  <select name="reason" id="reason" class="form-control" onchange = "additionaltext(this.value)">
-                      <option disabled selected value> -- select an option --</option>
-                        {{#excuse}}
-                              <option value="{{{excuse}}}">{{{excuse}}}</option>
-                        {{/excuse}}
-                    </select>
-                </div>
-                <div class="form-group col-12 col-xl-6">
                   <label for="quantity"><b>Quantity<span class="course"> *</span></b></label>
                   <select name="quantity" id="quantity" class="form-control" disabled require>
                     </select>
                 </div>
                 <div class="form-group col-12 col-xl-6">
-                  <label for="newexpiration"><b>New Expiration Date</b></label>
+                  <label for="newexpiration"><b>New course expiry date</b></label>
                   <input disabled
                     type="text"
                     class="form-control"
@@ -147,11 +140,6 @@
                     style="display:none;"
                   />
                 </div>
-                <div id ="reasontext" style="display:none">
-                <p>If sickness or illness has prevented you from completing a course for a prolonged period of time please send us an email <b>tutor@gses.com.au </b>. 
-                This exception only applies in special circumstances and is assessed on a case by case basis. 
-                You will need to provide a doctors certificate and an acceptable reason for failing to completing the course within the given timeframe. </p>
-                </div>
                 <div class="form-group col-12 col-xl-6 proceedbutton">
                   <input
                     onclick="if(validateForm()) {
@@ -166,7 +154,7 @@
                   </div>
                   <div class="form-group col-12 col-xl-6 cancelbutton">
                   <input
-                    onclick="window.location.href='https://www.gsestraining.com/my/'"
+                    onclick="window.location.href='https://gsestraining.com/my/'"
                     type="button"
                     name="cancel"
                     id="cancel"
@@ -186,24 +174,24 @@
                   //Button listener code that triggers post request to wordpress
                   function updateurl() {
                     // Get the selected course ID and update the URL string with it
-                    var url = 'https://gses.com.au/product/course-extension-1-month/';
+                    var url = 'https://www.gses.com.au/product/course-extensions/';
                     // Get the other form fields and add their values to the URL string as well
                     var courseid = document.getElementById('course').value;
-                    var reason = document.getElementById('reason').value;
                     var email = document.getElementById('email').value;
                     var lastname = document.getElementById('lastname').value;
                     var firstname = document.getElementById('firstname').value;
                     var coursename = document.getElementById('course').options[document.getElementById('course').selectedIndex].text;
                     var quantity = document.getElementById('quantity').value;
+                    var expiration = document.getElementById('expiration').value;
                     var newexpiration = document.getElementById('newexpiration').value;
                     //encoded in base64
                     url +='?courseid_extension=' + btoa(courseid) +
                     '&student_email_extension=' + btoa(email) +
-                    '&reason_extension=' + btoa(reason) +
                     '&student_last_name_extension=' + btoa(lastname) +
                     '&student_first_name_extension=' + btoa(firstname) +
                     '&course_name_extension=' + btoa(coursename) +
                     '&quantity=' + btoa(quantity) +
+                    '&expiration=' + btoa(expiration) +
                     '&newexpiration=' + btoa(newexpiration) +
                     '&timestart=' + btoa(get_start_date()) +
                     '&maxexpiration=' + btoa(get_max_date());
@@ -230,7 +218,7 @@
                     //Checks if they have selected a dropdown menu choice
                     function validateForm() {
                       // Replace these with the IDs or names of the required form fields
-                      var requiredFields = ["course", "reason"];
+                      var requiredFields = ["course"];
 
                       for (var i = 0; i < requiredFields.length; i++) {
                         var field = document.getElementById(requiredFields[i]);
@@ -261,7 +249,6 @@
                             document.getElementById("maxexpiration").value = "Not eligible for an extension";
                             document.getElementById("newexpiration").value = "";
                             document.getElementById("contactus2").style.display = "block";
-                            document.getElementById("reason").setAttribute("disabled",true);
                             document.getElementById("quantity").setAttribute("disabled",true);
                             document.getElementById("submit").setAttribute("disabled",true);
 
@@ -271,7 +258,6 @@
                             document.getElementById("maxexpiration").value = maxexpiration;
                             document.getElementById("contactus2").style.display = "none";
                             document.getElementById("submit").removeAttribute("disabled");
-                            document.getElementById("reason").removeAttribute("disabled",true);
                             document.getElementById("quantity").removeAttribute("disabled",true);
                             limitQuantity(expiration, maxexpiration);
 
@@ -304,7 +290,6 @@
                             quantity.add(option);
                             document.getElementById("quantity").setAttribute("disabled",true);
                             document.getElementById("submit").setAttribute("disabled",true);
-                            document.getElementById("reason").setAttribute("disabled",true);
                             document.getElementById("contactus").style.display = "block";
                           }else{
                             for (var i = 1; i <= months; i++) {
@@ -317,7 +302,6 @@
                               quantity.add(option);
                               document.getElementById("quantity").removeAttribute("disabled");
                               document.getElementById("submit").removeAttribute("disabled");
-                              document.getElementById("reason").removeAttribute("disabled",true);
                               document.getElementById("contactus").style.display = "none";
                             }
 
@@ -370,14 +354,6 @@
                     }
                     document.getElementById("course").addEventListener("change", updateexpiration);
                     
-                    var select = document.getElementById("reason");
-                    select.onchange = function() {
-                      if (select.value === "Sickness or illness") {
-                        document.getElementById("reasontext").style.display = "block";
-                      } else {
-                        document.getElementById("reasontext").style.display = "none";
-                      }
-                    }
                 </script>
               </div>
             </form>

@@ -42,8 +42,12 @@ class observer //extends \core\task\scheduled_task                        //exte
 
                 //------------------WC API CONNECTION
                 if ($orderid && !str_contains($coursename, "Electrical Basics Examination")) {
-                    require 'access.php';
+                    //require 'access.php';
                     require_once($CFG->dirroot . '/local/pending/vendor/autoload.php');
+                    
+                    $store_url = get_config('local_pending', 'storeurl');
+                    $consumer_key = get_config('local_pending', 'storekey');
+                    $consumer_secret = get_config('local_pending', 'storesecret');
 
                     $woocommerce = new Client(
                     $store_url,
@@ -81,7 +85,7 @@ class observer //extends \core\task\scheduled_task                        //exte
                         }
                     }
                 
-                    if ($statuscheck == 'on-hold') {
+                    if ($statuscheck == 'checking') {
                         try {
                             $data = ["status" => "processing"]; //change status into processing
                             $woocommerce->put("orders/{$orderid}", $data); //searches for order id and changes status to process

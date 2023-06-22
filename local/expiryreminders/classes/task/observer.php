@@ -58,7 +58,6 @@ class observer
     }
 
     private static function handle_enrolment_event($event, $courseid, $flag) {
-      require 'access.php';
       global $DB, $fstartdate, $fenddate, $contact_id, $student_email, $user;
       // error_log(var_export($event, true));
       $user = $event->relateduserid; 
@@ -108,7 +107,8 @@ class observer
       //---------------------------------------------------------------------------------------------------
 
 
-      $api_url = 'https://gses.api-us1.com/api/3/contacts';
+      $api_url = get_config('local_expiryreminders', 'acapiurl');
+      $api_token = get_config('local_expiryreminders', 'acapikey');
       $contact_id = '';
       
       // Get contact ID from email 
@@ -262,7 +262,8 @@ class observer
       }
       //checks which start and end date fields to update based on the courseid value and field id, once found timestart and timeend are sent to Active Campaign
       private static function checkcoursevalues($coursevalues, $courseid) {
-        require 'access.php';
+        $api_url = get_config('local_expiryreminders', 'acapiurl');
+        $api_token = get_config('local_expiryreminders', 'acapikey');
         global $DB, $fstartdate, $fenddate, $contact_id, $student_email, $user;
         $COURSE_ENROLMENT_START_DATE = null;
         $COURSE_ENROLMENT_END_DATE = null;

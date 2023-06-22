@@ -47,21 +47,10 @@ foreach ($results as $key => $value) {
 //Converting associative array into index array
 $results = array_values($results);
 
-$excuse = [
-['excuse' => 'Ran out of time'],
-['excuse' => 'Personal or family emergency'],
-['excuse' => 'Lack of motivation or interest'],
-['excuse' => 'Learning difficulties'],
-['excuse' => 'Technical difficulties'],
-['excuse' => 'Language barriers'],
-['excuse' => 'Sickness or illness']
-];
-
 $obj = [
     'firstname' => $USER->firstname,
     'lastname' =>  $USER->lastname,
     'email' =>  $USER->email,
-    'excuse' => $excuse,
     'results' => $results,
 ];
 echo $OUTPUT->header();

@@ -19,9 +19,15 @@
  * Language EN
  *
  * @package    local_studentmanager
- * @copyright  2022 GSES
+ * @copyright  2023 GSES
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 $string['pluginname'] = 'Expiry Reminders';
-$string['expiryreminders'] = 'Expiry Reminders';
+$string['courseextension'] = 'Expiry Reminders';
+$string['manage'] = 'Manage Expiry Reminder plugin settings';
+$string['acapiurl'] = 'Active Campaign API URL';
+$string['acapiurl_desc'] = 'The contacts API URL for Active Campaign';
+$string['acapikey'] = 'Active Campaign API token';
+$string['acapikey_desc'] = 'The API token for Active Campaign';
+
