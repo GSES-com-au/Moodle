@@ -3080,6 +3080,12 @@ abstract class enrol_plugin {
         $users = array();
 
         foreach($rs as $ue) {
+            //moved from below EJ
+			if ($ue->timeend - $ue->expirythreshold + 86400 < $timenow) {
+                // Notify only once at the start of the threshold.
+                $trace->output("user $ue->userid and enroller were already notified that enrolment in course $ue->courseid expires on ".userdate($ue->timeend, '', $CFG->timezone), 1);
+                continue;
+            }
             if ($lastenrollid and $lastenrollid != $ue->enrolid) {
                 $this->notify_expiry_enroller($lastenrollid, $users, $trace);
                 $users = array();
@@ -3097,11 +3103,11 @@ abstract class enrol_plugin {
                 continue;
             }
 
-            if ($ue->timeend - $ue->expirythreshold + 86400 < $timenow) {
-                // Notify enrolled users only once at the start of the threshold.
-                $trace->output("user $ue->userid was already notified that enrolment in course $ue->courseid expires on ".userdate($ue->timeend, '', $CFG->timezone), 1);
-                continue;
-            }
+            // if ($ue->timeend - $ue->expirythreshold + 86400 < $timenow) {
+            //     // Notify enrolled users only once at the start of the threshold.
+            //     $trace->output("user $ue->userid was already notified that enrolment in course $ue->courseid expires on ".userdate($ue->timeend, '', $CFG->timezone), 1);
+            //     continue;
+            // }
 
             $this->notify_expiry_enrolled($user, $ue, $trace);
         }

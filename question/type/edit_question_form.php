@@ -546,7 +546,7 @@ abstract class question_edit_form extends question_wizard_form {
         $mform->addElement('select', 'penalty',
                 get_string('penaltyforeachincorrecttry', 'question'), $penaltyoptions);
         $mform->addHelpButton('penalty', 'penaltyforeachincorrecttry', 'question');
-        $mform->setDefault('penalty', $this->get_default_value('penalty',  0.3333333));
+        $mform->setDefault('penalty', $this->get_default_value('penalty',  0.0000000));
 
         if (isset($this->question->hints)) {
             $counthints = count($this->question->hints);

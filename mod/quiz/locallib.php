@@ -1393,6 +1393,17 @@ function quiz_send_notification_messages($course, $quiz, $attempt, $context, $cm
     $a->quizreviewlink  = '<a href="' . $a->quizreviewurl . '">' .
             format_string($quiz->name) . ' review</a>';
     $a->attemptid       = $attempt->id;
+       // Custom attempt info.
+       $a->attemptnocustom   = $attempt->attempt;
+       if ($attempt->sumgrades == $quiz->sumgrades) {
+           $a->resultcustom  = '100%';
+       }
+       if ($attempt->sumgrades != $quiz->sumgrades) {
+           $a->resultcustom  = 'incomplete';
+       }
+       if ($quiz->sumgrades != 0) {
+           $a->gradecustom  = round($attempt->sumgrades / $quiz->sumgrades * 100,1) . '%';
+       }
     // Student who sat the quiz info.
     $a->studentidnumber = $submitter->idnumber;
     $a->studentname     = fullname($submitter);

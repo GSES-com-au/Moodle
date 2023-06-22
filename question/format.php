@@ -773,8 +773,8 @@ class qformat_default {
         $question->questiontextformat = FORMAT_MOODLE;
         $question->generalfeedback = '';
         $question->generalfeedbackformat = FORMAT_MOODLE;
-        $question->answernumbering = 'abc';
-        $question->penalty = 0.3333333;
+        $question->answernumbering = 'none';
+        $question->penalty = 0.0000000;
         $question->length = 1;
 
         // this option in case the questiontypes class wants

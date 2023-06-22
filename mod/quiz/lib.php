@@ -45,7 +45,7 @@ require_once($CFG->dirroot . '/calendar/lib.php');
 /**#@+
  * Option controlling what options are offered on the quiz settings form.
  */
-define('QUIZ_MAX_ATTEMPT_OPTION', 10);
+define('QUIZ_MAX_ATTEMPT_OPTION', 20);
 define('QUIZ_MAX_QPP_OPTION', 50);
 define('QUIZ_MAX_DECIMAL_OPTION', 5);
 define('QUIZ_MAX_Q_DECIMAL_OPTION', 7);

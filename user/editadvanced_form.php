@@ -168,7 +168,59 @@ class user_editadvanced_form extends moodleform {
      */
     public function definition_after_data() {
         global $USER, $CFG, $DB, $OUTPUT;
+        //GSES Edits: Creates a snapshot of user data before the database is updated - Marco 12/05/23
+        //grabs userid from url
+        $moodleuserid = required_param('id', PARAM_INT);
 
+        $sql = "SELECT id, username, firstname, lastname, email
+        FROM mdl_user
+        WHERE id = :moodleuserid";
+
+        $params = array(
+            'moodleuserid' => $moodleuserid
+        );
+
+        $userData = $DB->get_record_sql($sql, $params);
+
+
+        $sql = "SELECT *
+        FROM mdl_user_snapshot
+        WHERE moodleuserid = :moodleuserid";
+
+        $params = array(
+        'moodleuserid' => $moodleuserid
+        );
+
+        if ($userData != NULL) {
+            if ($DB->record_exists_sql($sql, $params)) {
+                $id = $DB->get_field_sql($sql, $params);
+
+                $old_info = new \stdClass();
+                $old_info->id = $id;
+                $old_info->moodleuserid = $userData->id;
+                $old_info->username = $userData->username;
+                $old_info->firstname = $userData->firstname;
+                $old_info->lastname = $userData->lastname;
+                $old_info->email = $userData->email;
+
+                $DB->update_record('user_snapshot', $old_info);
+            }else {
+                $sql = "INSERT
+                INTO mdl_user_snapshot
+                (moodleuserid,username,firstname,lastname,email)
+                VALUES (:moodleuserid, :username, :firstname, :lastname, :email)";
+
+                $params = array(
+                'moodleuserid' => $userData->id,
+                'username' => $userData->username,
+                'firstname' => $userData->firstname,
+                'lastname' => $userData->lastname,
+                'email' => $userData->email
+                );
+                $DB->execute($sql, $params);
+            }
+    }
+        //GSES Edits---------------------------------------------------------------------------------------------------------------------
         $mform = $this->_form;
 
         // Trim required name fields.
