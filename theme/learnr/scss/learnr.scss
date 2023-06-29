@@ -1,4 +1,19 @@
 // Universal LearnR theme styling
+//CourseExtension
+#page-local-courseextension-index .form-row .form-group label .course {
+    color: red;
+  }
+  #page-local-courseextension-index .proceedbutton {
+    max-width: 30%;
+  }
+  #page-local-courseextension-index .cancelbutton {
+    max-width: 20%;
+  }
+  
+  #page-local-courseextension-index .cancelbutton #cancel {
+    background-color: rgb(255, 0, 0);
+    border-color: rgb(255, 0, 0);
+  }
 //Contact us
 #page-user-contactsitesupport .mform {
     @media (min-width: 1000px) {
