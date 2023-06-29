@@ -1,6 +1,6 @@
 Alert from Moodle when students update their username, firstname, lastname or email address
 
-Plugin utilises custom code inserted into core moodle public_html/user/editadvanced_form.php lines 170 - 226
+Plugin utilises custom code inserted into core moodle public_html/user/editadvanced_form.php lines 170 - 227
 
 editadvanced_form.php
 

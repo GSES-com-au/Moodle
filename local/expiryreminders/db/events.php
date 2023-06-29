@@ -12,4 +12,8 @@ defined('MOODLE_INTERNAL') || die();
             'eventname' => '\core\event\user_enrolment_created',
             'callback' => '\local_expiryreminders\task\observer::user_enrolment_created',
         ),
+        array(
+            'eventname' => '\core\event\user_enrolment_deleted',
+            'callback' => '\local_expiryreminders\task\observer::user_enrolment_deleted',
+        ),
     );

@@ -81,16 +81,23 @@
                     >
                 </div>
                 <script>
-                  document.getElementById('save').addEventListener('click', function() {
-                      var xhr = new XMLHttpRequest();
-                      xhr.open('GET', '/home/gsesdev/public_html/local/courseextension/dashboard.php', true);
-                      xhr.onreadystatechange = function() {
-                          if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                              // Handle the response if needed
-                          }
-                      };
-                      xhr.send();
-                  });
+                function saveData() {
+                  // Send an AJAX request to the PHP script
+                  var xhr = new XMLHttpRequest();
+                  xhr.open("GET", "/home/gsesdev/public_html/local/courseextension/templates/script.php", true);
+                  xhr.send();
+                  
+                  // Handle the response from the PHP script
+                  xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                      if (xhr.status === 200) {
+                        // Request successful, do something if needed
+                      } else {
+                        // Request failed, handle error if needed
+                      }
+                    }
+                  };
+                }
                 </script>
               </div>
             </form>

@@ -8,85 +8,108 @@ ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/error.log');
 class observer 
 {
-    public static function user_enrolment_updated(\core\event\user_enrolment_updated $event)
-    {
+    
+    public static function user_enrolment_deleted(\core\event\user_enrolment_deleted $event) {
       $courseid = $event->courseid;
       $course = get_course($courseid);
       $coursename = $course->fullname;
-      //Change tutorid when moving to production
-      global $tutoruserid;
-      $tutoruserid = 17;
+      //Get the category of the course
+      $categoryid = $course->category;
 
+      //categoryid = 6 for Grid-Connected PV Systems(GCPV)
+      //categoryid = 7 for Grid-Connected PV Systems(GCwB)
+      //categoryid = 8 for Grid-Connected PV Systems(SAPS)
+      //categoryid = 1 for gsesdev miscellaneous 
       if 
-      (str_contains($coursename, "Grid Connected PV Systems")
-      || str_contains($coursename, "Battery Storage Systems for Grid-Connected PV Systems")
-      || str_contains($coursename, "Stand Alone Power Systems")
+      (str_contains($categoryid, 1)
+      || str_contains($categoryid, 1)
+      || str_contains($categoryid, 1)
       || str_contains($coursename, "Electrical Basics Examination")) 
-      { 
-        self::handle_enrolment_event($event, $courseid); 
+      {
+        $flag = 'deleted';
+        self::handle_enrolment_event($event, $courseid, $flag); 
       }
-
     }
-    public static function user_enrolment_created(\core\event\user_enrolment_created $event)
-    {
+
+    public static function user_enrolment_updated(\core\event\user_enrolment_updated $event) {
       $courseid = $event->courseid;
       $course = get_course($courseid);
       $coursename = $course->fullname;
-      //Change tutorid when moving to production
-      global $tutoruserid;
-      $tutoruserid = 17;
+      //Get the category of the course
+      $categoryid = $course->category;
 
+      //categoryid = 6 for Grid-Connected PV Systems(GCPV)
+      //categoryid = 7 for Grid-Connected PV Systems(GCwB)
+      //categoryid = 8 for Grid-Connected PV Systems(SAPS)
+      //categoryid = 1 for gsesdev miscellaneous 
       if 
-      (str_contains($coursename, "Grid Connected PV Systems")
-      || str_contains($coursename, "Battery Storage Systems for Grid-Connected PV Systems")
-      || str_contains($coursename, "Stand Alone Power Systems")
+      (str_contains($categoryid, 1)
+      || str_contains($categoryid, 1)
+      || str_contains($categoryid, 1)
       || str_contains($coursename, "Electrical Basics Examination")) 
       { 
-        self::handle_enrolment_event($event, $courseid); 
+        $flag = 'updated';
+        self::handle_enrolment_event($event, $courseid, $flag); 
+      }
+    }
+    
+    public static function user_enrolment_created(\core\event\user_enrolment_created $event) {
+      $courseid = $event->courseid;
+      $course = get_course($courseid);
+      $coursename = $course->fullname;
+      //Get the category of the course
+      $categoryid = $course->category;
+
+      //categoryid = 6 for Grid-Connected PV Systems(GCPV)
+      //categoryid = 7 for Grid-Connected PV Systems(GCwB)
+      //categoryid = 8 for Grid-Connected PV Systems(SAPS)
+      //categoryid = 1 for gsesdev miscellaneous 
+      if 
+      (str_contains($categoryid, 1)
+      || str_contains($categoryid, 1)
+      || str_contains($categoryid, 1)
+      || str_contains($coursename, "Electrical Basics Examination")) 
+      { 
+        $flag = 'created';
+        self::handle_enrolment_event($event, $courseid, $flag); 
       }
     }
 
-    private static function handle_enrolment_event($event, $courseid) {
-      require 'access.php';
-      global $DB, $tutoruserid, $fstartdate, $fenddate, $contact_id, $student_email, $user;
-      // error_log(var_export($event, true));
+    private static function handle_enrolment_event($event, $courseid, $flag) {
+      global $DB, $fstartdate, $fenddate, $contact_id, $student_email, $user;
+
       $user = $event->relateduserid; 
       //finding studentemail
       $email = $DB->get_record('user', array('id' => $user));
       $student_email = $email->email;
 
-
       //URL TO FIND ALL FIELD IDS IN ACTIVE CAMPAIGN (can use in postman)
       //CURLOPT_URL => "https://gses.api-us1.com/api/3/fields?limit=1000"
-
+      
 
       $instance = $DB->get_record('enrol', ['courseid' => $courseid, 'enrol' => 'manual']);
       $enrolid = $instance->id;
-      
       //------------Finding course expiration--------------------------------------------------------------
-      $search = $DB->get_record('user_enrolments', ['enrolid' => $enrolid, 'userid' => $user]);
-      $expiration = $search->timeend;
-      $startdate = $search->timestart;
-      $fenddate = date('d/m/Y', $expiration);
-      $fstartdate = date('d/m/Y', $startdate);
+      //Expiry dates won't be added if 'delete' or 'create' user enrolment functions were triggered.
+      if ($flag == 'deleted' || $flag == 'created') {
+        $fstartdate = '';
+        $fenddate = '';
+      } else {
+        //User enrolment is being updated
+        $search = $DB->get_record('user_enrolments', ['enrolid' => $enrolid, 'userid' => $user]);
+        $expiration = $search->timeend;
+        $startdate = $search->timestart;
+        $fenddate = date('d/m/Y', strtotime('-1 day', $expiration));
+        $fstartdate = date('d/m/Y', $startdate);
 
-
-      //Handles AC displaying wrong date to student by subtracting 1 day to account for midnight date in Moodle
-      $newenddate = DateTime::createFromFormat('d/m/Y', $fenddate);
-      $newstartdate = DateTime::createFromFormat('d/m/Y', $fstartdate);
-            
-      $dayDifference = $newenddate->diff($newstartdate);
-
-      // error_log('Day Difference: ' . var_export($dayDifference,true));
-
-      if ($dayDifference->d > 0) {
-          $newenddate->modify('-1 day');
-          $fenddate = $newenddate->format('d/m/Y');
       }
+
+
       //---------------------------------------------------------------------------------------------------
 
 
-      $api_url = 'https://gses.api-us1.com/api/3/contacts';
+      $api_url = get_config('local_expiryreminders', 'acapiurl');
+      $api_token = get_config('local_expiryreminders', 'acapikey');
       $contact_id = '';
       
       // Get contact ID from email 
@@ -113,15 +136,12 @@ class observer
       if ($err) {
         error_log("cURL Error #:" . $err);
         error_log("Error #1: Student id not found");
-      } 
-      else {
+      } else {
         $data = json_decode($response, true);
       
       //Ensures the contact exists
       if (!empty($data['contacts'])) {
-          $contact_id = $data['contacts'][0]['id'];
-
-
+            $contact_id = $data['contacts'][0]['id'];
             //Gets an array of fieldValues for all customfield ids of the specified $contact_id
             $curl = curl_init();
             curl_setopt_array($curl, [
@@ -142,7 +162,7 @@ class observer
             $err = curl_error($curl);
             curl_close($curl);
             if ($err) {
-              echo "cURL Error #:" . $err;
+              //echo "cURL Error #:" . $err;
               error_log("Error #2: There was a problem with the GET request for the field value");
             } else {
               //Active Campaign courseid field ids
@@ -176,7 +196,7 @@ class observer
 
               if (!$hasduplicateid) {
                 self::checkcoursevalues($coursevalues, $courseid);
-              }else{
+              } else{
                 error_log("
                 Error #3: Duplicate courseids exist for active campaign user below:
                   ActiveCampaign ContactId: $contact_id
@@ -185,24 +205,6 @@ class observer
                   Course Expiration Start Date: $fstartdate
                   Course Expiration End Date: $fenddate
                   ");
-                  //Tutor account ID
-                  $conditions = ['id' => $tutoruserid];
-                  $table = 'user';            
-                  $user_object = $DB->get_record($table, $conditions, $fields='*', $strictness=IGNORE_MISSING);
-                  $emailuser = new \stdClass();
-                  $emailuser->email = $user_object->email;
-                  $emailuser->username = $user_object->username;
-                  $emailuser->firstname = $user_object->firstname;
-                  $emailuser->lastname = $user_object->lastname;
-                  $emailuser->maildisplay = $user_object->maildisplay;
-                  $emailuser->mailformat = 1;
-                  $emailuser->id = $user_object->id;
-                  $emailuser->firstnamephonetic = $user_object->firstnamephonetic;
-                  $emailuser->lastnamephonetic = $user_object->lastnamephonetic;
-                  $emailuser->middlename = $user_object->middlename;
-                  $emailuser->alternatename = $user_object->alternatename;
-                  $first = $emailuser->firstname;
-                  $last = $emailuser->lastname;
                     $messageHtml = "
                     <p><b>ERROR:</b> Duplicate courseids exist for active campaign user below:</p>
                     <br />
@@ -225,10 +227,10 @@ class observer
                     </ul>
                       ";
                     $subject = "Expiry reminder failed";
-                    email_to_user($emailuser, '',$subject, '',$messageHtml, '', '', false);    
+                    email_to_user(get_admin(), '',$subject, '',$messageHtml, '', '', false);    
               }
             
-            }else {
+            } else {
               //error for if student email doesn't exist in Active Campaign
               error_log("
               Error #4: The contact with email of $student_email does not exist in Active Campaign. Please see user information:
@@ -238,24 +240,6 @@ class observer
                 Course Expiration Start Date: $fstartdate
                 Course Expiration End Date: $fenddate
                 ");
-                //Tutor account ID
-                $conditions = ['id' => $tutoruserid];
-                $table = 'user';            
-                $user_object = $DB->get_record($table, $conditions, $fields='*', $strictness=IGNORE_MISSING);
-                $emailuser = new \stdClass();
-                $emailuser->email = $user_object->email;
-                $emailuser->username = $user_object->username;
-                $emailuser->firstname = $user_object->firstname;
-                $emailuser->lastname = $user_object->lastname;
-                $emailuser->maildisplay = $user_object->maildisplay;
-                $emailuser->mailformat = 1;
-                $emailuser->id = $user_object->id;
-                $emailuser->firstnamephonetic = $user_object->firstnamephonetic;
-                $emailuser->lastnamephonetic = $user_object->lastnamephonetic;
-                $emailuser->middlename = $user_object->middlename;
-                $emailuser->alternatename = $user_object->alternatename;
-                $first = $emailuser->firstname;
-                $last = $emailuser->lastname;
                   $messageHtml = "
                   <p>Contact could not be found!</p>
                   <br />
@@ -272,15 +256,16 @@ class observer
                     </ul>
                     ";
                   $subject = "Expiry Reminder Failed";
-                  email_to_user($emailuser, '',$subject, '',$messageHtml, '', '', false);
+                  email_to_user(get_admin(), '',$subject, '',$messageHtml, '', '', false);
             }
         }
   
       }
       //checks which start and end date fields to update based on the courseid value and field id, once found timestart and timeend are sent to Active Campaign
       private static function checkcoursevalues($coursevalues, $courseid) {
-        require 'access.php';
-        global $DB, $tutoruserid, $fstartdate, $fenddate, $contact_id, $student_email, $user;
+        $api_url = get_config('local_expiryreminders', 'acapiurl');
+        $api_token = get_config('local_expiryreminders', 'acapikey');
+        global $DB, $fstartdate, $fenddate, $contact_id, $student_email, $user;
         $COURSE_ENROLMENT_START_DATE = null;
         $COURSE_ENROLMENT_END_DATE = null;
 
@@ -316,26 +301,7 @@ class observer
               Moodle Email: $student_email
               Course Expiration Start Date: $fstartdate
               Course Expiration End Date: $fenddate
-              Tutoruserid: $tutoruserid
               ");
-              //Tutor account ID
-              $conditions = ['id' => $tutoruserid];
-              $table = 'user';            
-              $user_object = $DB->get_record($table, $conditions, $fields='*', $strictness=IGNORE_MISSING);
-              $emailuser = new \stdClass();
-              $emailuser->email = $user_object->email;
-              $emailuser->username = $user_object->username;
-              $emailuser->firstname = $user_object->firstname;
-              $emailuser->lastname = $user_object->lastname;
-              $emailuser->maildisplay = $user_object->maildisplay;
-              $emailuser->mailformat = 1;
-              $emailuser->id = $user_object->id;
-              $emailuser->firstnamephonetic = $user_object->firstnamephonetic;
-              $emailuser->lastnamephonetic = $user_object->lastnamephonetic;
-              $emailuser->middlename = $user_object->middlename;
-              $emailuser->alternatename = $user_object->alternatename;
-              $first = $emailuser->firstname;
-              $last = $emailuser->lastname;
                 $messageHtml = "
                 <p>Plugin failed to get student enrolment dates, please see moodle error logs for more information.</p>
                 <br />
@@ -360,7 +326,7 @@ class observer
                 </ul>
                   ";
                 $subject = "Expiry reminder failed";
-                email_to_user($emailuser, '',$subject, '',$messageHtml, '', '', false);                  
+                email_to_user(get_admin(), '',$subject, '',$messageHtml, '', '', false);                  
         }
 
 
@@ -390,10 +356,10 @@ class observer
         curl_close($curl);
 
         if ($err) {
-          echo "cURL Error #:" . $err;
+          //echo "cURL Error #:" . $err;
           error_log(var_export($err, true));
         } else {
-          echo $response;
+          //echo $response;
         }
 
         $curl = curl_init();
@@ -421,10 +387,10 @@ class observer
         curl_close($curl);
 
         if ($err) {
-          echo "cURL Error #:" . $err;
+          //echo "cURL Error #:" . $err;
           error_log(var_export($err, true));
         } else {
-          echo $response;
+          //echo $response;
         } 
       }
 }

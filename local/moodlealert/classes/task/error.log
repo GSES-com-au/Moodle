@@ -4089,3 +4089,4 @@ Error code: generalexceptionmessage
 [19-May-2023 16:07:38 Australia/Sydney] lastname was changed
 [19-May-2023 16:07:38 Australia/Sydney] email was changed
 [19-May-2023 16:07:38 Australia/Sydney] PHP Warning:  Undefined property: stdClass::$username in /home/gsesdev/public_html/lib/moodlelib.php on line 6177
+[16-Jun-2023 16:47:52 Australia/Sydney] PHP Warning:  Undefined property: stdClass::$username in /home/gsesdev/public_html/lib/moodlelib.php on line 6177
