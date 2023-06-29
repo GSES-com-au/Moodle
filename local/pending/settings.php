@@ -30,6 +30,8 @@ if ($hassiteconfig) {
     $settingspage = new admin_settingpage('managelocalpending', new lang_string('manage', 'local_pending'));
 
     if ($ADMIN->fulltree) {
+        $settingspage->add(new admin_setting_configtext('local_pending/wcfieldid', get_string('wcfieldid', 'local_pending'),
+    get_string('wcfieldid_desc', 'local_pending'), '', PARAM_INT));
         $settingspage->add(new admin_setting_configtext('local_pending/storeurl', get_string('storeurl', 'local_pending'),
     get_string('storeurl_desc', 'local_pending'), 'https://www.gses.com.au', PARAM_TEXT));
         $settingspage->add(new admin_setting_configtext('local_pending/storekey', get_string('storekey', 'local_pending'),

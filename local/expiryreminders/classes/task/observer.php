@@ -13,11 +13,16 @@ class observer
       $courseid = $event->courseid;
       $course = get_course($courseid);
       $coursename = $course->fullname;
+      //Get the category of the course
+      $categoryid = $course->category;
 
+      //categoryid = 6 for Grid-Connected PV Systems(GCPV)
+      //categoryid = 7 for Grid-Connected PV Systems(GCwB)
+      //categoryid = 8 for Grid-Connected PV Systems(SAPS)
       if 
-      (str_contains($coursename, "Grid Connected PV Systems")
-      || str_contains($coursename, "Battery Storage Systems for Grid-Connected PV Systems")
-      || str_contains($coursename, "Stand Alone Power Systems")
+      (str_contains($categoryid, 6)
+      || str_contains($categoryid, 7)
+      || str_contains($categoryid, 8)
       || str_contains($coursename, "Electrical Basics Examination")) 
       {
         $flag = 'deleted';
@@ -29,11 +34,16 @@ class observer
       $courseid = $event->courseid;
       $course = get_course($courseid);
       $coursename = $course->fullname;
-      
+      //Get the category of the course
+      $categoryid = $course->category;
+
+      //categoryid = 6 for Grid-Connected PV Systems(GCPV)
+      //categoryid = 7 for Grid-Connected PV Systems(GCwB)
+      //categoryid = 8 for Grid-Connected PV Systems(SAPS)
       if 
-      (str_contains($coursename, "Grid Connected PV Systems")
-      || str_contains($coursename, "Battery Storage Systems for Grid-Connected PV Systems")
-      || str_contains($coursename, "Stand Alone Power Systems")
+      (str_contains($categoryid, 6)
+      || str_contains($categoryid, 7)
+      || str_contains($categoryid, 8)
       || str_contains($coursename, "Electrical Basics Examination")) 
       { 
         $flag = 'updated';
@@ -45,11 +55,16 @@ class observer
       $courseid = $event->courseid;
       $course = get_course($courseid);
       $coursename = $course->fullname;
+      //Get the category of the course
+      $categoryid = $course->category;
 
+      //categoryid = 6 for Grid-Connected PV Systems(GCPV)
+      //categoryid = 7 for Grid-Connected PV Systems(GCwB)
+      //categoryid = 8 for Grid-Connected PV Systems(SAPS)
       if 
-      (str_contains($coursename, "Grid Connected PV Systems")
-      || str_contains($coursename, "Battery Storage Systems for Grid-Connected PV Systems")
-      || str_contains($coursename, "Stand Alone Power Systems")
+      (str_contains($categoryid, 6)
+      || str_contains($categoryid, 7)
+      || str_contains($categoryid, 8)
       || str_contains($coursename, "Electrical Basics Examination")) 
       { 
         $flag = 'created';
@@ -59,7 +74,7 @@ class observer
 
     private static function handle_enrolment_event($event, $courseid, $flag) {
       global $DB, $fstartdate, $fenddate, $contact_id, $student_email, $user;
-      // error_log(var_export($event, true));
+
       $user = $event->relateduserid; 
       //finding studentemail
       $email = $DB->get_record('user', array('id' => $user));
@@ -68,19 +83,6 @@ class observer
       //URL TO FIND ALL FIELD IDS IN ACTIVE CAMPAIGN (can use in postman)
       //CURLOPT_URL => "https://gses.api-us1.com/api/3/fields?limit=1000"
       
-      //Check to see if user is in pending group
-      // $sql = "
-      // SELECT `groups`.name
-      // FROM mdl_groups AS `groups`
-      // JOIN mdl_groups_members AS members ON `groups`.id = members.groupid
-      // WHERE `groups`.courseid = :courseid
-      //   AND members.userid = :userid
-      //   AND `groups`.name = 'Pending'";
-      // $params = [
-      //     'userid' => $user,
-      //     'courseid' => $courseid
-      // ];
-      // $results = $DB->get_records_sql($sql, $params);
 
       $instance = $DB->get_record('enrol', ['courseid' => $courseid, 'enrol' => 'manual']);
       $enrolid = $instance->id;
@@ -94,13 +96,8 @@ class observer
         $search = $DB->get_record('user_enrolments', ['enrolid' => $enrolid, 'userid' => $user]);
         $expiration = $search->timeend;
         $startdate = $search->timestart;
-        $fenddate = date('d/m/Y', $expiration);
+        $fenddate = date('d/m/Y', strtotime('-1 day', $expiration));
         $fstartdate = date('d/m/Y', $startdate);
-
-        //Handles AC displaying wrong date to student by subtracting 1 day to account for midnight date in Moodle
-        $newenddate = DateTime::createFromFormat('d/m/Y', $fenddate);
-        $newstartdate = DateTime::createFromFormat('d/m/Y', $fstartdate);
-        $newenddate->modify('-1 day');
       }
 
 
@@ -174,18 +171,22 @@ class observer
               $fieldvalues = json_decode($response, true)['fieldValues'];
               $hasduplicateid = false;
               $coursevalues=[];
+              error_log('fieldvalues:' . var_export($fieldvalues,true));
               foreach ($fieldvalues as $fieldvalue) {
                 if (in_array($fieldvalue['field'], $course_id_array)) {
-                    $value = $fieldvalue['value'];
-                    if (in_array($value, array_column($coursevalues, 'value'))) {
-                        // Error: Value exists more than once
+
+                    $coursevalues[] = array(
+                        'field' => $fieldvalue['field'],
+                        'value' => $fieldvalue['value']
+                    );
+                    $valueCounts = array_count_values(array_column($coursevalues, 'value'));
+                    if (isset($valueCounts[$courseid]) && $valueCounts[$courseid] > 1) {
+                        //Error: Value exists more than once
                         $hasduplicateid = true;
                         break; // Exit the loop if error occurs
                     }
-                    $coursevalues[] = array(
-                        'field' => $fieldvalue['field'],
-                        'value' => $value
-                    );
+                    error_log('value:' . var_export($coursevalues,true));
+
                 }
             }
   
@@ -205,7 +206,7 @@ class observer
                   Course Expiration End Date: $fenddate
                   ");
                     $messageHtml = "
-                    <p><b>ERROR:</b> Duplicate courseids exist for active campaign user below:</p>
+                    <p><b>Error #3:</b> Duplicate courseids exist for active campaign user below:</p>
                     <br />
                     <b>Debugging log</b>
                     <br />
@@ -240,7 +241,7 @@ class observer
                 Course Expiration End Date: $fenddate
                 ");
                   $messageHtml = "
-                  <p>Contact could not be found!</p>
+                  <p>Error #4: Contact could not be found!</p>
                   <br />
                   <b>Debugging log</b>
                   <br />
@@ -302,7 +303,7 @@ class observer
               Course Expiration End Date: $fenddate
               ");
                 $messageHtml = "
-                <p>Plugin failed to get student enrolment dates, please see moodle error logs for more information.</p>
+                <p>Error #5: Plugin failed to get student enrolment dates, please see moodle error logs for more information.</p>
                 <br />
                 <b>Debugging log</b>
                 <br />

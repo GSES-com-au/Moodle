@@ -30,6 +30,8 @@ $string['lln_s_email'] = '<p>Hi {$a->firstname},</p><p>Your prerequisites for yo
 $string['eb_emailsubject'] = 'GSES exam prerequisites approved';
 $string['eb_email'] = '<p>Hi {$a->firstname},</p><p>Your prerequisites for the {$a->coursename} have been approved.</p><p>You can access the exam through the student portal <a href="{$a->courseurl}">here</a>.</p><br /><p><b>IMPORTANT: You only have access to the exam for 30 days, therefore you must complete the exam by {$a->expirydate}.</b></p><p>If you do not complete the {$a->coursename} by this date, you will need to repurchase the exam.</p><br /><p>If you are having trouble accessing the exam or have any further questions, please contact us!</p><br /><p>Kind regards,</p><p>GSES Training Team</p>';
 $string['manage'] = 'Manage Pending plugin settings';
+$string['wcfieldid'] = 'WooCommerce Order Post ID field ID';
+$string['wcfieldid_desc'] = 'Custom Field ID for the WooCommerce Order Post ID field in Moodle';
 $string['storeurl'] = 'WooCommerce store URL';
 $string['storeurl_desc'] = 'The URL for the WooCommerce store, beginning with https and ending without a slash';
 $string['storekey'] = 'WooCommerce consumer key';
