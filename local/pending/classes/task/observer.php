@@ -34,9 +34,9 @@ class observer //extends \core\task\scheduled_task                        //exte
             //---------------------SQL Queries
                 $orderid = '';
                 //sql query
-                $params = ['userid' => $relateduserid];         //sending userid to mysql query
+                $params = ['fieldid' => get_config('local_pending', 'wcfieldid'), 'userid' => $relateduserid]; //sending fieldid and userid to mysql query
                 $return = 'data';                               //field from table wanted
-                $select = 'fieldid = 2 AND userid = :userid';   //declaring variable in mysql search
+                $select = 'fieldid = :fieldid AND userid = :userid';   //declaring variable in mysql search
                 $table = 'user_info_data';                      //table name in database
                 $orderid = $DB->get_field_select($table, $return, $select, $params, $strictness=IGNORE_MISSING); //query
 
@@ -72,7 +72,6 @@ class observer //extends \core\task\scheduled_task                        //exte
                         $woocommerce = new Client($store_url, $consumer_key, $consumer_secret, $options); //required to access woocommerce
                         $query = $woocommerce->get("orders/{$orderid}");
                         $statuscheck = $query->status;
-                        
                         
                     } catch ( WC_API_Client_Exception $e ) {
                     
@@ -115,7 +114,7 @@ class observer //extends \core\task\scheduled_task                        //exte
                 } else {
                     // Manual enrolment mode not found for this course.
                     error_log('unable to update users enrolment, failed enrolid lookup');
-                    $message = "<p><b>ERROR:</b>Pending plugin failed to update user's enrolment dates because the manual enrolment instance for this course couldn't be found.</p>
+                    $message = "<p><b>ERROR #1:</b>Pending plugin failed to update user's enrolment dates because the manual enrolment instance for this course couldn't be found.</p>
                       <br />
                     <b>Debugging log</b>
                     <br />
@@ -141,12 +140,13 @@ class observer //extends \core\task\scheduled_task                        //exte
                     $userexpiration = date('jS F Y', strtotime('-1 day', $enrolment->timeend));     //For email to user with the corrected expiration date
                     
                     // Update the enrolment record in the database
-                    $DB->update_record('user_enrolments', $enrolment);
+                    $enrolplugin = enrol_get_plugin($instance->enrol);
+                    $enrolplugin->update_user_enrol($instance, $relateduserid,'',$enrolment->timestart,$enrolment->timeend);
                 } else {
                     // Enrolment record not found
                     // Handle the case accordingly
                     error_log('unable to update users enrolment, failed user_enrolments lookup');
-                    $message = "<p><b>ERROR:</b>Pending plugin failed to update user's enrolment because the user's enrolment instance couldn't be found.</p>
+                    $message = "<p><b>ERROR #2:</b>Pending plugin failed to update user's enrolment because the user's enrolment instance couldn't be found.</p>
                       <br />
                     <b>Debugging log</b>
                     <br />

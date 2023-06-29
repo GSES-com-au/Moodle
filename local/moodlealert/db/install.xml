@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="local/moodlealert/db" VERSION="20230621" COMMENT="XMLDB file for Moodle local/moodlealert"
+<XMLDB PATH="local/moodlealert/db" VERSION="20230622" COMMENT="XMLDB file for Moodle local/moodlealert"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
 >
-    <TABLE NAME="local_moodlealert" COMMENT="moodlealert plugin old user information snapshot">
+  <TABLES>
+    <TABLE NAME="user_snapshot" COMMENT="Default comment for local_moodlealert, please edit me">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" AUTO_INCREMENT="true"/>
-        <FIELD NAME="moodleuserid" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="NULL" SEQUENCE="false" DECIMALS="2" COMMENT=""/>
-        <FIELD NAME="username" TYPE="VARCHAR" LENGTH="255" Collation="utf8mb4_0900_ai_ci" NOTNULL="false" DEFAULT="NULL" SEQUENCE="false" DECIMALS="2" COMMENT=""/>
-        <FIELD NAME="firstname" TYPE="VARCHAR" LENGTH="255" Collation="utf8mb4_0900_ai_ci" NOTNULL="false" DEFAULT="NULL" SEQUENCE="false" DECIMALS="2" COMMENT=""/>
-        <FIELD NAME="lastname" TYPE="VARCHAR" LENGTH="255" Collation="utf8mb4_0900_ai_ci" NOTNULL="false" DEFAULT="NULL" SEQUENCE="false" DECIMALS="2" COMMENT=""/>
-        <FIELD NAME="email" TYPE="VARCHAR" LENGTH="255" Collation="utf8mb4_0900_ai_ci" NOTNULL="false" DEFAULT="NULL" SEQUENCE="false" DECIMALS="2" COMMENT=""/>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="moodleuserid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="username" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="firstname" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="lastname" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="email" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
         <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
       </KEYS>
     </TABLE>
+  </TABLES>
 </XMLDB>
