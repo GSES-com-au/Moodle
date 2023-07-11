@@ -9,8 +9,10 @@ class observer
 {                              
     public static function user_updated(\core\event\user_updated $event)
     {
-        global $DB, $PAGE;
+        global $DB, $PAGE, $CFG;
         $userid = $event->get_context()->instanceid;
+        $adminid = $event->userid;
+        $siteurl = $CFG->wwwroot;
         
         // Check if user exists in snapshot table
         $sql = "SELECT *
@@ -57,7 +59,7 @@ class observer
             if ($sendemail) {       // Only send email if the relevant fields were changed
                 // Compose and send the email with details
                 $subject = 'Profile Field Change Notification';
-                $messageHtml = '<p>USERID: ' . $userid . ' has had their profile field(s) changed, please see below information</p>';
+                $messageHtml = '<p><b>USERID: ' . $userid . ' </b> has had their profile field(s) changed by user with an id of <b>' . $adminid . '</b> on ' . $siteurl. ', please see below information</p>';
                 if ($userData->username != $userData->snapshot_username) {
                     $messageHtml .= '<p>The <b>username</b> has changed</p>';
                 }

@@ -4090,3 +4090,81 @@ Error code: generalexceptionmessage
 [19-May-2023 16:07:38 Australia/Sydney] email was changed
 [19-May-2023 16:07:38 Australia/Sydney] PHP Warning:  Undefined property: stdClass::$username in /home/gsesdev/public_html/lib/moodlelib.php on line 6177
 [16-Jun-2023 16:47:52 Australia/Sydney] PHP Warning:  Undefined property: stdClass::$username in /home/gsesdev/public_html/lib/moodlelib.php on line 6177
+[04-Jul-2023 16:44:23 Australia/Sydney] core\event\user_updated::__set_state(array(
+   'data' => 
+  array (
+    'eventname' => '\\core\\event\\user_updated',
+    'component' => 'core',
+    'action' => 'updated',
+    'target' => 'user',
+    'objecttable' => 'user',
+    'objectid' => '17',
+    'crud' => 'u',
+    'edulevel' => 0,
+    'contextid' => 264,
+    'contextlevel' => 30,
+    'contextinstanceid' => '17',
+    'userid' => '17',
+    'courseid' => 0,
+    'relateduserid' => '17',
+    'anonymous' => 0,
+    'other' => NULL,
+    'timecreated' => 1688453063,
+  ),
+   'logextra' => NULL,
+   'context' => 
+  context_user::__set_state(array(
+     '_id' => 264,
+     '_contextlevel' => 30,
+     '_instanceid' => '17',
+     '_path' => '/1/264',
+     '_depth' => '2',
+     '_locked' => '0',
+  )),
+   'triggered' => true,
+   'dispatched' => false,
+   'restored' => false,
+   'recordsnapshots' => 
+  array (
+  ),
+))
+[04-Jul-2023 16:45:25 Australia/Sydney] core\event\user_updated::__set_state(array(
+   'data' => 
+  array (
+    'eventname' => '\\core\\event\\user_updated',
+    'component' => 'core',
+    'action' => 'updated',
+    'target' => 'user',
+    'objecttable' => 'user',
+    'objectid' => '374',
+    'crud' => 'u',
+    'edulevel' => 0,
+    'contextid' => 2905,
+    'contextlevel' => 30,
+    'contextinstanceid' => '374',
+    'userid' => '17',
+    'courseid' => 0,
+    'relateduserid' => '374',
+    'anonymous' => 0,
+    'other' => NULL,
+    'timecreated' => 1688453125,
+  ),
+   'logextra' => NULL,
+   'context' => 
+  context_user::__set_state(array(
+     '_id' => 2905,
+     '_contextlevel' => 30,
+     '_instanceid' => '374',
+     '_path' => '/1/2905',
+     '_depth' => '2',
+     '_locked' => '0',
+  )),
+   'triggered' => true,
+   'dispatched' => false,
+   'restored' => false,
+   'recordsnapshots' => 
+  array (
+  ),
+))
+[04-Jul-2023 16:47:40 Australia/Sydney] ADMINID = '17'
+[04-Jul-2023 16:51:21 Australia/Sydney] ADMINID = 'https://gsesdev.com'
