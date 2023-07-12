@@ -1,0 +1,22 @@
+<div>
+<h3>Costs for Enrolment Period and Hosting Fees</h3>
+</div>
+
+<div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Admin Fee for Selected Period</th>
+        <th>Total Fee for Enrolments</th>
+        <th class="text-left">Total Fee</th>
+      </tr>
+    </thead>
+    {{#data}}
+      <tr>
+        <td>{{bill_period}} days &#215; ${{cost_per_day}} = ${{flatcost_for_period}}</td>
+        <td>{{enrolmentnumber}} &#215; ${{enrolmentrate}} = ${{totalenrolcost}}</td>
+        <td>${{totalcost}}</td>
+      </tr>
+    {{/data}}
+  </table>
+</div>
