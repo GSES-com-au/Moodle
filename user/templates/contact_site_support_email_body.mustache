@@ -55,48 +55,25 @@
     </style>
 </head>
 <body>
-<table class="table">
-    <tr>
-        <td class="subject"><br /><b>{{#str}}subject{{/str}}:</b> {{subject}}<br /><br /></td>
-    </tr>
-    <tr>
-        <td>
-            <table style="width: 100%;">
+<div class="subject"><b>{{#str}}subject{{/str}}:</b> {{subject}}</div>
+{{#notloggedinuser}}
+    <div class="alert alert-warning" colspan="2">
+        {{#str}}supportmessagesentforloggedoutuser, user{{/str}}
+    </div>
+{{/notloggedinuser}}
+         
+<b>{{#str}}name{{/str}}</b>
+{{name}}
 
-                <thead>
-                <tr>
-                {{#notloggedinuser}}
-                    <td class="alert alert-warning" colspan="2">
-                        {{#str}}supportmessagesentforloggedoutuser, user{{/str}}
-                    </td>
-                {{/notloggedinuser}}
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td colspan="2"><br /></td>
-                </tr>
-                <tr>
-                    <td>&nbsp;<b>{{#str}}name{{/str}}</b></td>
-                    <td>{{name}}</td>
-                </tr>
-                <tr>
-                    <td colspan="2"><hr></td>
-                </tr>
-                <tr style="border-top: 10px" >
-                    <td >&nbsp;<b>{{#str}}email{{/str}}</b></td>
-                    <td>{{email}}</td>
-                </tr>
-                <tr>
-                    <td colspan="2"><hr></td>
-                </tr>
-                <tr>
-                    <td>&nbsp;<b>{{#str}}description{{/str}}</b></td>
-                    <td>{{message}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </td>
-    </tr>
-</table>
+<div style="border-top: 10px" ><b>{{#str}}email{{/str}}</b></div>
+{{email}}
+
+<div><b>Category</b></div>
+{{category}}
+
+<div><b>Course</b></div>
+{{course}}
+
+<div><b>{{#str}}description{{/str}}</b></div>
+{{message}}
 </body>
