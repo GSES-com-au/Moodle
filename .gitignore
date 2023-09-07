@@ -18,14 +18,13 @@
 [._]sw[a-p]
 # Temporary files including undo
 *~
+#GSES Edits
+**/access.php
+**/error.log
+**/error_log
 #
 /.htaccess
 /config.php
-<<<<<<< HEAD
-=======
-error_log
-/lib/editor/tinymce/extra/tools/temp/
->>>>>>> 9733bba5a0c (gitignore error_logs)
 /tags
 /TAGS
 /cscope.*
