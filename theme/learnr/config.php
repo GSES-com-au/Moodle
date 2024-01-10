@@ -204,7 +204,6 @@ if ($THEME->settings->showheaderblockpanel == 1 && $THEME->settings->showblockdr
 
 $THEME->prescsscallback = 'theme_learnr_get_pre_scss';
 $THEME->extrascsscallback = 'theme_learnr_get_extra_scss';
-$THEME->rendererfactory = 'theme_overridden_renderer_factory';
 $THEME->precompiledcsscallback = 'theme_learnr_get_precompiled_css';
 $THEME->yuicssmodules = array();
 
@@ -216,6 +215,7 @@ $THEME->activityheaderconfig = [
 ];
 $THEME->requiredblocks = '';
 $THEME->enable_dock = false;
+$THEME->rendererfactory = 'theme_overridden_renderer_factory';
 
 if ($THEME->settings->showcourseindexnav == 1) {
     $THEME->usescourseindex = true;

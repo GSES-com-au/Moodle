@@ -1,4 +1,12 @@
 // Universal LearnR theme styling
+//Multitopic plugin - Removing banner
+#page #page-header #course-header #course-header-banner {
+  background-image: none !important;
+}
+
+#page #page-header #course-header #course-header-banner_attribution {
+  display: none;
+}
 //CourseExtension
 #page-local-courseextension-index .form-row .form-group label .course {
   color: red;
