@@ -41,7 +41,12 @@ class observer //extends \core\task\scheduled_task                        //exte
                 $orderid = $DB->get_field_select($table, $return, $select, $params, $strictness=IGNORE_MISSING); //query
 
                 //------------------WC API CONNECTION
-                if ($orderid && !str_contains($coursename, "Electrical Basics Examination")) {
+                $courseid = $event->courseid;
+                $course = get_course($courseid);
+                $coursename = $course->fullname;
+                $categoryid = $course->category;
+
+                if ($orderid && ($categoryid == 6 || $categoryid == 7 || $categoryid == 8)) {
                     //require 'access.php';
                     require_once($CFG->dirroot . '/local/pending/vendor/autoload.php');
                     

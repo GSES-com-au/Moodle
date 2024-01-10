@@ -19,7 +19,6 @@ class observer
       //categoryid = 6 for Grid-Connected PV Systems(GCPV)
       //categoryid = 7 for Grid-Connected PV Systems(GCwB)
       //categoryid = 8 for Grid-Connected PV Systems(SAPS)
-      //categoryid = 1 for gsesdev miscellaneous 
       if 
       (str_contains($categoryid, 1)
       || str_contains($categoryid, 1)
@@ -41,7 +40,6 @@ class observer
       //categoryid = 6 for Grid-Connected PV Systems(GCPV)
       //categoryid = 7 for Grid-Connected PV Systems(GCwB)
       //categoryid = 8 for Grid-Connected PV Systems(SAPS)
-      //categoryid = 1 for gsesdev miscellaneous 
       if 
       (str_contains($categoryid, 1)
       || str_contains($categoryid, 1)
@@ -63,7 +61,6 @@ class observer
       //categoryid = 6 for Grid-Connected PV Systems(GCPV)
       //categoryid = 7 for Grid-Connected PV Systems(GCwB)
       //categoryid = 8 for Grid-Connected PV Systems(SAPS)
-      //categoryid = 1 for gsesdev miscellaneous 
       if 
       (str_contains($categoryid, 1)
       || str_contains($categoryid, 1)
@@ -77,7 +74,6 @@ class observer
 
     private static function handle_enrolment_event($event, $courseid, $flag) {
       global $DB, $fstartdate, $fenddate, $contact_id, $student_email, $user;
-
       $user = $event->relateduserid; 
       //finding studentemail
       $email = $DB->get_record('user', array('id' => $user));
@@ -86,7 +82,7 @@ class observer
       //URL TO FIND ALL FIELD IDS IN ACTIVE CAMPAIGN (can use in postman)
       //CURLOPT_URL => "https://gses.api-us1.com/api/3/fields?limit=1000"
       
-
+      //error_log('function has run!');
       $instance = $DB->get_record('enrol', ['courseid' => $courseid, 'enrol' => 'manual']);
       $enrolid = $instance->id;
       //------------Finding course expiration--------------------------------------------------------------
@@ -95,13 +91,22 @@ class observer
         $fstartdate = '';
         $fenddate = '';
       } else {
-        //User enrolment is being updated
-        $search = $DB->get_record('user_enrolments', ['enrolid' => $enrolid, 'userid' => $user]);
-        $expiration = $search->timeend;
-        $startdate = $search->timestart;
-        $fenddate = date('d/m/Y', strtotime('-1 day', $expiration));
-        $fstartdate = date('d/m/Y', $startdate);
+        $context = \context_course::instance($courseid);
 
+        if (is_enrolled($context, $user, $withcapability = '', true)){
+          //user enrolment is active
+          //User enrolment is being updated
+          $search = $DB->get_record('user_enrolments', ['enrolid' => $enrolid, 'userid' => $user]);
+          $expiration = $search->timeend;
+          $startdate = $search->timestart;
+          $fenddate = date('d/m/Y', strtotime('-1 day', $expiration));
+          $fstartdate = date('d/m/Y', $startdate);
+        }
+        else {
+          //user is 'suspended' or 'not current'
+          $fstartdate = '';
+          $fenddate = '';
+          }
       }
 
 
@@ -169,7 +174,10 @@ class observer
               $course_id_1 = 57;
               $course_id_2 = 58;
               $course_id_3 = 59;
-              $course_id_array = array($course_id_1, $course_id_2, $course_id_3);
+              $course_id_4 = 67;
+              $course_id_5 = 72;
+              $course_id_6 = 79;
+              $course_id_array = array($course_id_1, $course_id_2, $course_id_3, $course_id_4, $course_id_5, $course_id_6);
               
               //Finds the courseid values for all fields
               $fieldvalues = json_decode($response, true)['fieldValues'];
@@ -177,16 +185,18 @@ class observer
               $coursevalues=[];
               foreach ($fieldvalues as $fieldvalue) {
                 if (in_array($fieldvalue['field'], $course_id_array)) {
-                    $value = $fieldvalue['value'];
-                    if (in_array($value, array_column($coursevalues, 'value'))) {
-                        // Error: Value exists more than once
+
+                    $coursevalues[] = array(
+                        'field' => $fieldvalue['field'],
+                        'value' => $fieldvalue['value']
+                    );
+                    $valueCounts = array_count_values(array_column($coursevalues, 'value'));
+                    if (isset($valueCounts[$courseid]) && $valueCounts[$courseid] > 1) {
+                        //Error: Value exists more than once
                         $hasduplicateid = true;
                         break; // Exit the loop if error occurs
                     }
-                    $coursevalues[] = array(
-                        'field' => $fieldvalue['field'],
-                        'value' => $value
-                    );
+
                 }
             }
   
@@ -195,7 +205,7 @@ class observer
           }
 
               if (!$hasduplicateid) {
-                self::checkcoursevalues($coursevalues, $courseid);
+                self::checkcoursevalues($coursevalues, $courseid, $exit_flag);
               } else{
                 error_log("
                 Error #3: Duplicate courseids exist for active campaign user below:
@@ -206,7 +216,7 @@ class observer
                   Course Expiration End Date: $fenddate
                   ");
                     $messageHtml = "
-                    <p><b>ERROR:</b> Duplicate courseids exist for active campaign user below:</p>
+                    <p><b>Error #3:</b> Duplicate courseids exist for active campaign user below:</p>
                     <br />
                     <b>Debugging log</b>
                     <br />
@@ -241,7 +251,7 @@ class observer
                 Course Expiration End Date: $fenddate
                 ");
                   $messageHtml = "
-                  <p>Contact could not be found!</p>
+                  <p>Error #4: Contact could not be found!</p>
                   <br />
                   <b>Debugging log</b>
                   <br />
@@ -262,7 +272,7 @@ class observer
   
       }
       //checks which start and end date fields to update based on the courseid value and field id, once found timestart and timeend are sent to Active Campaign
-      private static function checkcoursevalues($coursevalues, $courseid) {
+      private static function checkcoursevalues($coursevalues, $courseid, $exit_flag) {
         $api_url = get_config('local_expiryreminders', 'acapiurl');
         $api_token = get_config('local_expiryreminders', 'acapikey');
         global $DB, $fstartdate, $fenddate, $contact_id, $student_email, $user;
@@ -291,6 +301,27 @@ class observer
                 $COURSE_ENROLMENT_END_DATE = 56;
                 break;
             }
+            elseif ($fieldvalue['value'] == $courseid && $fieldvalue['field'] == 67) {
+              //Active Campaign enrolment start and end date field ids
+              // error_log('Enrolment 3 variables triggered');
+              $COURSE_ENROLMENT_START_DATE = 73;
+              $COURSE_ENROLMENT_END_DATE = 74;
+              break;
+          }
+            elseif ($fieldvalue['value'] == $courseid && $fieldvalue['field'] == 72) {
+              //Active Campaign enrolment start and end date field ids
+              // error_log('Enrolment 3 variables triggered');
+              $COURSE_ENROLMENT_START_DATE = 75;
+              $COURSE_ENROLMENT_END_DATE = 76;
+              break;
+          }
+            elseif ($fieldvalue['value'] == $courseid && $fieldvalue['field'] == 79) {
+              //Active Campaign enrolment start and end date field ids
+              // error_log('Enrolment 3 variables triggered');
+              $COURSE_ENROLMENT_START_DATE = 81;
+              $COURSE_ENROLMENT_END_DATE = 82;
+              break;
+          }
         }
         //Error handling ~ If none of the courseids match
         if ($COURSE_ENROLMENT_START_DATE == NULL OR $COURSE_ENROLMENT_END_DATE == NULL) {
@@ -303,7 +334,7 @@ class observer
               Course Expiration End Date: $fenddate
               ");
                 $messageHtml = "
-                <p>Plugin failed to get student enrolment dates, please see moodle error logs for more information.</p>
+                <p>Error #5: Plugin failed to get student enrolment dates, please see moodle error logs for more information.</p>
                 <br />
                 <b>Debugging log</b>
                 <br />
@@ -320,9 +351,9 @@ class observer
                 <b>Possible Solutions</b>
                 <ul>
                 <li>Check the enrolments for courseid: " . $courseid . " to see if this is a re-enrolment</li>
-                <li>Check if the customer accidentally double ordered the course/li>
-                <li>Check if the customer is enrolling in Electrical Basics Exam again/li>
-                <li>Check if the customer is enrolling in design or install version of the course in which they were previously enrolled in/li>
+                <li>Check if the customer accidentally double ordered the course</li>
+                <li>Check if the customer is enrolling in Electrical Basics Exam again</li>
+                <li>Check if the customer is enrolling in design or install version of the course in which they were previously enrolled in</li>
                 </ul>
                   ";
                 $subject = "Expiry reminder failed";
