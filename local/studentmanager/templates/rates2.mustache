@@ -1,9 +1,12 @@
 <div class="card-body"><a href="/local/studentmanager/index.php" class="btn btn-secondary float-right">Student Manager</a><br></div>
 <div class="card-body">
+
+  <strong>* Note all costs on this page are <u>GST exc</u></strong><br><br>
   <table class="table table-striped">
     <thead>
       <tr>
         <th class="text-center">Enrolment Rate ($/Enrolment)</th>
+        <th class="text-center">Number of Courses</th>
         <th class="text-center">Yearly Fee ($/Year)</th>
         <th class="text-center">Edit</th>
         
@@ -12,6 +15,7 @@
     {{#data}}
       <tr>
         <td class="text-center">{{{enrolmentrate}}}</td>
+        <td class="text-center">{{{nocoursehosted}}}</td>
         <td class="text-center">{{flatcost}}</td>
       <td class="text-center"><a href="/local/studentmanager/ratesform.php?id={{id}}"><i class="fa fa-edit"></i></td>
       </tr>

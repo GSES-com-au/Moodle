@@ -33,13 +33,17 @@ class rates_form extends moodleform
         global $CFG;
 
         $mform = $this->_form; // Don't forget the underscore!
-        $mform->addElement('html', '<strong>Rates form</strong><br><br>');
+        $mform->addElement('html', '<strong>* Note all costs on this page are <u>GST exc</u></strong><br><br>');
 
-        $mform->addElement('text', 'enrolmentrate', 'Enrolment rate', ' size="100%" '); // Add elements to your form
+        $mform->addElement('text', 'enrolmentrate', 'Enrolment cost per student', ' size="100%" '); // Add elements to your form
         $mform->setType('enrolmentrate', PARAM_NUMBER);                   //Set type of element
         $mform->setDefault('enrolmentrate', 0);        //Default value
 
-        $mform->addElement('text', 'flatcost', 'Quarterly flat fee', ' size="100%" '); // Add elements to your form
+        $mform->addElement('text', 'nocoursehosted', 'Number of courses hosted', ' size="100%" '); // Add elements to your form
+        $mform->setType('nocoursehosted', PARAM_NUMBER);                   //Set type of element
+        $mform->setDefault('nocoursehosted', 0);        //Default value
+
+        $mform->addElement('text', 'flatcost', 'Yearly fee', ' size="100%" '); // Add elements to your form
         $mform->setType('flatcost', PARAM_NUMBER);                   //Set type of element
         $mform->setDefault('flatcost', 0);        //Default value
 
