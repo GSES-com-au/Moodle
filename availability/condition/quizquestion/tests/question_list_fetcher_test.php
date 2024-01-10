@@ -14,27 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+namespace availability_quizquestion;
+
 /**
  * Tests for the code that gets a list of questions in a quiz.
  *
  * @package availability_quizquestion
  * @copyright 2020 Tim Hunt, Shamim Rezaie, Benjamin Schröder, Martin Hanusch, Thomas Lattner, Alex Keiller
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @covers \availability_quizquestion\question_list_fetcher
  */
-
-namespace availability_quizquestion;
-defined('MOODLE_INTERNAL') || die();
-
-global $CFG;
-require_once($CFG->dirroot . '/backup/util/includes/backup_includes.php');
-require_once($CFG->dirroot . '/backup/util/includes/restore_includes.php');
-
-/**
- * Tests for the code that gets a list of questions in a quiz.
- */
-class question_list_fetcher_testcase extends \advanced_testcase {
+class question_list_fetcher_test extends \advanced_testcase {
 
     public function test_list_questions_in_quiz() {
+        global $DB;
+
         $this->resetAfterTest();
         $this->setAdminUser();
 
@@ -45,10 +39,11 @@ class question_list_fetcher_testcase extends \advanced_testcase {
         // Create a quiz and a category to hold the questions.
         /** @var \core_question_generator $questiongenerator */
         $questiongenerator = $this->getDataGenerator()->get_plugin_generator('core_question');
-        $context = \context_course::instance($course->id);
+        $coursecontext = \context_course::instance($course->id);
         $quiz = $generator->create_module('quiz', ['course' => $course->id]);
+        $quizcontext = \context_module::instance($quiz->cmid);
         $category = $questiongenerator->create_question_category(
-                ['contextid' => $context->id, 'name' => 'Test questions']);
+                ['contextid' => $coursecontext->id, 'name' => 'Test questions']);
 
         // Add a Description (which should not appear in the list).
         $description = $questiongenerator->create_question('description', null,
@@ -68,12 +63,16 @@ class question_list_fetcher_testcase extends \advanced_testcase {
                 ['category' => $category->id, 'name' => 'Write an essay']);
         quiz_add_quiz_question($essay->id, $quiz);
 
+        // Re-load questions to get entry ids.
+        $tf = \question_bank::load_question_data($tf->id);
+        $essay = \question_bank::load_question_data($essay->id);
+
         // Verify that the right list is returned.
         $this->assertEquals(
                 [
-                    (object) ['id' => $tf->id, 'name' => 'Q1) True false question'],
-                    (object) ['id' => $essay->id, 'name' => 'Q3) Write an essay'],
+                    (object) ['id' => $tf->questionbankentryid, 'name' => 'Q1) True false question'],
+                    (object) ['id' => $essay->questionbankentryid, 'name' => 'Q3) Write an essay'],
                 ],
-                question_list_fetcher::list_questions_in_quiz($quiz->id));
+                question_list_fetcher::list_questions_in_quiz($quiz->id, $quizcontext));
     }
 }
