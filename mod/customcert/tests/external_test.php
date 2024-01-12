@@ -25,7 +25,7 @@
 
 namespace mod_customcert;
 
-use external_api;
+use core_external\external_api;
 use advanced_testcase;
 
 /**
