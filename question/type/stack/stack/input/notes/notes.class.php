@@ -29,6 +29,7 @@ class stack_notes_input extends stack_input {
 
     protected $extraoptions = array(
         'hideanswer' => false,
+        'allowempty' => false,
         'manualgraded' => false,
     );
 
@@ -52,7 +53,7 @@ class stack_notes_input extends stack_input {
 
         // Sort out size of text area.
         $rows = stack_utils::list_to_array($current, false);
-        $attributes['rows'] = max(5, count($rows) + 1);
+        $attributes['rows'] = max(3, count($rows) + 1);
 
         $boxwidth = $this->parameters['boxWidth'];
         foreach ($rows as $row) {
@@ -64,7 +65,7 @@ class stack_notes_input extends stack_input {
             $attributes['readonly'] = 'readonly';
         }
 
-        return html_writer::tag('textarea', htmlspecialchars($current), $attributes) .
+        return html_writer::tag('textarea', htmlspecialchars($current, ENT_COMPAT), $attributes) .
             html_writer::tag('div', "", array('class' => 'clearfix'));
     }
 

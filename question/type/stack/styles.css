@@ -1,3 +1,16 @@
+/* Style for hint question block */
+details.stack-hint {
+    padding: 2px;
+    display: block;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2;
+    width: fit-content;
+}
+
+div.stack-hint-content {
+    padding: 10px;
+}
+
 /* Styles used when questions are being attempted. */
 .que.stack .stackruntimeerrror {
     color: #c02200;
@@ -66,6 +79,12 @@
     max-width: 100%;
     resize: both;
 }
+#id_questionvariables,
+textarea[id*=feedbackvariables],
+textarea[name=maximavars] {
+    min-width: 100%;
+    font-family: monospace;
+}
 .que.stack input[type=checkbox] {
     margin-right: 0.4em;
 }
@@ -75,6 +94,7 @@
 .que.stack input[type=text] {
     max-width: 100%;
 }
+.que.stack .geogebra-right,
 .que.stack .numerical-right,
 .que.stack .algebraic-right,
 .que.stack .algebraic-units-right {
@@ -1072,4 +1092,122 @@ table.HELM_table th:last-child {
 /* Properly display inversetrig values, in RTL mode */
 #page-question-type-stack #id_inversetrig option {
     unicode-bidi: plaintext;
+}
+
+/* Trees: https://codepen.io/ross-angus/pen/jwxMjL
+Copyright (c) 2022 by Ross Angus (https://codepen.io/ross-angus/pen/jwxMjL)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+and associated documentation files (the "Software"), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge, publish, distribute,
+sublicense, and/or sell copies of the Software, and to permit persons to whom the Software
+is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+/* It's supposed to look like a tree diagram. */
+.algebratree,
+.algebratree ul,
+.algebratree li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.algebratree {
+    margin: 0 0 1em;
+    text-align: center;
+}
+.algebratree,
+.algebratree ul {
+    display: table;
+}
+.algebratree ul {
+    width: 100%;
+}
+.algebratree li {
+    display: table-cell;
+    padding: .5em 0;
+    vertical-align: top;
+}
+/* _________ */
+.algebratree li:before {
+    outline: solid 1px #666;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.algebratree li:first-child:before {
+    left: 50%;
+}
+.algebratree li:last-child:before {
+    right: 50%;
+}
+.algebratree span.atom,
+.algebratree span.op,
+.algebratree span.cell,
+.algebratree code {
+    border: solid .1em #666;
+    border-radius: .2em;
+    display: inline-block;
+    margin: 0 .2em .5em;
+    padding: .2em .5em;
+    position: relative;
+}
+/* If the tree represents DOM structure. */
+.algebratree span.atom {
+    border-radius: .5em;
+    color: DarkRed;
+    background-color: LightCyan;
+}
+.algebratree code,
+.algebratree span.op {
+    border-radius: .2em;
+    color: Red;
+    background-color: LemonChiffon;
+}
+/* | */
+.algebratree ul:before,
+.algebratree span.atom:before,
+.algebratree span.op:before,
+.algebratree span.cell:before,
+.algebratree code:before {
+    outline: solid 1px #666;
+    content: "";
+    height: .5em;
+    left: 50%;
+    position: absolute;
+}
+.algebratree ul:before {
+    top: -.5em;
+}
+.algebratree span.atom:before,
+.algebratree span.op:before,
+.algebratree span.cell:before,
+.algebratree code:before {
+    top: -.55em;
+}
+/* The root node doesn't connect upwards. */
+.algebratree > li {
+    margin-top: 0;
+}
+.algebratree > li:before,
+.algebratree > li:after,
+.algebratree > li > span.atom:before,
+.algebratree > li > span.op:before,
+.algebratree > li > span.cell:before,
+.algebratree > li > code:before {
+    outline: none;
 }

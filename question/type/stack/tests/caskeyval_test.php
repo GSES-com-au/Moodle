@@ -175,6 +175,12 @@ class caskeyval_test extends qtype_stack_testcase {
         }
     }
 
+    public function test_remove_comment_hanging() {
+        $at1 = new stack_cas_keyval("a:1\n /* This is an open comment \n b:2\n \n c:3^2", null, 123);
+        $this->assertFalse($at1->get_valid());
+        $at1->instantiate();
+    }
+
     public function test_multiline_input() {
         $tests = "n:3;\nif is(n=3) then (\nk1:1,\nk2:2\n) else (\nk1:3,\nk2:4\n);\na:k2^2;";
 
@@ -300,5 +306,14 @@ class caskeyval_test extends qtype_stack_testcase {
                     "df_simp:(subst(sub,df));\n" .
                     "ta1:expand(df_simp);";
         $this->assertEquals($expected, $s->get_keyval_representation());
+    }
+
+    public function test_stack_seed_redef() {
+        $tests = 'v:2;stack_seed:2';
+        $kv = new stack_cas_keyval($tests);
+        $this->assertFalse($kv->get_valid());
+        $expected = array('Redefinition of key constants is forbidden: ' .
+            '<span class="stacksyntaxexample">stack_seed</span>.');
+        $this->assertEquals($expected, $kv->get_errors());
     }
 }

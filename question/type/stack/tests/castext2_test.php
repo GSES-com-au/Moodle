@@ -128,6 +128,25 @@ class castext2_test extends qtype_stack_testcase {
 
     /**
      * @covers \qtype_stack\stack_cas_castext2_latex
+     */
+    public function test_latex_injection_5() {
+        // Issue #849, let the simplification state stay after injection if
+        // modified globally.
+        // While this is a bad way to do things and is essenttialy authoring with
+        // side effects that might be hard to spot it has been done in the past
+        // and we need to support it still.
+        // Note that we will not support conditionally changing the `simp` inside
+        // an injection. If that needs to be done use the `[[if]]` block combined
+        // to `[[define]]`.
+        $input = '[[define simp="true"/]]{@a@}, {@(simp:false,a)@}, {@a@}';
+        $preamble = array('a:3/9');
+        $output = '\({\frac{1}{3}}\), \({\frac{3}{9}}\), \({\frac{3}{9}}\)';
+        $options = new stack_options(array('simplify' => false));
+        $this->assertEquals($output, $this->evaluate($input, $preamble, $options));
+    }
+
+    /**
+     * @covers \qtype_stack\stack_cas_castext2_latex
      * @covers \qtype_stack\stack_cas_castext2_markdownformat
      * @covers \qtype_stack\castext2_parser_utils::math_paint
      */
@@ -322,6 +341,19 @@ class castext2_test extends qtype_stack_testcase {
     }
 
     /**
+     * @covers \qtype_stack\stack_cas_castext2_latex
+     * @covers \qtype_stack\stack_options
+     */
+    public function test_latex_matrixparens_indirect_lmxchar() {
+        $input = '\[ f(x) := \left\{ {@(lmxchar:"", f)@} \right. \]';
+        $preamble = array('f:matrix([4*x+4, x<1],[-x^2-4*x-8, x>=1])');
+        $output = '\[ f(x) := \left\{ {\begin{array}{cc} 4\cdot x+4 & x < 1 \\\\ ' .
+            '-x^2-4\cdot x-8 & x\geq 1 \end{array}} \right. \]';
+        $options = new stack_options();
+        $this->assertEquals($output, $this->evaluate($input, $preamble, $options));
+    }
+
+    /**
      * Block-system "define"-block, functional requirements:
      *  1. Allow inline changes to any value.
      *  2. Handle simplification.
@@ -456,6 +488,19 @@ class castext2_test extends qtype_stack_testcase {
     }
 
     /**
+     * Block-system "todo"-block, functional requirements:
+     *  1. Comments out itself and contents.
+     *  2. Even if contents are invalid or incomplete.
+     *
+     * @covers \qtype_stack\stack_cas_castext2_comment
+     */
+    public function test_blocks_todo() {
+        $input = '1[[ todo]] [[ foreach bar="foo"]] {#y@} [[/todo]]2';
+        $output = '1<!--- stack_todo --->2';
+        $this->assertEquals($output, $this->evaluate($input));
+    }
+
+    /**
      * Block-system "escape"-block, functional requirements:
      *  1. Escapes the contents so that they will not be processed.
      *  2. Outputs contents as they are.
@@ -523,8 +568,11 @@ class castext2_test extends qtype_stack_testcase {
      */
     public function test_stackfltfmt() {
         $input = '{@a@}, {@(stackfltfmt:"~f",a)@}';
-        $preamble = array('stackfltfmt:"~e"', 'a:0.000012');
-        $output = '\({1.2e-5}\), \({0.000012}\)';
+        // Note that 0.000012 has rounding in clisp which is not the point of this test.
+        // And 0.000013 has rounding in SBCL/GCL.
+        // And 0.000016 has rounding in SBCL!
+        $preamble = array('stackfltfmt:"~e"', 'a:0.000025');
+        $output = '\({2.5e-5}\), \({0.000025}\)';
         $this->assertEquals($output, strtolower($this->evaluate($input, $preamble)));
     }
 
@@ -536,6 +584,9 @@ class castext2_test extends qtype_stack_testcase {
         $input = '{@(stackintfmt:"~:r",a)@}, {@(stackintfmt:"~@R",a)@}';
         $preamble = array('a:1998');
         $output = '\({\mbox{one thousand nine hundred ninety-eighth}}\), \({MCMXCVIII}\)';
+        if ($this->adapt_to_new_maxima('5.46.0')) {
+            $output = '\({\mbox{one thousand, nine hundred ninety-eighth}}\), \({MCMXCVIII}\)';
+        }
         $this->assertEquals($output, $this->evaluate($input, $preamble));
     }
 
@@ -638,9 +689,53 @@ class castext2_test extends qtype_stack_testcase {
     }
 
     public function test_plot_if() {
+        // This test case caused an error in Maxima 5.45.0.
+        // The fix to this error is the use of ex:%_ce_expedite(ex) in the plot function to remove %_C.
+        // However, we need to actively evaluate the %_C functions at the point we remove them.
+        // When expressions occur within the "then" clause they are not actually evaluated and in Maxima 5.45.0
+        // this happens _after_ the list of variables has been created.  So at that point, %_C(sin) contributes an extra
+        // variable "sin" to the picture, and so plot2d throws a (needless) error.  Hence, the fix is to
+        // expedite the security checks before we send the cleaned-up expression to plot2d.
         $input = '{@plot(if x<=0 then x^2+1 else sin(x)/x, [x,-4,20], [y,-1,6])@}';
-        $output = '';
 
         $this->assertTrue(strpos($this->evaluate($input), '!ploturl!stackplot') > 0);
+    }
+
+    public function test_templates_1() {
+        $input = '[[template name="foobar"/]]';
+        $output = 'Warning no template defined with name "foobar"';
+        $this->assertEquals($output, $this->evaluate($input));
+    }
+
+    public function test_templates_2() {
+        $input = '[[template name="foobar" mode="ignore missing"/]]';
+        $output = '';
+        $this->assertEquals($output, $this->evaluate($input));
+    }
+
+    public function test_templates_3() {
+        $preamble = array('a:1');
+        $input = '[[template name="foobar"]]FOOBAR{#a#}[[/template]][[template name="foobar"/]]' .
+            '[[define a="2"/]] [[template name="foobar"/]]';
+        $output = 'FOOBAR1 FOOBAR2';
+        $this->assertEquals($output, $this->evaluate($input, $preamble));
+    }
+
+    public function test_templates_4() {
+        $input = '[[template name="foobar" mode="default"]]default[[/template]]';
+        $output = 'default';
+        $this->assertEquals($output, $this->evaluate($input));
+    }
+
+    public function test_templates_5() {
+        $input = '[[template name="foobar"]]override[[/template]]X[[template name="foobar" mode="default"]]default[[/template]]';
+        $output = 'Xoverride';
+        $this->assertEquals($output, $this->evaluate($input));
+    }
+
+    public function test_maplist_labda() {
+        $input = '{@maplist(lambda([ex], x^ex), [1,2,3,4])@}';
+        $output = '\({\left[ x , x^2 , x^3 , x^4 \right]}\)';
+        $this->assertEquals($output, $this->evaluate($input));
     }
 }

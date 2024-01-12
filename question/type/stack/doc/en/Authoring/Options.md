@@ -36,11 +36,23 @@ any penalty \(\ge 0.66\) and \(\le 0.67\) is changed to \(0.6666667\).
 
 The following options affect how mathematics is displayed.
 
+### Decimal separator ### {#decimals}
+
+Choose the symbol for the decimal separator used by student input.  There are currently two choices.
+
+* `.`, the British decimal point.
+* `,`, the comma, as used in much of Europe.
+
+The design of this option is discussed further in the [developer docs](../Developer/Syntax_numbers.md).
+
+Teachers must always use strict Maxima syntax, which requires `.`, including in test case construction.
+
 ### Multiplication Sign ### {#multiplication}
 
 * (none), e.g. \(x(x+1)\)
 * Dot, e.g. \(x\cdot(x+1)\)
 * Cross, e.g. \(x\times (x+1)\)
+* Numbers only, e.g. \(3\times 5\, x\).
 
 In practice it is very helpful to have some kind of multiplication sign displayed to the student.  The difference between
 \[ xe^x \mbox{ and } x\,e^x\]
@@ -53,6 +65,14 @@ Internally the display of multiplication signs is controlled by the STACK functi
     Cross remains: {@a*b@}.
 
 The expression `(make_multsgn("cross"), a*b)` uses parentheses as an abbreviation for Maxima's `block` command.  So, the first expression `make_multsgn("cross")` is evaluated which changes the display option to a cross.  Then the second expression is evaluated and displayed as \(a\times b\).  The new option persists in the next expression.
+
+The value of this option `onum` will only put a multiplication sign between numbers.  This means you will see \(3\times 5\, x\) and not \(3\, 5\, x\) as you would if you have "none".
+
+There is a special atom which controls the multiplication symbol.  If you would like a dot then define
+
+    texput(multsgnonlyfornumberssym, "\\times");
+
+in the question variables.
 
 ### Logic symbols ### {#logicsymbol}
 

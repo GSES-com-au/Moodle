@@ -43,7 +43,7 @@ class input_notes_test extends qtype_stack_testcase {
     public function test_render_blank() {
         $el = stack_input_factory::make('notes', 'ans1', '');
         $el->adapt_to_model_answer('Hello world');
-        $this->assertEquals('<textarea name="ans1" id="ans1" rows="5" cols="50"></textarea>' .
+        $this->assertEquals('<textarea name="ans1" id="ans1" rows="3" cols="50"></textarea>' .
                 '<div class="clearfix"></div>',
                 $el->render(new stack_input_state(stack_input::BLANK, array(), '', '', '', '', ''),
                         'ans1', false, null));
@@ -59,18 +59,20 @@ class input_notes_test extends qtype_stack_testcase {
         $this->assertEquals('', $state->contentsmodified);
 
         $el->set_parameter('showValidation', 0);
-        $vr = '<div class="stackinputfeedback standard empty" id="sans1_val"></div>';
+        $vr = '<div class="stackinputfeedback standard empty" id="sans1_val" aria-live="assertive"></div>';
         $this->assertEquals($vr, $el->replace_validation_tags($state, 'sans1', '[[validation:sans1]]'));
 
         $el->set_parameter('showValidation', 1);
-        $vr = '<div class="stackinputfeedback standard" id="sans1_val"><span class="filter_mathjaxloader_equation">' .
+        $vr = '<div class="stackinputfeedback standard" id="sans1_val" aria-live="assertive">' .
+                '<span class="filter_mathjaxloader_equation">' .
                 '<div class="text_to_html"><p>This input gives an instant rendering of LaTeX e.g. ' .
                 '<span class="nolink">\[ \sum_{n=1}^\infty \frac{1}{n^2}=\frac{\pi^2}{6}.\]</span></p>' .
                 '<p class="stackinputnotice">(This input is not assessed automatically by STACK.)</p></div></span></div>';
         $this->assertEquals($vr, $el->replace_validation_tags($state, 'sans1', '[[validation:sans1]]'));
 
         $el->set_parameter('showValidation', 2);
-        $vr = '<div class="stackinputfeedback standard" id="sans1_val"><span class="filter_mathjaxloader_equation">' .
+        $vr = '<div class="stackinputfeedback standard" id="sans1_val" aria-live="assertive">' .
+                '<span class="filter_mathjaxloader_equation">' .
                 '<div class="text_to_html"><p>This input gives an instant rendering of LaTeX e.g. ' .
                 '<span class="nolink">\[ \sum_{n=1}^\infty \frac{1}{n^2}=\frac{\pi^2}{6}.\]</span></p>' .
                 '<p class="stackinputnotice">(This input is not assessed automatically by STACK.)</p></div></span></div>';
@@ -87,7 +89,8 @@ class input_notes_test extends qtype_stack_testcase {
                 'hDrk?autoplay=1&amp;loop=1;controls=0"<https://www.youtube.com/embed/IB3d1UthDrk?autoplay' .
                 '=1&amp;loop=1;controls=0> allow="accelerometer; autoplay; encrypted-media; gyroscope; ' .
                 'picture-in-picture" allowfullscreen="" width="0" height="0" frameborder="0"></iframe>}$$';
-        $ta = '<div class="stackinputfeedback standard" id="sans1_val"><span class="filter_mathjaxloader_' .
+        $ta = '<div class="stackinputfeedback standard" id="sans1_val" aria-live="assertive">' .
+                '<span class="filter_mathjaxloader_' .
                 'equation"><div class="text_to_html"><p><span class="nolink">$$ \unicode{ allow="accelerometer; ' .
                 'autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" width="0" height="0' .
                 '" frameborder="0"&gt;}$$</span></p><p class="stackinputnotice">(This input is not assessed autom' .
