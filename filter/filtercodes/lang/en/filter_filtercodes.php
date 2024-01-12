@@ -1,5 +1,5 @@
 <?php
-// This file is part of FilterCodes for Moodle - http://moodle.org/
+// This file is part of FilterCodes for Moodle - https://moodle.org/
 //
 // FilterCodes is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,15 +12,15 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+// along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * English strings for FilterCodes plugin.
  *
  * @package    filter_filtercodes
- * @copyright  2017-2022 TNG Consulting Inc. - www.tngconsulting.ca
+ * @copyright  2017-2023 TNG Consulting Inc. - www.tngconsulting.ca
  * @author     Michael Milette
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -36,7 +36,7 @@ $string['defaultemail'] = '';
 $string['enable_customnav'] = 'Custom navigation support';
 $string['enable_customnav_description'] = '<strong>Experimental</strong>: Enable support for FilterCode tags in Moodle custom navigation menu.
 Note: Is known to be compatible with Clean and Boost based themes in Moodle 3.2 to 3.4 only. Does not filter tags on the Moodle Theme Settings page.';
-$string['disabled_customnav_description'] = '<strong>Note regarding support for custom menu</strong> - To enable support for FilterCodes in your Moodle site\'s custom menu, you may need to customize your theme or Moodle core. <a href="https://github.com/michael-milette/moodle-filter_filtercodes#can-i-use-filtercodes-in-moodles-custom-menus">Information on how to add FilterCodes support in custom menus</a>.';
+$string['disabled_customnav_description'] = '<strong>Note regarding support for custom menu</strong> - To enable support for FilterCodes in your Moodle site\'s custom menu, you may need to customize your theme or Moodle core. <a href="https://github.com/michael-milette/moodle-filter_filtercodes#filtercodes-in-a-custom-menu">Information on how to add FilterCodes support in custom menus</a>.';
 $string['enable_scrape'] = 'Scrape tag support';
 $string['enable_scrape_description'] = 'Enable the scrape tag.';
 $string['enable_sesskey'] = 'Sesskey tag support';
@@ -45,35 +45,43 @@ $string['escapebraces'] = 'Escape tags';
 $string['escapebraces_desc'] = 'When this option is checked, you will be able to display FilterCode tags without them being interpreted by this filter by wrapping your tag in [ brackets ]. This can be very useful when creating FilterCodes documentation for the teachers and course creators on your Moodle site.<br><br>Example: [{fullname}] will not display the user\'s full name but display the {fullname} tag instead without the brackets.';
 $string['hidecompletedcourses'] = 'Hide completed courses';
 $string['hidecompletedcourses_desc'] = 'Enable to filter out completed courses in {mycoursesmenu} tag listings.';
+$string['nocompletedcourses'] = 'None of the courses in which you are enrolled have been marked as completed.';
 $string['coursecontactshowpic'] = 'Show contact picture';
 $string['coursecontactshowpic_desc'] = 'If enabled, will display the contact\'s profile picture in {coursecontacts} tags.';
 $string['coursecontactshowdesc'] = 'Show contact\'s profile description.';
 $string['coursecontactshowdesc_desc'] = 'If enabled, will display the contact\'s profile description in {coursecontacts} tags.';
 $string['coursecontactlinktype'] = 'Contact link type';
-$string['coursecontactlinktype_desc'] = 'Choose the type of link for the contact\s link in the {coursecontacts} tags.';
+$string['coursecontactlinktype_desc'] = 'Choose the type of link for the contact\'s link in the {coursecontacts} tags.';
 $string['showhiddenprofilefields'] = 'Show hidden profile fields';
 $string['showhiddenprofilefields_desc'] = 'Enable the {profile_field_...} tag to process all profile fields including ones hidden from the user.';
 $string['ifprofilefiedonlyvisible'] = '{ifprofile_field_} only visible.';
 $string['ifprofilefiedonlyvisible_desc'] = 'When checked, restrict the {ifprofile_field_...} tag to only access visible user profile fields. Hidden fields will behave as if they were empty. If unchecked, this tag will be also able to check hidden fields.';
 $string['categorycardshowpic'] = 'Show {categorycards} background';
 $string['categorycardshowpic_desc'] = 'If enabled, will display a background colour/pattern for {categorycards} tag similar to the course images when no image was specified.';
+$string['coursecardsformat'] = 'Course cards layout';
+$string['coursecardsformat_desc'] = 'Display {coursecards}, {coursecardsbyenrol} and {mycoursescards} either:<br>
+<ul>
+<li><strong>Vertical</strong>: Course image above course name.</li>
+<li><strong>Horizontal</strong>: Course image to the left of course name, category and summary; or</li>
+<li><strong>List</strong> in a table: Course name, category and summary.</li>
+</ul>';
 $string['coursecardsbyenrol'] = 'Maximum {coursecardsbyenrol} cards.';
 $string['coursecardsbyenrol_desc'] = 'Maximum number of course cards to display for {coursecardsbyenrol} tag. Set to zero for unlimited (not recommended).';
 $string['chartprogressbarlabel'] = '{$a->label}: {$a->value}';
 $string['teamcardsformat'] = 'Team cards format';
 $string['teamcardsformat_desc'] = 'Choose how the team members will appear in the {teamcards} tag.<br>
 <ul>
-<li>None: Displays just the picture and name as a card without the user description.</li>
-<li>Icon: Same as none except that the user description appears in an information popup bubble.</li>
-<li>Brief: Same as none but displays the description below the user picture and name.</li>
-<li>Verbose: List format. Recommended if your team members tends to have long user descriptions.</li>
+<li><strong>None</strong>: Displays just the picture and name as a card without the user description.</li>
+<li><strong>Icon</strong>: Same as none except that the user description appears in an information popup bubble.</li>
+<li><strong>Brief</strong>: Same as none but displays the description below the user picture and name.</li>
+<li><strong>Verbose</strong>: List format. Recommended if your team members tends to have long user descriptions.</li>
 </ul>';
 $string['brief'] = 'Brief';
 $string['verbose'] = 'Verbose';
 $string['teamcardslinktype'] = 'Team link type';
 $string['teamcardslinktype_desc'] = 'Choose the type of link for the team member\'s link in the {teamcards} tag. Note: Photo will automatically be linked to profile when the user is logged-in regardless of your choice here.';
 $string['narrowpage'] = 'Narrow page';
-$string['narrowpage_desc'] = 'Enable this option to optimize display of information if Moodle is using a theme with limited page width (e.g., Boost in Moodle 4.0).';
+$string['narrowpage_desc'] = 'Enable this option to optimize display of information if Moodle is using a theme with limited page width (e.g., Boost in Moodle 4.0+).';
 $string['sizeb'] = 'B';
 $string['sizekb'] = 'KB';
 $string['sizemb'] = 'MB';
@@ -97,6 +105,7 @@ $string['photoeditor'] = 'Photo editor';
 $string['photoeditorlink'] = 'https://pixlr.com/editor/';
 $string['screenrec'] = 'Screen recorder';
 $string['screenreclink'] = 'https://screenapp.io/#/recording';
+$string['notavailable'] = 'Not available';
 
 $string['formquickquestion'] = '
 <form action="{wwwroot}/local/contact/index.php" method="post" class="cf contact-us">

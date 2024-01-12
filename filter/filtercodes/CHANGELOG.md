@@ -1,7 +1,100 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [2.3.4] 2022-12-11 (dev)
+## [2.4.3] 2023-11-20
+### Added
+- New {menuthemes} tag.
+- New {sitename} tag.
+- New {sitesummary} tag.
+- New {ifminstudent} tag.
+### Updated
+- {courseenddate} tag can now take an optional courseid parameter.
+- {courseenddate} tag will now display strftime date formats.
+- If support page is blank, the {supportpage} tag will be blank instead of displaying the tag.
+- If support email is blank, the {supportemail} tag will display "Not available" instead of the tag.
+- If support name is blank, the {supportname} tag will display "Not available" instead of the tag.
+- Fixed {preferredlanguage} tag if system default language is a child language pack.
+- Refactored for performance improvement performance. Enable more tags for embedding.
+- Instructions for enabling filters in custom menu.
+- {courseshortname} tag can now be used inside other tags.
+- {teamcards} now lists users with selected roles in Site Administration > Appearance > Course > Course Contacts.
+- Fixed issue where a tel: link was unexpectedly created in {teamcards}.
+
+## [2.4.2] 2023-10-25
+### Updated
+- Fixed bug with rendering of coursecards in Moodle 3.10 and earlier.
+
+## [2.4.1] 2023-10-23
+### Added
+- New %7Bwwwroot%7D - alias for the {wwwroot} tag.
+### Updated
+- Fixed: {coursecard}, {coursecards}, {mycoursescards} and {coursecardsbyenrol} now include visible courses without an end date.
+- Fixed a failed PHPUnit test for {coursemoduleid}.
+- Fix spacing for some failed CSS code checks.
+- Tested compatible with PHP 8.2.
+
+## [2.4.0] 2023-10-20
+### Added
+- Support for FontAwesome v6 syntax including fa-solid and fa-brands. E.g. {fa-solid fa-user}.
+- Fix-266: New {multilang}{/multilang} tag. Note: Depends on Moodle's `Multi-language content` filter.
+- Fix-198: Module level assigned roles detection to {ifcustomrole} and {ifnotcustomrole} tags.
+- New {myccourses} tag.
+- New {ifnotincourse}{/ifnotincourse} tags.
+- New {coursecount students:active} tag.
+- Fix-258: New {ifvisible} tag.
+- New {supportservicespage} tag (for Moodle 4.2 and later).
+- New {coursemoduleid} tag.
+- Fix-261: New {courseimage-url} tag.
+- New {chart progresspie} tag (ALPHA - not yet compatible with Firefox).
+- Fix-187: New {coursecard} tag (not the same as {coursecards}).
+- New {courseenrolmentdate} tag.
+- (ALPHA) New horizontal layout setting for {coursecards}, {coursecardsbyenrol} and {mycoursescards} (affects all 3).
+- (ALPHA) New table list layout setting for {coursecards}, {coursecardsbyenrol} and {mycoursescards} (affects all 3).
+- Fix-251: New optional course ID parameter for {coursestartdate} tag.
+- Alternative (alt) text to {qrcode} tag.
+- Documented tags in the source code.
+- Compatibility with Moodle 4.3.
+### Updated
+- The {button} tag will now attempt to automatically strip HTML tags created by some other filters.
+- Fixed profile pictures including user picture, gravatar and faceless avatar.
+- {scrape} tag now automatically removes any HTML in case Moodle turned the URL into a link.
+- Reordered tags to fix issue where some tags were not working or not being interpreted in the right order.
+- Fix-271: Fixed issue with multiple static declarations.
+- Fix-272: Fixed issue with {categorydescription} tag if it includes an embedded URL for image.
+- Fix-274: Fixed issue creating {button} with {urlencoded}{shortcoursename}{/urlencoded}.
+- Fix-273: Fixed several tags that were not being replaced.
+- Fix-269: Fixed deprecation notice relating to trim() function in PHP 8.1.
+- Fix-241: You may now optionally specify a space delimited list of category ID(s) in the {mycoursescards} tag.
+- Git now ignores .patch files.
+- Fix-256: The {courseid} and %7Bcourseid%7D tags can now be embedded in other tags.
+- Fix-256: The {coursemoduleid} and %7Bcoursecontextid%7D tags can now be embedded in other tags.
+- Fix-256: The {coursecontextid} and %7Bcoursecontextid%7D tags can now be embedded in other tags.
+- Fix-256: The {coursemoduleid} and %7Bcoursemoduleid%7D tags can now be embedded in other tags.
+- Fixed display of Course Cards Layout list of settings.
+- Addressed some PHP 8.1 compatibility warnings.
+- Some tags are now disabled if they do not meet Moodle and PHP version requirements.
+- Fix-253: Cohort names can now contain a dash in {ifincohort} tag.
+- Instruction to patch Moodle 4.2 to enable FilterCodes in custom menu.
+- {timezone} now works correctly if user's timezone is set to system timezone.
+- Refactored {mycourses...} tags and added missing unordered tag for {mycourses} tag.
+- {mycoursescards} tag will now display message if the user is not enrolled in any courses.
+- Courses that are either hidden or expired will now appear in course cards if the user has the capability to to see hidden courses.
+- Documentation (README.md)
+
+## [2.3.6] 2023-05-07
+### Updated
+- Partial fix for sizing issue of radial and pie charts in Moodle 4.1 and 4.2.
+- Copyright notice to include 2023.
+- Compatibility with Moodle 4.2.
+- Compatibility with PHP 8.1.
+
+## [2.3.5] 2023-01-31
+### Added
+- New {ifenrolpage}{/ifenrolpage} tags.
+- New {ifnotenrolpage}{/ifnotenrolpage} tags.
+- {courseid} tag now resolves to course id on enrolment pages.
+
+## [2.3.4] 2022-12-11
 ### Added
 - New {courseunenrolurl} tag.
 - New {coursecount students} tag.
