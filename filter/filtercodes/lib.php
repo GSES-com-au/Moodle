@@ -1,5 +1,5 @@
 <?php
-// This file is part of the FilterCodes plugin for Moodle - http://moodle.org/
+// This file is part of the FilterCodes plugin for Moodle - https://moodle.org/
 //
 // FilterCodes is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,15 +12,15 @@
 // GNU General Public License for more details.
 //
 // You should have received a copy of the GNU General Public License
-// along with FilterCodes.  If not, see <http://www.gnu.org/licenses/>.
+// along with FilterCodes.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
  * Library of functions for filtercodes.
  *
  * @package   filter_filtercodes
- * @copyright 2016-2022 TNG Consulting Inc. (https://tngconsulting.ca)
+ * @copyright 2016-2023 TNG Consulting Inc. (https://tngconsulting.ca)
  * @author    Michael Milette
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @license   https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 /**
@@ -35,15 +35,18 @@ function filter_filtercodes_render_navbar_output() {
 
         // Don't filter menus on Theme Settings page or it will filter the custommenuitems field in the page and loose the tags.
         if ($PAGE->pagetype != 'admin-setting-themesettings' && stripos($CFG->custommenuitems, '{') !== false) {
-
             // Don't apply auto-linking filters.
             $filtermanager = filter_manager::instance();
             $filteroptions = ['originalformat' => FORMAT_HTML, 'noclean' => true];
             $skipfilters = ['activitynames', 'data', 'glossary', 'sectionnames', 'bookchapters'];
 
             // Filter Custom Menu.
-            $CFG->custommenuitems = $filtermanager->filter_text($CFG->custommenuitems,
-                    $PAGE->context, $filteroptions, $skipfilters);
+            $CFG->custommenuitems = $filtermanager->filter_text(
+                $CFG->custommenuitems,
+                $PAGE->context,
+                $filteroptions,
+                $skipfilters
+            );
         }
     }
     return '';

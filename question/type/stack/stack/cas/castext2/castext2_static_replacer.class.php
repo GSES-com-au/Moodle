@@ -94,6 +94,9 @@ class castext2_static_replacer {
                     $node->parentnode->items[0]->value === 'demoodle' ||
                     ($node->parentnode->items[0]->value === 'jsxgraph' &&
                             array_search($node, $node->parentnode->items) > 1)
+                    ||
+                    ($node->parentnode->items[0]->value === 'geogebra' &&
+                            array_search($node, $node->parentnode->items) > 1)
                     )) {
                     // Do we already have this string value?
                     $key = array_search($node->value, $map);
@@ -110,5 +113,18 @@ class castext2_static_replacer {
         $ast->callbackRecurse($collector);
         $this->map = $map;
         return $ast->toString(['nosemicolon' => true]);
+    }
+
+    /**
+     * Adds a string to the map and returns the replacement placeholder.
+     */
+    public function add_to_map(string $value): string {
+        $key = array_search($value, $this->map);
+        if ($key === false) {
+            $k = count($this->map);
+            $key = "//CT2S$k//"; // Assume that this is never present in normal content.
+            $this->map[$key] = $value;
+        }
+        return $key;
     }
 }

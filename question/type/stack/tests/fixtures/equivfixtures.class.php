@@ -789,6 +789,14 @@ class stack_equiv_test_data {
 
         $newarg = array();
         $newarg['title']     = "";
+        $newarg['narrative'] = '';
+        $newarg['casstring'] = "[a=logbase(9,3),3^a=9,3^a=3^2,a=2]";
+        $newarg['debuglist'] = "(EMPTYCHAR,EQUIVCHAR,EQUIVCHAR,EQUIVCHAR)";
+        $newarg['outcome']   = true;
+        $samplearguments[] = $newarg;
+
+        $newarg = array();
+        $newarg['title']     = "";
         $newarg['narrative'] = 'Problematic case with nth roots.  (Needed for intrging integrals.)';
         $newarg['casstring'] = "[x=(1+y/n)^n,x^(1/n)=(1+y/n),y/n=x^(1/n)-1,y=n*(x^(1/n)-1)]";
         $newarg['debuglist'] = "(EMPTYCHAR,QMCHAR,EQUIVCHAR,EQUIVCHAR)";
@@ -947,6 +955,14 @@ class stack_equiv_test_data {
         $samplearguments[] = $newarg;
 
         $newarg = array();
+        $newarg['title']      = "Rational expressions.";
+        $newarg['narrative']  = '';
+        $newarg['casstring']  = "[1/(a-b)-1/(b-a),stackeq(1/(a-b)+1/(b-a))]";
+        $newarg['debuglist']  = "(EMPTYCHAR,QMCHAR)";
+        $newarg['outcome']    = false;
+        $samplearguments[]    = $newarg;
+
+        $newarg = array();
         $newarg['section'] = 'Equate coefficients';
         $samplearguments[] = $newarg;
 
@@ -1085,6 +1101,15 @@ class stack_equiv_test_data {
         $samplearguments[] = $newarg;
 
         $newarg = array();
+        $newarg['title']     = "The Sophie Germain Identity";
+        $newarg['narrative'] = 'This example is based on the Sophie Germain Identity.';
+        $newarg['casstring'] = "[a^4+4*b^4,stackeq((a^2)^2+4*a^2*b^2+(2*b^2)^2-4*a^2*b^2)," .
+            "stackeq((a^2+2*b^2)^2-(2*a*b)^2),stackeq((2*b^2-2*a*b+a^2)*(2*b^2+2*a*b+a^2))]";
+        $newarg['debuglist'] = "(EMPTYCHAR,CHECKMARK,CHECKMARK,CHECKMARK)";
+        $newarg['outcome']   = true;
+        $samplearguments[] = $newarg;
+
+        $newarg = array();
         $newarg['title']     = "Induction step";
         $newarg['narrative'] = '';
         $newarg['casstring'] = "[sum(k,k,1,n+1),stackeq(sum(k,k,1,n)+(n+1)),stackeq(n*(n+1)/2 +n+1),".
@@ -1111,6 +1136,19 @@ class stack_equiv_test_data {
                 'stackeq((n+1)!/((k+1)!*(n-k)!)),stackeq(binomial(n+1,k+1))]';
         $newarg['debuglist'] = '(EMPTYCHAR,CHECKMARK,CHECKMARK,CHECKMARK,CHECKMARK,CHECKMARK,CHECKMARK,CHECKMARK,' .
                 'CHECKMARK,CHECKMARK)';
+        $newarg['outcome']   = true;
+        $samplearguments[]   = $newarg;
+
+        $newarg = array();
+        $newarg['title']     = "";
+        $newarg['narrative'] = '';
+        $newarg['casstring'] = '[binomial(n,k)+binomial(n,k-1),' .
+                'stackeq(n!/((k-1)!*(n-k+1)!)+n!/(k!*(n-k)!)),' .
+                'stackeq(n!*k/(k!*(n-k+1)!)+n!*(n-k+1)/(k!*(n-k+1)!)),' .
+                'stackeq(n!*k/(k!*(n-k+1)!)+n!/(k!*(n-k)!)),' .
+                'stackeq(((n-k+1)*n!+k*n!)/(k!*(n-k+1)!)),' .
+                'stackeq(((n+1)*n!)/(k!*(n-k+1)!))]';
+        $newarg['debuglist'] = '(EMPTYCHAR,CHECKMARK,CHECKMARK,CHECKMARK,CHECKMARK,CHECKMARK)';
         $newarg['outcome']   = true;
         $samplearguments[]   = $newarg;
 
@@ -1267,16 +1305,6 @@ class stack_equiv_test_data {
 
         $newarg = array();
         $newarg['title']     = "Solving a quadratic inequality";
-        $newarg['narrative'] = 'Solving quadratic inequalities using reasoning by equivalence.';
-        $newarg['casstring'] = "[2*x^2+x>=6, 2*x^2+x-6>=0, (2*x-3)*(x+2)>= 0,".
-                "((2*x-3)>=0 and (x+2)>=0) or ((2*x-3)<=0 and (x+2)<=0), ".
-                "(x>=3/2 and x>=-2) or (x<=3/2 and x<=-2), x>=3/2 or x <=-2]";
-        $newarg['debuglist'] = "(EMPTYCHAR,EQUIVCHAR,EQUIVCHAR,EQUIVCHAR,EQUIVCHAR,EQUIVCHAR)";
-        $newarg['outcome']   = true;
-        $samplearguments[]   = $newarg;
-
-        $newarg = array();
-        $newarg['title']     = "Solving a quadratic inequality";
         $newarg['narrative'] = 'Failing to solving quadratic inequalities';
         $newarg['casstring'] = "[2*x^2+x>=6, 2*x^2+x-6>=0, (2*x-3)*(x+2)>= 0,".
                 "((2*x-3)>=0 and (x+2)>=0) or ((2*x-3)<=0 and (x+2)<=0), ".
@@ -1358,8 +1386,6 @@ class stack_equiv_test_data {
         $newarg['debuglist'] = "(EMPTYCHAR,EQUIVCHAR,EQUIVCHAR,EQUIVCHAR)";
         $newarg['outcome']   = true;
         $samplearguments[] = $newarg;
-
-        /* ....................................... */
 
         $newarg = array();
         $newarg['section'] = 'Induction steps';

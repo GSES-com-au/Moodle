@@ -44,12 +44,11 @@ $PAGE->set_title($strpagetitle);
 $PAGE->set_heading($strpageheading);
 
 $id = optional_param('id', '', PARAM_TEXT);
-error_log("$id 1");
 
 $mform = new rates_form("?id=$id");
-error_log("$id 2");
+
 $toform = [];
-error_log("$id 3");
+
 
 
 
@@ -57,28 +56,23 @@ error_log("$id 3");
 if ($mform->is_cancelled()) {
     redirect("/local/studentmanager/rates.php", '',10);
 } elseif ($fromform = $mform->get_data()) {
-    error_log("$id 4");
     if ($id) {
         //has id then update
         $obj = $DB->get_record('local_enrolment_rates', ['id'=>$id]);
         $obj->enrolmentrate = $fromform->enrolmentrate;
         $obj->flatcost = $fromform->flatcost;
         $DB->update_record('local_enrolment_rates', $obj);
-        error_log("$id 5");
     } else {
         //otherwise add new record
         $obj = new stdClass();
         $obj->enrolmentrate = $fromform->enrolmentrate;
         $obj->flatcost = $fromform->flatcost;
         $orgid = $DB->insert_record('local_enrolment_rates', $obj);
-        error_log("$id 6");
     }
-    error_log("$id 7");
     redirect("/local/studentmanager/rates.php?id=$id", 'Changes saved', 10,  \core\output\notification::NOTIFY_SUCCESS);
 } else {
     if ($id) {
         $toform = $DB->get_record('local_enrolment_rates', ['id'=>$id]);
-        error_log("$id log");
     }
     //Set default data (if any)
     $mform->set_data($toform);

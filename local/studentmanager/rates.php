@@ -40,10 +40,6 @@ $PAGE->set_title($strpagetitle);
 $PAGE->set_heading($strpageheading);
 
 $rates = $DB->get_records('local_enrolment_rates', null);
-// foreach ($rates as $key => $value)
-// {
-//   $rates[$key]->monthname = date("F", mktime(0, 0, 0, $rates[$key]->month, 10));
-// }
 
 $results = new stdClass();
 $results->data = array_values($rates);
