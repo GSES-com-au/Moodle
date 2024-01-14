@@ -165,14 +165,14 @@ abstract class qtype_multianswer_subq_renderer_base extends qtype_renderer {
             $fraction, $feedbacktext, $rightanswer, question_display_options $options) {
 
         $feedback = array();
-        if ($options->correctness) {
+        /*if ($options->correctness) {
             if (is_null($fraction)) {
                 $state = question_state::$gaveup;
             } else {
                 $state = question_state::graded_state_for_fraction($fraction);
             }
             $feedback[] = $state->default_string(true);
-        }
+        }*/
 
         if ($options->feedback && $feedbacktext) {
             $feedback[] = $feedbacktext;
@@ -183,23 +183,83 @@ abstract class qtype_multianswer_subq_renderer_base extends qtype_renderer {
         }
 
         $subfraction = '';
-        if ($options->marks >= question_display_options::MARK_AND_MAX && $subq->defaultmark > 0
+        /*if ($options->marks >= question_display_options::MARK_AND_MAX && $subq->defaultmark > 0
                 && (!is_null($fraction) || $feedback)) {
             $a = new stdClass();
             $a->mark = format_float($fraction * $subq->defaultmark, $options->markdp);
             $a->max = format_float($subq->defaultmark, $options->markdp);
             $feedback[] = get_string('markoutofmax', 'question', $a);
-        }
+        }*/
 
         if (!$feedback) {
             return '';
         }
 
-        $outputfeedback = html_writer::tag('span', implode('<br />', $feedback), array('class' => 'feedbackspan accesshide'));
-        if ($feedbacktext) {
-        $outputfeedback .= html_writer::tag('div', $feedbacktext, array('class' => 'outcome'));
+        return html_writer::tag('span', implode('<br />', $feedback), [
+            //'class' => 'feedbackspan',
+        ]);
+    }
+
+    /**
+     * Render the feedback icon for a sub-question which is also the trigger for the feedback popover.
+     *
+     * @param string $icon The feedback icon
+     * @param string $feedbackcontents The feedback contents to be shown on the popover.
+     * @return string
+     */
+    protected function get_feedback_image(string $icon, string $feedbackcontents): string {
+        global $PAGE;
+        if ($icon === '') {
+            return '';
+        }
+
+        $PAGE->requires->js_call_amd('qtype_multianswer/feedback', 'initPopovers');
+
+        $outputfeedback = html_writer::link('#', $icon, [
+            'role' => 'button',
+            'tabindex' => 0,
+            'class' => 'feedbacktrigger btn btn-link p-0',
+            'data-toggle' => 'popover',
+            'data-container' => 'body',
+            'data-content' => $feedbackcontents,
+            'data-placement' => 'right',
+            'data-trigger' => 'hover focus',
+            'data-html' => 'true',
+        ]);
+        if ($feedbackcontents) {
+            $outputfeedback .= html_writer::tag('div', $feedbackcontents, array('class' => 'outcome'));
         }
         return $outputfeedback;
+    }
+
+    /**
+     * Generates a label for an answer field.
+     *
+     * If the question number is set ({@see qtype_renderer::$questionnumber}), the label will
+     * include the question number in order to indicate which question the answer field belongs to.
+     *
+     * @param string $langkey The lang string key for the lang string that does not include the question number.
+     * @param string $component The Frankenstyle component name.
+     * @return string
+     * @throws coding_exception
+     */
+    protected function get_answer_label(
+        string $langkey = 'answerx',
+        string $component = 'question'
+    ): string {
+        // There may be multiple answer fields for a question, so we need to increment the answer fields in order to distinguish
+        // them from one another.
+        $questionnumber = $this->displayoptions->questionidentifier ?? '';
+        $questionnumberindex = $questionnumber !== '' ? $questionnumber : 0;
+        if (isset(self::$answercount[$questionnumberindex][$langkey])) {
+            self::$answercount[$questionnumberindex][$langkey]++;
+        } else {
+            self::$answercount[$questionnumberindex][$langkey] = 1;
+        }
+
+        $params = self::$answercount[$questionnumberindex][$langkey];
+
+        return $this->displayoptions->add_question_identifier_to_label(get_string($langkey, $component, $params));
     }
 }
 
