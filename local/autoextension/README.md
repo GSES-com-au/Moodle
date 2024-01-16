@@ -1,2 +1,3 @@
-# sundayd-moodle-event-listener
-Auto + 2 weeks extension upon tutor marking their design task and providing feedback on moodle
+This plugin extends the student expiration date upon a tutor providing feedback for their assignment.
+
+Summary: This plugin extends the student expiration date by +2 weeks upon a tutor providing feedback for their assignment. The primary function of this plugin is to ensure the students can access their course and resubmit their assignments after feedback is provided by a tutor. Usually students who submit their final assignments such as electrical schematics or design tasks expire shortly after, so this plugin should provide then an additional 2 weeks from the date of tutor feedback. You must be familiar with Moodles events API to fully understand the functions being called in this plugin https://docs.moodle.org/dev/Events_API#Unit_Testing

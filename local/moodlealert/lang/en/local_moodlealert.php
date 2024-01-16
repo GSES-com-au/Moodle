@@ -25,3 +25,5 @@
 
 $string['pluginname'] = 'moodlealert';
 $string['moodlealert'] = 'moodlealert';
+$string['plugin_enable'] = 'Enable the moodlealert plugin';
+$string['manage'] = 'Manage Moodlealert plugin settings';

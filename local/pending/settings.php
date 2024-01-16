@@ -38,6 +38,8 @@ if ($hassiteconfig) {
     get_string('storekey_desc', 'local_pending'), '', PARAM_TEXT));
         $settingspage->add(new admin_setting_configtext('local_pending/storesecret', get_string('storesecret', 'local_pending'),
     get_string('storesecret_desc', 'local_pending'), '', PARAM_TEXT));
+    $settingspage->add(new admin_setting_configcheckbox('local_pending/pluginenable', get_string('plugin_enable', 'local_pending'),
+    '', 1));
     }
 
     $ADMIN->add('localplugins', $settingspage);

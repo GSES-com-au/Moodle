@@ -10,13 +10,14 @@ class observer //extends \core\task\scheduled_task                        //exte
 
     public static function group_member_removed(\core\event\group_member_removed $event)
     {
+        $pluginenabled = get_config('local_pending', 'pluginenable');
+        if ($pluginenabled) {
         //Declaring Variables (Database and others)
         global $DB, $PAGE, $CFG, $COURSE;
         $relateduserid = $event->relateduserid;         //get userid
         $courseid = $event->courseid;                   //courseid number
         $coursename = get_course($courseid)->fullname;  //get course name
         $coursecontext = \context_course::instance($courseid);
-        
         //If userid is not enrolled in course skip logic
         if (is_enrolled($coursecontext, $relateduserid)) {
         
@@ -41,7 +42,13 @@ class observer //extends \core\task\scheduled_task                        //exte
                 $orderid = $DB->get_field_select($table, $return, $select, $params, $strictness=IGNORE_MISSING); //query
 
                 //------------------WC API CONNECTION
-                if ($orderid && !str_contains($coursename, "Electrical Basics Examination")) {
+                //alter next line to only activate for categories 6, 7 and 8 (GCPV, GCBS and SAPS)
+                    $courseid = $event->courseid;
+                    $course = get_course($courseid);
+                    $coursename = $course->fullname;
+                    $categoryid = $course->category;
+
+                if ($orderid && ($categoryid == 6 || $categoryid == 7 || $categoryid == 8)) {
                     //require 'access.php';
                     require_once($CFG->dirroot . '/local/pending/vendor/autoload.php');
                     
@@ -200,6 +207,7 @@ class observer //extends \core\task\scheduled_task                        //exte
                 }
             }
             else {}
+        }
         }
     }
 }

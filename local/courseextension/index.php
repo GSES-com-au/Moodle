@@ -20,13 +20,16 @@ $sql = "
     JOIN mdl_course c ON cc.id = c.category
     JOIN mdl_enrol e ON e.courseid = c.id
     JOIN mdl_user_enrolments ue ON ue.enrolid = e.id AND ue.userid = :userid
-    WHERE cc.name LIKE :category1 OR cc.name LIKE :category2 OR cc.name LIKE :category3 OR cc.name LIKE :category4";
+    WHERE cc.name LIKE :category1 OR cc.name LIKE :category2 OR cc.name LIKE :category3 OR cc.name LIKE :category4 OR cc.name LIKE :category5 OR cc.name LIKE :category6";
 $params = [
     'userid' => $userid,
     'category1' => '%(GCPV)%',
     'category2' => '%(GCwB)%',
     'category3' => '%(SAPS)%',
-    'category4' => '%Miscellaneous%'
+    'category4' => '%Miscellaneous%',
+    'category5' => '%Vocational%',
+    'category6' => '%(GCBS)%'
+
 ];
 $results = $DB->get_records_sql($sql, $params);
 

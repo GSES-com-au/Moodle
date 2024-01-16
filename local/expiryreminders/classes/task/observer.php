@@ -10,6 +10,8 @@ class observer
 {
     
     public static function user_enrolment_deleted(\core\event\user_enrolment_deleted $event) {
+      $pluginenabled = get_config('local_expiryreminders', 'pluginenable');
+      if ($pluginenabled) {
       $courseid = $event->courseid;
       $course = get_course($courseid);
       $coursename = $course->fullname;
@@ -17,20 +19,25 @@ class observer
       $categoryid = $course->category;
 
       //categoryid = 6 for Grid-Connected PV Systems(GCPV)
-      //categoryid = 7 for Grid-Connected PV Systems(GCwB)
-      //categoryid = 8 for Grid-Connected PV Systems(SAPS)
+      //categoryid = 7 for Grid-Connected Battery Systems(GCwB)
+      //categoryid = 8 for Stand Alone Power Systems(SAPS)
+      //categoryid = 11 for Vocational Courses
       if 
       (str_contains($categoryid, 6)
       || str_contains($categoryid, 7)
       || str_contains($categoryid, 8)
+      || str_contains($categoryid, 11)
       || str_contains($coursename, "Electrical Basics Examination")) 
       {
         $flag = 'deleted';
         self::handle_enrolment_event($event, $courseid, $flag); 
       }
     }
+  }
 
     public static function user_enrolment_updated(\core\event\user_enrolment_updated $event) {
+      $pluginenabled = get_config('local_expiryreminders', 'pluginenable');
+      if ($pluginenabled) {
       $courseid = $event->courseid;
       $course = get_course($courseid);
       $coursename = $course->fullname;
@@ -38,39 +45,47 @@ class observer
       $categoryid = $course->category;
 
       //categoryid = 6 for Grid-Connected PV Systems(GCPV)
-      //categoryid = 7 for Grid-Connected PV Systems(GCwB)
-      //categoryid = 8 for Grid-Connected PV Systems(SAPS)
+      //categoryid = 7 for Grid-Connected Battery Systems(GCwB)
+      //categoryid = 8 for Stand Alone Power Systems(SAPS)
+      //categoryid = 11 for Vocational Courses
       if 
       (str_contains($categoryid, 6)
       || str_contains($categoryid, 7)
       || str_contains($categoryid, 8)
+      || str_contains($categoryid, 11)
       || str_contains($coursename, "Electrical Basics Examination")) 
       { 
         $flag = 'updated';
         self::handle_enrolment_event($event, $courseid, $flag); 
       }
     }
+  }
     
     public static function user_enrolment_created(\core\event\user_enrolment_created $event) {
+      $pluginenabled = get_config('local_expiryreminders', 'pluginenable');
+      if ($pluginenabled) {
       $courseid = $event->courseid;
       $course = get_course($courseid);
       $coursename = $course->fullname;
       //Get the category of the course
       $categoryid = $course->category;
-
+      
       //categoryid = 6 for Grid-Connected PV Systems(GCPV)
-      //categoryid = 7 for Grid-Connected PV Systems(GCwB)
-      //categoryid = 8 for Grid-Connected PV Systems(SAPS)
+      //categoryid = 7 for Grid-Connected Battery Systems(GCwB)
+      //categoryid = 8 for Stand Alone Power Systems(SAPS)
+      //categoryid = 11 for Vocational Courses
       if 
       (str_contains($categoryid, 6)
       || str_contains($categoryid, 7)
       || str_contains($categoryid, 8)
+      || str_contains($categoryid, 11)
       || str_contains($coursename, "Electrical Basics Examination")) 
       { 
         $flag = 'created';
         self::handle_enrolment_event($event, $courseid, $flag); 
       }
     }
+  }
 
     private static function handle_enrolment_event($event, $courseid, $flag) {
       global $DB, $fstartdate, $fenddate, $contact_id, $student_email, $user;
@@ -92,12 +107,22 @@ class observer
         $fstartdate = '';
         $fenddate = '';
       } else {
-        //User enrolment is being updated
-        $search = $DB->get_record('user_enrolments', ['enrolid' => $enrolid, 'userid' => $user]);
-        $expiration = $search->timeend;
-        $startdate = $search->timestart;
-        $fenddate = date('d/m/Y', strtotime('-1 day', $expiration));
-        $fstartdate = date('d/m/Y', $startdate);
+        $context = \context_course::instance($courseid);
+
+        if (is_enrolled($context, $user, $withcapability = '', true)){
+          //user enrolment is active
+          //User enrolment is being updated
+          $search = $DB->get_record('user_enrolments', ['enrolid' => $enrolid, 'userid' => $user]);
+          $expiration = $search->timeend;
+          $startdate = $search->timestart;
+          $fenddate = date('d/m/Y', strtotime('-1 day', $expiration));
+          $fstartdate = date('d/m/Y', $startdate);
+        }
+        else {
+          //user is 'suspended' or 'not current'
+          $fstartdate = '';
+          $fenddate = '';
+          }
       }
 
 
@@ -165,13 +190,16 @@ class observer
               $course_id_1 = 57;
               $course_id_2 = 58;
               $course_id_3 = 59;
-              $course_id_array = array($course_id_1, $course_id_2, $course_id_3);
+              $course_id_4 = 67;
+              $course_id_5 = 72;
+              $course_id_6 = 79;
+              $course_id_array = array($course_id_1, $course_id_2, $course_id_3, $course_id_4, $course_id_5, $course_id_6);
               
               //Finds the courseid values for all fields
               $fieldvalues = json_decode($response, true)['fieldValues'];
               $hasduplicateid = false;
               $coursevalues=[];
-              error_log('fieldvalues:' . var_export($fieldvalues,true));
+              // error_log('fieldvalues:' . var_export($fieldvalues,true));
               foreach ($fieldvalues as $fieldvalue) {
                 if (in_array($fieldvalue['field'], $course_id_array)) {
 
@@ -185,7 +213,7 @@ class observer
                         $hasduplicateid = true;
                         break; // Exit the loop if error occurs
                     }
-                    error_log('value:' . var_export($coursevalues,true));
+                    // error_log('value:' . var_export($coursevalues,true));
 
                 }
             }
@@ -223,7 +251,7 @@ class observer
                     <b>Possible Solutions</b>
                     <ul>
                     <li>Check the active campaign contact information and ensure there is a courseid of ".$courseid ." in one of the available slots.</li>
-                    <li>Check if all enrolments are within 18 months of the start date and the contact is enrolled in 3 or more accreditation courses</li>
+                    <li>Check if all enrolments are within 18 months of the start date and the contact is enrolled in 6 or more accreditation courses</li>
                     </ul>
                       ";
                     $subject = "Expiry reminder failed";
@@ -232,11 +260,14 @@ class observer
             
             } else {
               //error for if student email doesn't exist in Active Campaign
+              $course = get_course($courseid);
+              $coursename = $course->fullname;
               error_log("
               Error #4: The contact with email of $student_email does not exist in Active Campaign. Please see user information:
                 ActiveCampaign ContactId: $contact_id
                 Moodle UserId: $user
                 Moodle Email: $student_email
+                Course Name: $coursename
                 Course Expiration Start Date: $fstartdate
                 Course Expiration End Date: $fenddate
                 ");
@@ -250,6 +281,7 @@ class observer
                     <li>ActiveCampaign ContactID: ". $contact_id . "</li>
                     <li>Moodle UserID: " . $user . "</li>
                     <li>Moodle CourseID: " . $courseid . "</li>
+                    <li>Moodle CourseName: " . $coursename . "</li>
                     <li>Moodle Email: " . $student_email . "</li>
                     <li>Course Expiration Start Date: " . $fstartdate . "</li>
                     <li>Course Expiration End Date: " . $fenddate ."</li>
@@ -270,6 +302,8 @@ class observer
         $COURSE_ENROLMENT_END_DATE = null;
 
         foreach ($coursevalues as $fieldvalue) {
+          error_log(var_export('Fieldvalue is:' . $fieldvalue['value'],true));
+          error_log(var_export('Fieldid is:' . $fieldvalue['field'],true));
             if ($fieldvalue['value'] == $courseid && $fieldvalue['field'] == 57) {
                 //Active Campaign enrolment start and end date field ids
                 // error_log('Enrolment 1 variables triggered');
@@ -291,14 +325,38 @@ class observer
                 $COURSE_ENROLMENT_END_DATE = 56;
                 break;
             }
+            elseif ($fieldvalue['value'] == $courseid && $fieldvalue['field'] == 67) {
+              //Active Campaign enrolment start and end date field ids
+              // error_log('Enrolment 4 variables triggered');
+              $COURSE_ENROLMENT_START_DATE = 73;
+              $COURSE_ENROLMENT_END_DATE = 74;
+              break;
+          }
+            elseif ($fieldvalue['value'] == $courseid && $fieldvalue['field'] == 72) {
+              //Active Campaign enrolment start and end date field ids
+              // error_log('Enrolment 5 variables triggered');
+              $COURSE_ENROLMENT_START_DATE = 75;
+              $COURSE_ENROLMENT_END_DATE = 76;
+              break;
+          }
+            elseif ($fieldvalue['value'] == $courseid && $fieldvalue['field'] == 79) {
+              //Active Campaign enrolment start and end date field ids
+              // error_log('Enrolment 6 variables triggered');
+              $COURSE_ENROLMENT_START_DATE = 81;
+              $COURSE_ENROLMENT_END_DATE = 82;
+              break;
+          }
         }
         //Error handling ~ If none of the courseids match
         if ($COURSE_ENROLMENT_START_DATE == NULL OR $COURSE_ENROLMENT_END_DATE == NULL) {
+            $course = get_course($courseid);
+            $coursename = $course->fullname;
             error_log("
             Error #5: The CourseId of $courseid does not match any Active Campaign course ids. Please see user information:
               ActiveCampaign ContactId: $contact_id
               Moodle UserId: $user
               Moodle Email: $student_email
+              Course Name: $coursename
               Course Expiration Start Date: $fstartdate
               Course Expiration End Date: $fenddate
               ");
@@ -312,6 +370,7 @@ class observer
                   <li>ActiveCampaign ContactID: ". $contact_id . "</li>
                   <li>Moodle UserID: " . $user . "</li>
                   <li>Moodle CourseID: " . $courseid . "</li>
+                  <li>Moodle CourseName: " . $coursename . "</li>
                   <li>Moodle Email: " . $student_email . "</li>
                   <li>Course Expiration Start Date: " . $fstartdate . "</li>
                   <li>Course Expiration End Date: " . $fenddate ."</li>
