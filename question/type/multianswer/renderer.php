@@ -164,15 +164,15 @@ abstract class qtype_multianswer_subq_renderer_base extends qtype_renderer {
     protected function feedback_popup(question_graded_automatically $subq,
             $fraction, $feedbacktext, $rightanswer, question_display_options $options) {
 
-        // $feedback = array();
-        // if ($options->correctness) {
-        //     if (is_null($fraction)) {
-        //         $state = question_state::$gaveup;
-        //     } else {
-        //         $state = question_state::graded_state_for_fraction($fraction);
-        //     }
-        //     $feedback[] = $state->default_string(true);
-        // }
+        $feedback = array();
+        /*if ($options->correctness) {
+            if (is_null($fraction)) {
+                $state = question_state::$gaveup;
+            } else {
+                $state = question_state::graded_state_for_fraction($fraction);
+            }
+            $feedback[] = $state->default_string(true);
+        }*/
 
         if ($options->feedback && $feedbacktext) {
             $feedback[] = $feedbacktext;
@@ -182,21 +182,21 @@ abstract class qtype_multianswer_subq_renderer_base extends qtype_renderer {
             $feedback[] = get_string('correctansweris', 'qtype_shortanswer', $rightanswer);
         }
 
-        // $subfraction = '';
-        // if ($options->marks >= question_display_options::MARK_AND_MAX && $subq->maxmark > 0
-        //         && (!is_null($fraction) || $feedback)) {
-        //     $a = new stdClass();
-        //     $a->mark = format_float($fraction * $subq->maxmark, $options->markdp);
-        //     $a->max = format_float($subq->maxmark, $options->markdp);
-        //     $feedback[] = get_string('markoutofmax', 'question', $a);
-        // }
+        $subfraction = '';
+        /*if ($options->marks >= question_display_options::MARK_AND_MAX && $subq->defaultmark > 0
+                && (!is_null($fraction) || $feedback)) {
+            $a = new stdClass();
+            $a->mark = format_float($fraction * $subq->defaultmark, $options->markdp);
+            $a->max = format_float($subq->defaultmark, $options->markdp);
+            $feedback[] = get_string('markoutofmax', 'question', $a);
+        }*/
 
         if (!$feedback) {
             return '';
         }
 
         return html_writer::tag('span', implode('<br />', $feedback), [
-            // 'class' => 'feedbackspan',
+            //'class' => 'feedbackspan',
         ]);
     }
 
@@ -213,6 +213,8 @@ abstract class qtype_multianswer_subq_renderer_base extends qtype_renderer {
             return '';
         }
 
+        $PAGE->requires->js_call_amd('qtype_multianswer/feedback', 'initPopovers');
+
         $outputfeedback = html_writer::link('#', $icon, [
             'role' => 'button',
             'tabindex' => 0,
@@ -226,8 +228,8 @@ abstract class qtype_multianswer_subq_renderer_base extends qtype_renderer {
         ]);
         if ($feedbackcontents) {
             $outputfeedback .= html_writer::tag('div', $feedbackcontents, array('class' => 'outcome'));
-            }
-            return $outputfeedback;
+        }
+        return $outputfeedback;
     }
 
     /**
