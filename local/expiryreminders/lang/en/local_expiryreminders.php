@@ -30,4 +30,4 @@ $string['acapiurl'] = 'Active Campaign API URL';
 $string['acapiurl_desc'] = 'The contacts API URL for Active Campaign';
 $string['acapikey'] = 'Active Campaign API token';
 $string['acapikey_desc'] = 'The API token for Active Campaign';
-
+$string['plugin_enable'] = 'Enable the expiryreminders plugin';
