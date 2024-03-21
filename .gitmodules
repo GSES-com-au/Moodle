@@ -1,0 +1,3 @@
+[submodule "theme/learnr"]
+	path = theme/learnr
+	url = https://github.com/GSES-com-au/moodle-theme_learnr.git
