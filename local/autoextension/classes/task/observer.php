@@ -5,7 +5,13 @@ use \DateInterval;
 class observer //extends \core\task\scheduled_task                        //extends for Cron activation
 {                                  
     public static function submission_graded(\mod_assign\event\submission_graded $event)
-    {
+    {   
+        // for error_log
+        // require_once '../../config.php';
+        // error_reporting(E_ALL);
+        // ini_set('display_errors', 0);
+        // ini_set('log_errors', 1);
+        // ini_set('error_log', __DIR__ . '/error.log');
         global $DB, $PAGE;
         
         //Objectid required for assign_grades table id
@@ -23,10 +29,31 @@ class observer //extends \core\task\scheduled_task                        //exte
         $table = 'assign';                                          
         $assignname = $DB->get_field_select($table, $return, $select, $params, $strictness=IGNORE_MISSING);
 
+        // 2 design task changes, check the other design task has been submitted as students should only receive extensions if they have submitted both design tasks, otherwise they require
+        //a course re-enrollment or will need to purchase an extension.
+        $designtaskmap = array(
+            "Design Task Site B Submission (GCwB)" => "Design Task Site A Submission (GCwB)",
+            "Design Task Site A Submission (GCwB)" => "Design Task Site B Submission (GCwB)",
+            "Design Task 1 Electrical Schematic and Site Plan Submission" => "Design Task 2 Electrical Schematic and Site Plan Submission",
+            "Design Task 2 Electrical Schematic and Site Plan Submission" => "Design Task 1 Electrical Schematic and Site Plan Submission",
+            "Design Task 1 Submission" => "Design Task 2 Submission",
+            "Design Task 2 Submission" => "Design Task 1 Submission"
+        );
+        $otherassignname = $designtaskmap[$assignname];
+        $user = $event->relateduserid; 
+        $otherassignid = $DB->get_record('assign', array('name' => $otherassignname, 'course' => $courseid), '*', MUST_EXIST);
+        $submission = $DB->get_record('assign_submission', array('assignment' => $otherassignid->id, 'userid' => $user), '*', IGNORE_MISSING);
+        $submission_status = $submission->status;
+        $do_extension = strpos($assignname, "Design Task Site A Submission (GCwB)") !== false || strpos($assignname, "Design Task Site B Submission (GCwB)") !== false || 
+        strpos($assignname, "Design Task 1 Electrical Schematic and Site Plan Submission") !== false || strpos($assignname, "Design Task 2 Electrical Schematic and Site Plan Submission") !== false || 
+        strpos($assignname, "Design Task 1 Submission") !== false || strpos($assignname, "Design Task 2 Submission") !== false;
+        $do_extension_8 = str_contains($assignname, "Design Task Site A Submission (GCwB)") || str_contains($assignname, "Design Task Site B Submission (GCwB)")|| 
+        str_contains($assignname, "Design Task 1 Electrical Schematic and Site Plan Submission") || str_contains($assignname, "Design Task 2 Electrical Schematic and Site Plan Submission") || 
+        str_contains($assignname, "Design Task 1 Submission") || str_contains($assignname, "Design Task 2 Submission");
         //String name for Design Task varies between courses, therefore we need a "str_contain"
-        if (!function_exists('str_contains')) {
+        if (!function_exists('str_contains') && $submission_status == 'submitted' ) {
             //For older PHP versions
-            if (strpos($assignname, "Design Task Submission") !== false || strpos($assignname, "Preliminary Load Assessment Submission")  !== false || strpos($assignname, "Site Plan and Electrical Schematic") !== false){
+            if ($do_extension){
                 $user = $event->relateduserid; 
 
                 $instance = $DB->get_record('enrol', ['courseid' => $courseid, 'enrol' => 'manual']);
@@ -51,9 +78,9 @@ class observer //extends \core\task\scheduled_task                        //exte
                 }
             }
         }
-        else{
+        else if ($submission_status == 'submitted') {
             //For newer PHP version 8.0+
-                if (str_contains($assignname, "Design Task Submission")|| str_contains($assignname, "Preliminary Load Assessment Submission")|| str_contains($assignname, "Site Plan and Electrical Schematic")) {
+                if ($do_extension_8) {
                     $course = get_course($courseid);
                     // Get the course name
                     $courseName = $course->shortname;

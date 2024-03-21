@@ -139,11 +139,7 @@ class observer //extends \core\task\scheduled_task                        //exte
                     date_default_timezone_set('Australia/Sydney');
                     $date = new \DateTime('today midnight');   //must use '\' to avoid namespace naming conflicts
                     $enrolment->timestart = $date->getTimestamp(); // Set the current timestamp as the timestart
-                    if (str_contains($coursename, "Electrical Basics Examination")) {
-                        $enrolment->timeend = strtotime('+31 days', $enrolment->timestart); // Set the timeend to 31 days from now
-                    } else {
                     $enrolment->timeend = strtotime('+1 year 1 day', $enrolment->timestart); // Set the timeend to one year and 1 day from now
-                    }
                     $userexpiration = date('jS F Y', strtotime('-1 day', $enrolment->timeend));     //For email to user with the corrected expiration date
                     
                     // Update the enrolment record in the database
@@ -187,12 +183,7 @@ class observer //extends \core\task\scheduled_task                        //exte
                 $emaildetails = array('firstname' => $emailuser->firstname, 'coursename' => $coursename, 'expirydate' => $userexpiration, 'courseurl' => $courseurl);
 
             //-----------------------------------------------Email Templates
-                if (str_contains($coursename, "Electrical Basics Examination")) {
-                    //Email if prerequisites have been approved for the EB exam
-                    email_to_user($emailuser, '', get_string('eb_emailsubject', 'local_pending'), '', get_string('eb_email', 'local_pending', $emaildetails), '', '', false);
-                    //Sending email to tutor as well
-                    email_to_user(get_admin(), '', get_string('eb_emailsubject', 'local_pending') . ' - sent to ' . $emailuser->email, '', get_string('eb_email', 'local_pending', $emaildetails), '', '', false);
-                } else if ($LLN != 'approved') {
+                if ($LLN != 'approved') {
                     //Email if prerequisites have been approved and LLN incomplete
                     email_to_user($emailuser, '', get_string('lln_nys_emailsubject', 'local_pending'), '', get_string('lln_nys_email', 'local_pending', $emaildetails), '', '', false);
                     //Sending email to tutor as well

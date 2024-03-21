@@ -26,8 +26,7 @@ class observer
       (str_contains($categoryid, 6)
       || str_contains($categoryid, 7)
       || str_contains($categoryid, 8)
-      || str_contains($categoryid, 11)
-      || str_contains($coursename, "Electrical Basics Examination")) 
+      || str_contains($categoryid, 11)) 
       {
         $flag = 'deleted';
         self::handle_enrolment_event($event, $courseid, $flag); 
@@ -52,8 +51,7 @@ class observer
       (str_contains($categoryid, 6)
       || str_contains($categoryid, 7)
       || str_contains($categoryid, 8)
-      || str_contains($categoryid, 11)
-      || str_contains($coursename, "Electrical Basics Examination")) 
+      || str_contains($categoryid, 11)) 
       { 
         $flag = 'updated';
         self::handle_enrolment_event($event, $courseid, $flag); 
@@ -78,8 +76,7 @@ class observer
       (str_contains($categoryid, 6)
       || str_contains($categoryid, 7)
       || str_contains($categoryid, 8)
-      || str_contains($categoryid, 11)
-      || str_contains($coursename, "Electrical Basics Examination")) 
+      || str_contains($categoryid, 11)) 
       { 
         $flag = 'created';
         self::handle_enrolment_event($event, $courseid, $flag); 
@@ -159,6 +156,26 @@ class observer
         error_log("Error #1: Student id not found");
       } else {
         $data = json_decode($response, true);
+      
+      //check connection was made
+      if (empty($data)) {
+        error_log("Error #6: Connection error. Check the API key is correct, the associated user has the correct permissions, and Active Campaign is up");
+        $messageHtml = "Error #6: Connection error. Check the API key is correct, the associated user has the correct permissions, and Active Campaign is up
+                  <br />
+                  <b>Debugging log</b>
+                  <br />
+                    <ul>
+                    <li>ActiveCampaign ContactID: ". $contact_id . "</li>
+                    <li>Moodle UserID: " . $user . "</li>
+                    <li>Moodle CourseID: " . $courseid . "</li>
+                    <li>Moodle CourseName: " . $coursename . "</li>
+                    <li>Moodle Email: " . $student_email . "</li>
+                    <li>Course Expiration Start Date: " . $fstartdate . "</li>
+                    <li>Course Expiration End Date: " . $fenddate ."</li>
+                    </ul>";
+        $subject = "Expiry reminder failed";
+        email_to_user(get_admin(), '',$subject, '',$messageHtml, '', '', false);    
+      } else {
       
       //Ensures the contact exists
       if (!empty($data['contacts'])) {
@@ -293,6 +310,7 @@ class observer
         }
   
       }
+    }
       //checks which start and end date fields to update based on the courseid value and field id, once found timestart and timeend are sent to Active Campaign
       private static function checkcoursevalues($coursevalues, $courseid) {
         $api_url = get_config('local_expiryreminders', 'acapiurl');

@@ -1406,7 +1406,7 @@ function quiz_send_notification_messages($course, $quiz, $attempt, $context, $cm
            $a->resultcustom  = 'incomplete';
        }
        if ($quiz->sumgrades != 0) {
-           $a->gradecustom  = round($attempt->sumgrades / $quiz->sumgrades * 100,1) . '%';
+           $a->gradecustom  = round($attempt->sumgrades / $quiz->sumgrades * 100,2) . '%';
        }
     // Student who sat the quiz info.
     $a->studentidnumber = $submitter->idnumber;

@@ -183,13 +183,13 @@ abstract class qtype_multianswer_subq_renderer_base extends qtype_renderer {
         }
 
         $subfraction = '';
-        /*if ($options->marks >= question_display_options::MARK_AND_MAX && $subq->defaultmark > 0
+        if ($options->marks >= question_display_options::MARK_AND_MAX && $subq->defaultmark > 0
                 && (!is_null($fraction) || $feedback)) {
             $a = new stdClass();
             $a->mark = format_float($fraction * $subq->defaultmark, $options->markdp);
             $a->max = format_float($subq->defaultmark, $options->markdp);
-            $feedback[] = get_string('markoutofmax', 'question', $a);
-        }*/
+            //$feedback[] = get_string('markoutofmax', 'question', $a);
+        }
 
         if (!$feedback) {
             return '';
@@ -495,7 +495,7 @@ class qtype_multianswer_multichoice_vertical_renderer extends qtype_multianswer_
             $a->mark = format_float($fraction * $subq->defaultmark, $options->markdp);
             $a->max = format_float($subq->defaultmark, $options->markdp);
 
-            $feedback[] = html_writer::tag('div', get_string('markoutofmax', 'question', $a));
+            //$feedback[] = html_writer::tag('div', get_string('markoutofmax', 'question', $a));
         }
 
         if ($options->rightanswer) {
@@ -636,7 +636,7 @@ class qtype_multianswer_multiresponse_vertical_renderer extends qtype_multianswe
             }
         }
         // Display 'correct' answers as correct, if we are at 100%, otherwise mark them as 'partial'.
-        $answerfraction = ($fraction > 0.999) ? 1.0 : 0.5;
+        $answerfraction = ($fraction > 0.999) ? 1.0 : 0;
 
         foreach ($subq->get_order($qa) as $value => $ansid) {
             $ans = $subq->answers[$ansid];
@@ -653,13 +653,13 @@ class qtype_multianswer_multiresponse_vertical_renderer extends qtype_multianswe
             }
 
             $class = 'r' . ($value % 2);
-            if ($options->correctness && $isselected) {
-                $thisfrac = ($ans->fraction > 0) ? $answerfraction : 0;
-                $feedbackimg = $this->feedback_image($thisfrac);
-                $class .= ' ' . $this->feedback_class($thisfrac);
-            } else {
-                $feedbackimg = '';
-            }
+            //if ($options->correctness && $isselected) {
+            //    $thisfrac = ($ans->fraction > 0) ? $answerfraction : 0;
+            //    $feedbackimg = $this->feedback_image($thisfrac);
+            //    $class .= ' ' . $this->feedback_class($thisfrac);
+            //} else {
+            //    $feedbackimg = '';
+            //}
 
             $result .= $this->choice_wrapper_start($class);
             $result .= html_writer::empty_tag('input', $inputattributes);
@@ -677,7 +677,9 @@ class qtype_multianswer_multiresponse_vertical_renderer extends qtype_multianswe
 
             $result .= $this->choice_wrapper_end();
         }
-
+        if ($options->correctness) {
+            $result .= $this->feedback_image($answerfraction);
+        }
         $result .= $this->all_choices_wrapper_end();
 
         $feedback = array();
@@ -687,7 +689,7 @@ class qtype_multianswer_multiresponse_vertical_renderer extends qtype_multianswe
             $a->mark = format_float($fraction * $subq->defaultmark, $options->markdp);
             $a->max = format_float($subq->defaultmark, $options->markdp);
 
-            $feedback[] = html_writer::tag('div', get_string('markoutofmax', 'question', $a));
+            //$feedback[] = html_writer::tag('div', get_string('markoutofmax', 'question', $a));
         }
 
         if ($options->rightanswer) {
