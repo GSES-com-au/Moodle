@@ -24,8 +24,6 @@
 
 namespace customcertelement_image;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * The customcert element image's core interaction API.
  *
@@ -38,7 +36,7 @@ class element extends \mod_customcert\element {
     /**
      * @var array The file manager options.
      */
-    protected $filemanageroptions = array();
+    protected $filemanageroptions = [];
 
     /**
      * Constructor.
@@ -48,11 +46,11 @@ class element extends \mod_customcert\element {
     public function __construct($element) {
         global $COURSE;
 
-        $this->filemanageroptions = array(
+        $this->filemanageroptions = [
             'maxbytes' => $COURSE->maxbytes,
             'subdirs' => 1,
             'accepted_types' => 'image'
-        );
+        ];
 
         parent::__construct($element);
     }
@@ -65,15 +63,9 @@ class element extends \mod_customcert\element {
     public function render_form_elements($mform) {
         $mform->addElement('select', 'fileid', get_string('image', 'customcertelement_image'), self::get_images());
 
-        $mform->addElement('text', 'width', get_string('width', 'customcertelement_image'), array('size' => 10));
-        $mform->setType('width', PARAM_INT);
-        $mform->setDefault('width', 0);
-        $mform->addHelpButton('width', 'width', 'customcertelement_image');
+        \mod_customcert\element_helper::render_form_element_width($mform);
 
-        $mform->addElement('text', 'height', get_string('height', 'customcertelement_image'), array('size' => 10));
-        $mform->setType('height', PARAM_INT);
-        $mform->setDefault('height', 0);
-        $mform->addHelpButton('height', 'height', 'customcertelement_image');
+        \mod_customcert\element_helper::render_form_element_height($mform);
 
         $alphachannelvalues = [
             '0' => 0,
@@ -110,17 +102,13 @@ class element extends \mod_customcert\element {
      */
     public function validate_form_elements($data, $files) {
         // Array to return the errors.
-        $errors = array();
+        $errors = [];
 
-        // Check if width is not set, or not numeric or less than 0.
-        if ((!isset($data['width'])) || (!is_numeric($data['width'])) || ($data['width'] < 0)) {
-            $errors['width'] = get_string('invalidwidth', 'customcertelement_image');
-        }
+        // Validate the width.
+        $errors += \mod_customcert\element_helper::validate_form_element_width($data);
 
-        // Check if height is not set, or not numeric or less than 0.
-        if ((!isset($data['height'])) || (!is_numeric($data['height'])) || ($data['height'] < 0)) {
-            $errors['height'] = get_string('invalidheight', 'customcertelement_image');
-        }
+        // Validate the height.
+        $errors += \mod_customcert\element_helper::validate_form_element_height($data);
 
         // Validate the position.
         if (get_config('customcert', 'showposxy')) {
@@ -275,7 +263,7 @@ class element extends \mod_customcert\element {
                 $style .= 'height: ' . $imageinfo->height . 'mm';
             }
 
-            return \html_writer::tag('img', '', array('src' => $url, 'style' => $style));
+            return \html_writer::tag('img', '', ['src' => $url, 'style' => $style]);
         }
     }
 
@@ -349,7 +337,7 @@ class element extends \mod_customcert\element {
         $elementinfo = json_encode($elementinfo);
 
         // Perform the update.
-        $DB->set_field('customcert_elements', 'data', $elementinfo, array('id' => $this->get_id()));
+        $DB->set_field('customcert_elements', 'data', $elementinfo, ['id' => $this->get_id()]);
     }
 
     /**
@@ -378,7 +366,7 @@ class element extends \mod_customcert\element {
         $fs = get_file_storage();
 
         // The array used to store the images.
-        $arrfiles = array();
+        $arrfiles = [];
         // Loop through the files uploaded in the system context.
         if ($files = $fs->get_area_files(\context_system::instance()->id, 'mod_customcert', 'image', false, 'filename', false)) {
             foreach ($files as $hash => $file) {
@@ -394,7 +382,7 @@ class element extends \mod_customcert\element {
         }
 
         \core_collator::asort($arrfiles);
-        $arrfiles = array('0' => get_string('noimage', 'customcert')) + $arrfiles;
+        $arrfiles = ['0' => get_string('noimage', 'customcert')] + $arrfiles;
 
         return $arrfiles;
     }
