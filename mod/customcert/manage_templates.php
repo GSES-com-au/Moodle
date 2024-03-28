@@ -37,7 +37,7 @@ if ($action) {
 }
 
 if ($tid) {
-    $template = $DB->get_record('customcert_templates', array('id' => $tid), '*', MUST_EXIST);
+    $template = $DB->get_record('customcert_templates', ['id' => $tid], '*', MUST_EXIST);
     $template = new \mod_customcert\template($template);
 }
 
@@ -64,12 +64,12 @@ if ($tid) {
     if ($action && confirm_sesskey()) {
         $nourl = new moodle_url('/mod/customcert/manage_templates.php');
         $yesurl = new moodle_url('/mod/customcert/manage_templates.php',
-            array(
+            [
                 'tid' => $tid,
                 'action' => $action,
                 'confirm' => 1,
                 'sesskey' => sesskey()
-            )
+            ]
         );
 
         // Check if we are deleting a template.
@@ -101,15 +101,11 @@ if ($tid) {
             }
 
             // Create another template to copy the data to.
-            $newtemplate = new \stdClass();
-            $newtemplate->name = $template->get_name() . ' (' . strtolower(get_string('duplicate', 'customcert')) . ')';
-            $newtemplate->contextid = $template->get_contextid();
-            $newtemplate->timecreated = time();
-            $newtemplate->timemodified = $newtemplate->timecreated;
-            $newtemplateid = $DB->insert_record('customcert_templates', $newtemplate);
+            $name = $template->get_name() . ' (' . strtolower(get_string('duplicate', 'customcert')) . ')';
+            $newtemplate = \mod_customcert\template::create($name, $template->get_contextid());
 
             // Copy the data to the new template.
-            $template->copy_to_template($newtemplateid);
+            $template->copy_to_template($newtemplate);
 
             // Redirect back to the manage templates page.
             redirect(new moodle_url('/mod/customcert/manage_templates.php'));

@@ -76,7 +76,7 @@ class element_helper {
         $actualwidth = $pdf->GetStringWidth($content);
         $alignment = $element->get_alignment();
 
-        if ($w and $w < $actualwidth) {
+        if ($w && $w < $actualwidth) {
             $actualwidth = $w;
         }
 
@@ -129,7 +129,7 @@ class element_helper {
         if ($element->get_width()) {
             $style .= ' width: ' . $element->get_width() . 'mm';
         }
-        return \html_writer::div($content, '', array('style' => $style));
+        return \html_writer::div($content, '', ['style' => $style]);
     }
 
     /**
@@ -167,11 +167,11 @@ class element_helper {
      * @param \MoodleQuickForm $mform the edit_form instance.
      */
     public static function render_form_element_position($mform) {
-        $mform->addElement('text', 'posx', get_string('posx', 'customcert'), array('size' => 10));
+        $mform->addElement('text', 'posx', get_string('posx', 'customcert'), ['size' => 10]);
         $mform->setType('posx', PARAM_INT);
         $mform->setDefault('posx', 0);
         $mform->addHelpButton('posx', 'posx', 'customcert');
-        $mform->addElement('text', 'posy', get_string('posy', 'customcert'), array('size' => 10));
+        $mform->addElement('text', 'posy', get_string('posy', 'customcert'), ['size' => 10]);
         $mform->setType('posy', PARAM_INT);
         $mform->setDefault('posy', 0);
         $mform->addHelpButton('posy', 'posy', 'customcert');
@@ -183,10 +183,22 @@ class element_helper {
      * @param \MoodleQuickForm $mform the edit_form instance.
      */
     public static function render_form_element_width($mform) {
-        $mform->addElement('text', 'width', get_string('elementwidth', 'customcert'), array('size' => 10));
+        $mform->addElement('text', 'width', get_string('elementwidth', 'customcert'), ['size' => 10]);
         $mform->setType('width', PARAM_INT);
         $mform->setDefault('width', 0);
         $mform->addHelpButton('width', 'elementwidth', 'customcert');
+    }
+
+    /**
+     * Helper function to render the height element.
+     *
+     * @param \MoodleQuickForm $mform the edit_form instance.
+     */
+    public static function render_form_element_height($mform) {
+        $mform->addElement('text', 'height', get_string('elementheight', 'customcert'), ['size' => 10]);
+        $mform->setType('height', PARAM_INT);
+        $mform->setDefault('height', 0);
+        $mform->addHelpButton('height', 'elementheight', 'customcert');
     }
 
     /**
@@ -195,7 +207,7 @@ class element_helper {
      * @param \MoodleQuickForm $mform the edit_form instance.
      */
     public static function render_form_element_refpoint($mform) {
-        $refpointoptions = array();
+        $refpointoptions = [];
         $refpointoptions[self::CUSTOMCERT_REF_POINT_TOPLEFT] = get_string('topleft', 'customcert');
         $refpointoptions[self::CUSTOMCERT_REF_POINT_TOPCENTER] = get_string('topcenter', 'customcert');
         $refpointoptions[self::CUSTOMCERT_REF_POINT_TOPRIGHT] = get_string('topright', 'customcert');
@@ -212,7 +224,7 @@ class element_helper {
      * @param \MoodleQuickForm $mform the edit_form instance.
      */
     public static function render_form_element_alignment($mform) {
-        $alignmentoptions = array();
+        $alignmentoptions = [];
         $alignmentoptions[element::ALIGN_LEFT] = get_string('alignleft', 'customcert');
         $alignmentoptions[element::ALIGN_CENTER] = get_string('aligncenter', 'customcert');
         $alignmentoptions[element::ALIGN_RIGHT] = get_string('alignright', 'customcert');
@@ -230,7 +242,7 @@ class element_helper {
      * @return array the validation errors
      */
     public static function validate_form_element_colour($data) {
-        $errors = array();
+        $errors = [];
         // Validate the colour.
         if (!self::validate_colour($data['colour'])) {
             $errors['colour'] = get_string('invalidcolour', 'customcert');
@@ -245,7 +257,7 @@ class element_helper {
      * @return array the validation errors
      */
     public static function validate_form_element_position($data) {
-        $errors = array();
+        $errors = [];
 
         // Check if posx is not set, or not numeric or less than 0.
         if ((!isset($data['posx'])) || (!is_numeric($data['posx'])) || ($data['posx'] < 0)) {
@@ -263,14 +275,63 @@ class element_helper {
      * Helper function to perform validation on the width element.
      *
      * @param array $data the submitted data
+     * @param bool $allowzero allow zero as a valid value
      * @return array the validation errors
      */
-    public static function validate_form_element_width($data) {
-        $errors = array();
+    public static function validate_form_element_width($data, bool $allowzero = true) {
+        $errors = [];
+
+        // If there is no width element no validation is needed.
+        if (!isset($data['width'])) {
+            return [];
+        }
 
         // Check if width is less than 0.
-        if (isset($data['width']) && $data['width'] < 0) {
-            $errors['width'] = get_string('invalidelementwidth', 'customcert');
+        if (!is_numeric($data['width'])) {
+            $errors['width'] = get_string('invalidelementwidthorheightnotnumber', 'customcert');
+        } else {
+            if ($allowzero) {
+                if ($data['width'] < 0) {
+                    $errors['width'] = get_string('invalidelementwidthorheightzeroallowed', 'customcert');
+                }
+            } else {
+                if ($data['width'] <= 0) {
+                    $errors['width'] = get_string('invalidelementwidthorheightzeronotallowed', 'customcert');
+                }
+            }
+        }
+
+        return $errors;
+    }
+
+    /**
+     * Helper function to perform validation on the height element.
+     *
+     * @param array $data the submitted data
+     * @param bool $allowzero allow zero as a valid value
+     * @return array the validation errors
+     */
+    public static function validate_form_element_height($data, bool $allowzero = true) {
+        $errors = [];
+
+        // If there is no height element no validation is needed.
+        if (!isset($data['height'])) {
+            return [];
+        }
+
+        // Check if height is less than 0.
+        if (!is_numeric($data['height'])) {
+            $errors['height'] = get_string('invalidelementwidthorheightnotnumber', 'customcert');
+        } else {
+            if ($allowzero) {
+                if ($data['height'] < 0) {
+                    $errors['height'] = get_string('invalidelementwidthorheightzeroallowed', 'customcert');
+                }
+            } else {
+                if ($data['height'] <= 0) {
+                    $errors['height'] = get_string('invalidelementwidthorheightzeronotallowed', 'customcert');
+                }
+            }
         }
 
         return $errors;
@@ -307,7 +368,7 @@ class element_helper {
             $font = substr($font, 0, -1);
             $attr .= 'B';
         }
-        return array($font, $attr);
+        return [$font, $attr];
     }
 
     /**
@@ -318,7 +379,7 @@ class element_helper {
      */
     public static function validate_colour($colour) {
         // List of valid HTML colour names.
-        $colournames = array(
+        $colournames = [
             'aliceblue', 'antiquewhite', 'aqua', 'aquamarine', 'azure',
             'beige', 'bisque', 'black', 'blanchedalmond', 'blue',
             'blueviolet', 'brown', 'burlywood', 'cadetblue', 'chartreuse',
@@ -350,7 +411,7 @@ class element_helper {
             'slategray', 'slategrey', 'snow', 'springgreen', 'steelblue', 'tan',
             'teal', 'thistle', 'tomato', 'turquoise', 'violet', 'wheat', 'white',
             'whitesmoke', 'yellow', 'yellowgreen'
-        );
+        ];
 
         if (preg_match('/^#?([[:xdigit:]]{3}){1,2}$/', $colour)) {
             return true;
@@ -378,7 +439,7 @@ class element_helper {
                   FROM {customcert_elements}
                  WHERE pageid = :id";
         // Get the current max sequence on this page and add 1 to get the new sequence.
-        if ($maxseq = $DB->get_record_sql($sql, array('id' => $pageid))) {
+        if ($maxseq = $DB->get_record_sql($sql, ['id' => $pageid])) {
             $sequence = $maxseq->maxsequence + 1;
         }
 
@@ -403,7 +464,7 @@ class element_helper {
                  WHERE ce.id = :elementid";
 
         // Check if there is a course associated with this element.
-        if ($course = $DB->get_record_sql($sql, array('elementid' => $elementid))) {
+        if ($course = $DB->get_record_sql($sql, ['elementid' => $elementid])) {
             return $course->course;
         } else { // Must be in a site template.
             return $SITE->id;
@@ -426,7 +487,7 @@ class element_helper {
             INNER JOIN {customcert_elements} ce
                     ON cp.id = ce.pageid
                  WHERE ce.id = :elementid";
-        $contextid = $DB->get_field_sql($sql, array('elementid' => $elementid), MUST_EXIST);
+        $contextid = $DB->get_field_sql($sql, ['elementid' => $elementid], MUST_EXIST);
 
         return \context::instance_by_id($contextid);
     }
@@ -440,7 +501,7 @@ class element_helper {
         global $CFG;
 
         // Array to store the element types.
-        $options = array();
+        $options = [];
 
         // Check that the directory exists.
         $elementdir = "$CFG->dirroot/mod/customcert/element";
@@ -481,7 +542,7 @@ class element_helper {
      */
     public static function get_grade_items($course) {
         // Array to store the grade items.
-        $arrgradeitems = array();
+        $arrgradeitems = [];
 
         // Get other non-module related grade items.
         if ($gradeitems = \grade_item::fetch_all(['courseid' => $course->id])) {
@@ -493,7 +554,7 @@ class element_helper {
                 if ($gi->is_external_item()) {
                     $cm = get_coursemodule_from_instance($gi->itemmodule, $gi->iteminstance, $course->id);
                     $modcontext = \context_module::instance($cm->id);
-                    $modname = format_string($cm->name, true, array('context' => $modcontext));
+                    $modname = format_string($cm->name, true, ['context' => $modcontext]);
                 }
 
                 if ($gi->is_external_item() && !$gi->is_outcome_item()) {
@@ -531,7 +592,7 @@ class element_helper {
             return false;
         }
 
-        $grade = new \grade_grade(array('itemid' => $courseitem->id, 'userid' => $userid));
+        $grade = new \grade_grade(['itemid' => $courseitem->id, 'userid' => $userid]);
 
         return new grade_information(
             $courseitem->get_name(),
@@ -552,11 +613,11 @@ class element_helper {
     public static function get_mod_grade_info($cmid, $gradeformat, $userid) {
         global $DB;
 
-        if (!$cm = $DB->get_record('course_modules', array('id' => $cmid))) {
+        if (!$cm = $DB->get_record('course_modules', ['id' => $cmid])) {
             return false;
         }
 
-        if (!$module = $DB->get_record('modules', array('id' => $cm->module))) {
+        if (!$module = $DB->get_record('modules', ['id' => $cm->module])) {
             return false;
         }
 
@@ -615,7 +676,7 @@ class element_helper {
             return false;
         }
 
-        $grade = new \grade_grade(array('itemid' => $gradeitem->id, 'userid' => $userid));
+        $grade = new \grade_grade(['itemid' => $gradeitem->id, 'userid' => $userid]);
 
         return new grade_information(
             $gradeitem->get_name(),
