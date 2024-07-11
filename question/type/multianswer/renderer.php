@@ -221,7 +221,6 @@ abstract class qtype_multianswer_subq_renderer_base extends qtype_renderer {
             'class' => 'feedbacktrigger btn btn-link p-0',
             'data-toggle' => 'popover',
             'data-container' => 'body',
-        return $outputfeedback;
             'data-content' => $feedbackcontents,
             'data-placement' => 'right',
             'data-trigger' => 'hover focus',
