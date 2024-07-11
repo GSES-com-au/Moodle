@@ -59,3 +59,4 @@ moodle-plugin-ci.phar
 .hugo_build.lock
 phpcs.xml
 jsconfig.json
+/admin/cli/error_log 
