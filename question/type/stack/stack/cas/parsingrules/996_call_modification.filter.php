@@ -66,9 +66,13 @@ class stack_ast_filter_996_call_modification implements stack_cas_astfilter {
                     $replacement = new MP_FunctionCall(new MP_Identifier('block'),
                         [
                             new MP_List([new MP_Identifier('_tmp_996')]),
-                            new MP_Operation(':', new MP_Identifier('_tmp_996'), $node->arguments[0])
+                            new MP_Operation(':', new MP_Identifier('_tmp_996'), $node->arguments[0]),
                         ]);
+                    $node->arguments[0]->position['call-id'] = true;
+                    $replacement->position['ev-check'] = true;
+                    $replacement->name->position['ev-check'] = true;
                     $node->arguments[0] = new MP_Identifier('_tmp_996');
+                    $node->arguments[0]->position['ev-check'] = true;
                     $node->parentnode->replace($node, $replacement);
                     $replacement->arguments[] = $node;
                     return false;

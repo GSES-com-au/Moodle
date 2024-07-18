@@ -27,8 +27,10 @@ require_once(__DIR__ . '/../stack/cas/castext2/utils.php');
 require_once(__DIR__ . '/../stack/maximaparser/utils.php');
 
 // Now get cli options.
-list($options, $unrecognized) = cli_get_params(array('help' => false,
-    'string' => '{@foo@}', 'ast' => false), array('h' => 'help'));
+list($options, $unrecognized) = cli_get_params([
+    'help' => false,
+    'string' => '{@foo@}', 'ast' => false,
+], ['h' => 'help']);
 if ($unrecognized) {
     $unrecognized = implode("\n  ", $unrecognized);
     cli_error(get_string('cliunknowoption', 'admin', $unrecognized));
@@ -52,8 +54,7 @@ if (isset($options['string'])) {
 try {
     $result = castext2_parser_utils::compile($teststring, null, ['context' => 'test']);
     print("\nSuccess:\n");
-    $ast = maxima_parser_utils::parse($result);
-    print($ast->toString(['pretty' => true]) . "\n");
+    print($result->toString(['pretty' => true]) . "\n");
 } catch (Exception $e) {
     print("\nFailed\n");
     var_dump($e);

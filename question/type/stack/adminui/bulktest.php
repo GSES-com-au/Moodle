@@ -38,9 +38,10 @@ raise_memory_limit(MEMORY_HUGE);
 // Get the parameters from the URL.
 $contextid = required_param('contextid', PARAM_INT);
 $context = context::instance_by_id($contextid);
+$categoryid = optional_param('categoryid', null, PARAM_INT);
 
 $skippreviouspasses = optional_param('skippreviouspasses', false, PARAM_BOOL);
-$urlparams = ['contextid' => $context->id];
+$urlparams = ['contextid' => $context->id, 'categoryid' => $categoryid];
 if ($skippreviouspasses) {
     $urlparams['skippreviouspasses'] = 1;
 }
@@ -57,7 +58,7 @@ if ($context->contextlevel == CONTEXT_MODULE) {
     // Calling $PAGE->set_context should be enough, but it seems that it is not.
     // Therefore, we get the right $cm and $course, and set things up ourselves.
     $cm = get_coursemodule_from_id(false, $context->instanceid, 0, false, MUST_EXIST);
-    $PAGE->set_cm($cm, $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST));
+    $PAGE->set_cm($cm, $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST));
 }
 
 // Create the helper class.
@@ -72,7 +73,7 @@ echo $OUTPUT->heading($title);
 
 // Run the tests.
 list($allpassed, $failing) = $bulktester->run_all_tests_for_context(
-        $context, 'web', false, $skippreviouspasses);
+      $context, $categoryid, 'web', false, $skippreviouspasses);
 
 // Display the final summary.
 $bulktester->print_overall_result($allpassed, $failing);

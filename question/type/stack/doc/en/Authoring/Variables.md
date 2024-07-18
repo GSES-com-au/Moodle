@@ -75,12 +75,18 @@ As a more complicated example, to typeset `u(A_k,k,1,inf)` as \({\bigcup_{k = 1}
 
 Notice in this example how we check the length of the arguments supplied to the (inert) function `u`.  If there are fewer than the required number of arguments then this texput function returns something sensible.  Without this clause you get errors, which would be unhelpful to a student trying to type this in.
 
+Another example is to have the function `foo` displayed as traditional fractions.
+
+    texput(foo,lambda([e],[a,b]:args(e), sconcat("\\frac{", tex1(a), "}{", tex1(b), "}")));
+
+Note the way the lambda expression for the tex function has _one_ argument which is split later within the function.
+
 ## Feedback variables {#Feedback_variables}
 
 The feedback variables form one field in the [potential response tree](Potential_response_trees.md).
 
 When using the [potential response tree](Potential_response_trees.md) it is often very useful
-to manipulate the student's answer _before_ applying any of the [Answer tests](Answer_tests.md).
+to manipulate the student's answer _before_ applying any of the [Answer tests](Answer_Tests/index.md).
 This gives the opportunity to perform sophisticated mathematical operations.
 
 Before each answer test is applied the following list of variables is assembled and evaluated

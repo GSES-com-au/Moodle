@@ -29,60 +29,84 @@ require_once(__DIR__ . '/demarkdown.block.php');
 require_once(__DIR__ . '/demoodle.block.php');
 
 class stack_cas_castext2_special_root extends stack_cas_castext2_block {
-    public function compile($format, $options):  ? string {
-        $r = '';
+    public function compile($format, $options):  ? MP_Node {
+        $r = null;
 
-        if ($this->is_flat()) {
-            $r = 'sconcat(';
+        $flat = $this->is_flat();
+        if ($flat) {
+            $r = new MP_FunctionCall(new MP_Identifier('sconcat'), []);
         } else {
-            $r = '["%root",';
+            $r = new MP_List([new MP_String('%root')]);
         }
-        $items = [];
 
         foreach ($this->children as $item) {
             $c = $item->compile($format, $options);
             if ($c !== null) {
-                $items[] = $c;
+                if ($flat) {
+                    $r->arguments[] = $c;
+                } else {
+                    $r->items[] = $c;
+                }
             }
         }
-        $r .= implode(',', $items);
 
-        if ($this->is_flat()) {
-            $r .= ')';
-        } else {
-            $r .= ']';
-        }
-
-        // Essentially we now have an expression where anything could happen.
-        // We do not want it to affect the surroundings. So parse and
-        // find the used variables.
-        $ast    = maxima_parser_utils::parse($r);
+        $ast    = $r;
 
         // At this point we want to simplify things, it is entirely
         // possible that there are sconcats in play with overt number
         // of arguments and we may need to turn them to reduce-calls
         // to deal with GCL-limits.
 
-        $filteroptions = ['601_castext' => $options];
-        $pipeline = stack_parsing_rule_factory::get_filter_pipeline(['601_castext',
-            '602_castext_simplifier', '680_gcl_sconcat'], $filteroptions, false);
+        $filteroptions = [
+            '601_castext' => $options,
+            '610_castext_static_string_extractor' => $options,
+        ];
+        $pipeline = stack_parsing_rule_factory::get_filter_pipeline([
+            '601_castext',
+            '602_castext_simplifier', '610_castext_static_string_extractor',
+            '680_gcl_sconcat',
+        ], $filteroptions, false);
+        // If we are within an include it is necessary to avoid static string-collection.
+        if (isset($options['in include'])) {
+            $pipeline = stack_parsing_rule_factory::get_filter_pipeline([
+                '601_castext',
+                '602_castext_simplifier', '680_gcl_sconcat',
+            ],
+                 $filteroptions, false);
+        }
+
+        // Enusre that the tree has been marked as CASText.
+        $mark = function($node) {
+            $node->position['castext'] = true;
+            return true;
+        };
+        $ast->callbackRecurse($mark);
+        $ast->position['castext'] = true;
+        $ast = new MP_Group([$ast]);
 
         $errors = [];
         $answernotes = [];
         $ast = $pipeline->filter($ast, $errors, $answernotes, new stack_cas_security());
 
         if (count($errors) > 0) {
-            throw new stack_exception(implode('; ', $errors));
+            $this->err = $errors;
         }
 
-        $r = $ast->toString(['nosemicolon' => true]);
-
         $varref = maxima_parser_utils::variable_usage_finder($ast);
+        $r = $ast->items[0];
 
         // This may break with GCL as there is a limit for that local call there.
         if (count($varref['write']) > 0) {
-            $r = 'castext_simplify(block(local(' . implode(',', array_keys($varref['write'])) .
-                '),' . $r . '))';
+            $r = new MP_FunctionCall(new MP_Identifier('castext_simplify'), [
+                new MP_FunctionCall(new MP_Identifier('block'), [
+                    new MP_FunctionCall(new MP_Identifier('local'), []),
+                    $r,
+                ]),
+            ]);
+
+            foreach ($varref['write'] as $key => $duh) {
+                $r->arguments[0]->arguments[0]->arguments[] = new MP_Identifier($key);
+            }
         }
 
         return $r;
@@ -121,7 +145,7 @@ class stack_cas_castext2_special_root extends stack_cas_castext2_block {
 
         // This should be handled at a higher level, but as the structure that is postprocessed
         // Still comes through so many routes this has not been cleared.
-        // TODO: once everything for this comes through the MaximaParser, make the conversion
+        // TO-DO: once everything for this comes through the MaximaParser, make the conversion
         // from its structure to the array this function eats do this.
         $r = str_replace('QMCHAR', '?', $r);
 
@@ -133,7 +157,7 @@ class stack_cas_castext2_special_root extends stack_cas_castext2_block {
     }
 
     // Creates a block from a node.
-    // TODO: pick another place for this function.
+    // TO-DO: pick another place for this function.
     public static function make(CTP_Node $node): stack_cas_castext2_block {
         if ($node instanceof CTP_IOBlock) {
             $r = new stack_cas_castext2_special_ioblock([], [], $node->

@@ -20,19 +20,28 @@ require_once(__DIR__ . '/../../ast.container.class.php');
 
 class stack_cas_castext2_define extends stack_cas_castext2_block {
 
-    public function compile($format, $options): ?string {
+    public function compile($format, $options): ?MP_Node {
         $epos = $options['context'] . '/' . $this->position['start'] . '-' . $this->position['end'];
-        $epos = stack_utils::php_string_to_maxima_string($epos);
-        $r = '(';
+        $r = new MP_Group([]);
         foreach ($this->params as $param) {
             $ev = stack_ast_container::make_from_teacher_source($param['value']);
-            $ev = $ev->get_evaluationform();
-            $r .= '_EC(errcatch(' . $param['key'] . ':' . $ev . '),' . $epos . '),';
+            $ast = $ev->get_commentles_primary_statement();
+            $r->items[] = new MP_FunctionCall(new MP_Identifier('_EC'),
+                [
+                    new MP_FunctionCall(new MP_Identifier('errcatch'), [
+                        new MP_Operation(':', new MP_Identifier($param['key']), $ast),
+                    ]),
+                    new MP_String($epos),
+                ]);
         }
 
-        $r .= '"")'; // At the end just return an empty string.
+        // In the end we need to return something. Note that this will break all
+        // sort of simplifications and you may see some wacky logic working with this.
+        // The recommended simplification rule is to move this before any static seen
+        // before this, and jsut ignore what happens inside this.
+        $r->items[] = new MP_String('');
 
-        // TODO: consider a define that would define something for only its contents?
+        // TO-DO: consider a define that would define something for only its contents?
         // For now however define is assumed to be an empty block.
         // block(local(foo,bar),foo:1,bar:3,contents).
         return $r;
@@ -43,7 +52,7 @@ class stack_cas_castext2_define extends stack_cas_castext2_block {
     }
 
     public function validate_extract_attributes(): array {
-        $r = array();
+        $r = [];
         foreach ($this->params as $param) {
             $r[] = stack_ast_container_silent::make_from_teacher_source($param['key'] . ':' .
                 $param['value'], 'ct2:define', new stack_cas_security());

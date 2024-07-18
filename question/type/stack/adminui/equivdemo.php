@@ -40,11 +40,11 @@ if (!$questionid) {
     require_login();
     $context = context_system::instance();
     require_capability('qtype/stack:usediagnostictools', $context);
-    $urlparams = array();
+    $urlparams = [];
 
 } else {
     // Load the necessary data.
-    $questiondata = $DB->get_record('question', array('id' => $questionid), '*', MUST_EXIST);
+    $questiondata = $DB->get_record('question', ['id' => $questionid], '*', MUST_EXIST);
     $question = question_bank::load_question($questionid);
 
     // Process any other URL parameters, and do require_login.
@@ -56,7 +56,7 @@ if (!$questionid) {
 
 $context = context_system::instance();
 $PAGE->set_context($context);
-$PAGE->set_url('/question/type/stack/equivdemo.php', $urlparams);
+$PAGE->set_url('/question/type/stack/adminui/equivdemo.php', $urlparams);
 $title = "Equivalence reasoning test cases";
 $PAGE->set_title($title);
 
@@ -81,7 +81,7 @@ $options->set_site_defaults();
 $options->set_option('simplify', false);
 $options->set_option('multiplicationsign', 'none');
 
-$casstrings = array();
+$casstrings = [];
 $i = 0;
 $debug = false;
 // Set this to display only one argument.  Use the number.
@@ -101,7 +101,7 @@ if (array_key_exists('fail', $_GET)) {
 $verbose = $debug;
 /* Just consider the last in the array. */
 $sa = array_reverse($samplearguments);
-$samplearguments2 = array($sa[0]);
+$samplearguments2 = [$sa[0]];
 
 $timestart = microtime(true);
 foreach ($samplearguments as $argument) {
@@ -155,7 +155,7 @@ foreach ($samplearguments as $argument) {
 
             $cs4 = stack_ast_container::make_from_teacher_source("R1:first(S1)", '', new stack_cas_security());
 
-            $session = new stack_cas_session2(array($ap, $ar, $ac, $cs1, $cs2, $cs3, $cs4), $options);
+            $session = new stack_cas_session2([$ap, $ar, $ac, $cs1, $cs2, $cs3, $cs4], $options);
             $expected = $argument['outcome'];
             if (true === $argument['outcome']) {
                 $expected = 'true';
@@ -165,14 +165,16 @@ foreach ($samplearguments as $argument) {
             $string       = "\[{@second(S1)@}\]";
             $ct = castext2_evaluatable::make_from_source($string, 'equivdemo');
             $session->add_statement($ct);
-            $session->instantiate();
+            if ($session->get_valid()) {
+                $session->instantiate();
+            }
             $start = microtime(true);
             $displaytext  = $ct->get_rendered();
             $took = (microtime(true) - $start);
             $rtook = round($took, 5);
 
             $argumentvalue = '';
-            $overall = html_writer::tag('span', 'No value returned.', array('class' => 'stacksyntaxexamplehighlight'));
+            $overall = html_writer::tag('span', 'No value returned.', ['class' => 'stacksyntaxexamplehighlight']);
             if ($cs4->is_correctly_evaluated()) {
                 $argumentvalue = $cs4->get_value();
                 $overall = "Overall the argument is {$argumentvalue}.";
@@ -180,7 +182,7 @@ foreach ($samplearguments as $argument) {
             if ('unsupported' !== $argument['outcome']) {
                 $overall .= "  We expected the argument to be {$expected}.";
                 if ($argumentvalue != $expected) {
-                    $overall = html_writer::tag('span', $overall, array('class' => 'stacksyntaxexamplehighlight'));
+                    $overall = html_writer::tag('span', $overall, ['class' => 'stacksyntaxexamplehighlight']);
                 }
             }
             if ($argumentvalue === 'fail') {
@@ -192,8 +194,10 @@ foreach ($samplearguments as $argument) {
             }
             $errs = '';
             if ($ct->get_errors() != '') {
-                $errs = html_writer::tag('span', $ct->get_errors(), array('class' => 'stacksyntaxexamplehighlight'));
+                $errs = html_writer::tag('span', $ct->get_errors(), ['class' => 'stacksyntaxexamplehighlight']);
                 $errs .= $session->get_debuginfo();
+            } else if (!$session->get_valid()) {
+                $errs = html_writer::tag('span', $session->get_errors(true), ['class' => 'stacksyntaxexamplehighlight']);
             }
             $debuginfo = $session->get_debuginfo();
 
@@ -217,13 +221,13 @@ foreach ($samplearguments as $argument) {
                 echo html_writer::tag('h3', $cskey . ": ". $title).
                     html_writer::tag('p', $argument['narrative']);
                 if (!$debug && $verbose) {
-                    echo html_writer::tag('pre', htmlspecialchars($argument['casstring'])).
+                    echo html_writer::tag('pre', htmlspecialchars($argument['casstring'], ENT_COMPAT)).
                     html_writer::tag('p', $errs);
                 }
                 echo html_writer::tag('p', stack_ouput_castext($displaytext));
                 if ($debug) {
-                    echo html_writer::tag('pre', $cskey . ": ". htmlspecialchars($cs1->get_inputform()) .
-                            ";\nDL:" . htmlspecialchars($argument['debuglist']) . ";").
+                    echo html_writer::tag('pre', $cskey . ": ". htmlspecialchars($cs1->get_inputform(), ENT_COMPAT) .
+                        ";\nDL:" . htmlspecialchars($argument['debuglist'], ENT_COMPAT) . ";").
                         html_writer::tag('p', $errs);
                 }
                 echo "\n<hr/>\n\n\n";
@@ -231,11 +235,11 @@ foreach ($samplearguments as $argument) {
             /* Use the real validation code, and also create something which can be pasted into a live input box. */
             if ($onlyarg) {
                 $teacheranswer = $cs1->get_inputform();
-                $input = new stack_equiv_input('ans1', $teacheranswer, $options, array('options' => 'comments'));
+                $input = new stack_equiv_input('maximavars', $teacheranswer, $options, ['options' => 'comments']);
                 $response = $input->get_correct_response($teacheranswer);
                 $security = new stack_cas_security();
                 $state = $input->validate_student_response($response, $options, $teacheranswer, $security);
-                echo $input->render($state, 'ans1', false, $teacheranswer);
+                echo $input->render($state, 'maximavars', false, $teacheranswer);
             }
         }
 
@@ -258,7 +262,7 @@ if ($debug) {
     }
     $script .= "simp:false;\n";
     echo html_writer::tag('textarea', $script,
-            array('readonly' => 'readonly', 'wrap' => 'virtual', 'rows' => '32', 'cols' => '100'));
+            ['readonly' => 'readonly', 'wrap' => 'virtual', 'rows' => '32', 'cols' => '100']);
     echo '<hr />';
 
     // Have a second text area to facilitate pasting the arguments into separate lines in Maxima.
@@ -268,89 +272,8 @@ if ($debug) {
     }
     $script .= "\n".'disp_stack_eval_arg(A22, true, true, true, DL);';
     echo html_writer::tag('textarea', $script,
-            array('readonly' => 'readonly', 'wrap' => 'virtual', 'rows' => '32', 'cols' => '100'));
+            ['readonly' => 'readonly', 'wrap' => 'virtual', 'rows' => '32', 'cols' => '100']);
     echo '<hr />';
-}
-
-/* caschat.php script functions. */
-
-$debuginfo = '';
-$errs = '';
-$varerrs = '';
-
-$vars   = optional_param('vars', '', PARAM_RAW);
-$string = optional_param('cas', '', PARAM_RAW);
-$simp   = optional_param('simp', '', PARAM_RAW);
-
-// Always fix dollars in this script.
-// Very useful for converting existing text for use elswhere in Moodle, such as in pages of text.
-$string = stack_maths::replace_dollars($string);
-
-// Sort out simplification.
-if ('on' == $simp) {
-    $simp = true;
-} else {
-    $simp = false;
-}
-// Initially simplification should be on.
-if (!$vars && !$string) {
-    $simp = true;
-}
-
-if ($string) {
-    $options = new stack_options();
-    $options->set_site_defaults();
-    $options->set_option('simplify', $simp);
-
-    $session = new stack_cas_session2(null, $options);
-    if ($vars) {
-        $keyvals = new stack_cas_keyval($vars, $options, 0);
-        $session = $keyvals->get_session();
-        $varerrs = $keyvals->get_errors();
-    }
-
-    if (!$varerrs) {
-        $ct = castext2_evaluatable::make_from_source($string, 'equivdemo');
-        $session->add_statement($ct);
-        $session->instantiate();
-        $displaytext  = $ct->get_rendered();
-        $errs         = $ct->get_errors();
-        $debuginfo    = $session->get_debuginfo();
-    }
-}
-
-if (!$varerrs) {
-    if ($string) {
-        echo $OUTPUT->box(stack_ouput_castext($displaytext));
-    }
-}
-
-if ($simp) {
-    $simp = stack_string('autosimplify').' '.
-                html_writer::empty_tag('input', array('type' => 'checkbox', 'checked' => $simp, 'name' => 'simp'));
-} else {
-    $simp = stack_string('autosimplify').' '.html_writer::empty_tag('input', array('type' => 'checkbox', 'name' => 'simp'));
-}
-
-$varlen = substr_count($vars, "\n") + 3;
-$stringlen = max(substr_count($string, "\n") + 3, 8);
-
-echo html_writer::tag('form',
-            html_writer::tag('h2', stack_string('questionvariables')).
-            html_writer::tag('p', $varerrs) .
-            html_writer::tag('p', html_writer::tag('textarea', $vars,
-                    array('cols' => 100, 'rows' => $varlen, 'name' => 'vars'))).
-            html_writer::tag('p', $simp) .
-            html_writer::tag('h2', stack_string('castext')) .
-            html_writer::tag('p', $errs) .
-            html_writer::tag('p', html_writer::tag('textarea', $string,
-                    array('cols' => 100, 'rows' => $stringlen, 'name' => 'cas'))).
-            html_writer::tag('p', html_writer::empty_tag('input',
-                    array('type' => 'submit', 'value' => stack_string('chat')))),
-        array('action' => $PAGE->url, 'method' => 'post'));
-
-if ('' != trim($debuginfo)) {
-    echo $OUTPUT->box($debuginfo);
 }
 
 echo $OUTPUT->footer();

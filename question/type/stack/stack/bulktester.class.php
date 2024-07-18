@@ -27,56 +27,59 @@ require_once(__DIR__ . '/../../../engine/bank.php');
 class stack_bulk_tester {
 
     /**
-     * Get all the contexts that contain at least one STACK question, with a
-     * count of the number of those questions.
+     * Get all the courses and their contexts from the database.
      *
-     * @return array context id => number of STACK questions.
+     * @return array of course objects with id, contextid and name (short),
+     * indexed by id
      */
-    public function get_stack_questions_by_context() {
+    public function get_all_courses() {
         global $DB;
 
-        // Earlier than Moodle 4.0.
-        if (stack_determine_moodle_version() < 400) {
-            return $DB->get_records_sql_menu("
-                SELECT ctx.id, COUNT(q.id) AS numstackquestions
-                  FROM {context} ctx
-                  JOIN {question_categories} qc ON qc.contextid = ctx.id
-                  JOIN {question} q ON q.category = qc.id
-                WHERE q.qtype = 'stack'
-                GROUP BY ctx.id, ctx.path
-                ORDER BY ctx.path");
-        }
-
-        return $DB->get_records_sql_menu("
-                SELECT ctx.id, COUNT(q.id) AS numstackquestions
-                  FROM {context} ctx
-                  JOIN {question_categories} qc ON qc.contextid = ctx.id
-                  JOIN {question_bank_entries} qb ON qb.questioncategoryid = qc.id
-                  JOIN {question_versions} qv ON qv.questionbankentryid = qb.id
-                  JOIN {question} q ON q.id = qv.questionid
-                WHERE q.qtype = 'stack'
-                AND qv.version = (SELECT MAX(v.version)
-                                  FROM {question_versions} v
-                                  JOIN {question_bank_entries} be
-                                    ON be.id = v.questionbankentryid
-                                 WHERE be.id = qb.id)
-                GROUP BY ctx.id, ctx.path
-                ORDER BY ctx.path");
+        return $DB->get_records_sql("
+            SELECT crs.id, ctx.id as contextid, crs.shortname as name
+              FROM {course} crs
+              JOIN {context} ctx ON ctx.instanceid = crs.id
+            WHERE ctx.contextlevel = 50
+            ORDER BY name");
     }
 
     /**
-     * Get all the STACK questions in a particular context.
+     * Get all the contexts that contain at least one stack question, with a
+     * count of the number of those questions. Only the latest version of each
+     * question is counted.
      *
-     * @return array id of STACK questions.
+     * @return array context id => number of stack questions.
      */
-    public function get_stack_questions($categoryid) {
+    public function get_num_stack_questions_by_context() {
         global $DB;
 
-        // Earlier than Moodle 4.0.
-        if (stack_determine_moodle_version() < 400) {
-            return $DB->get_records_menu('question',
-                ['category' => $categoryid, 'qtype' => 'stack'], 'name', 'id, name');
-        }
+        return $DB->get_records_sql_menu("
+            SELECT ctx.id, COUNT(q.id) AS numstackquestions
+            FROM {context} ctx
+            JOIN {question_categories} qc ON qc.contextid = ctx.id
+            JOIN {question_bank_entries} qbe ON qbe.questioncategoryid = qc.id
+            JOIN {question_versions} qv ON qv.questionbankentryid = qbe.id
+            JOIN {question} q ON qv.questionid = q.id
+            WHERE q.qtype = 'stack'
+            AND (qv.version = (SELECT MAX(v.version)
+                                FROM {question_versions} v
+                                JOIN {question_bank_entries} be ON be.id = v.questionbankentryid
+                                WHERE be.id = qbe.id)
+                              )
+            GROUP BY ctx.id, ctx.path
+            ORDER BY ctx.path
+        ");
+    }
+
+    /**
+     * Find all stack questions in a given category, returning only
+     * the latest version of each question.
+     * @param type $categoryid the id of a question category of interest
+     * @return all stack question ids in any state and any version in the given
+     * category. Each row in the returned list of rows has an id, name and version number.
+     */
+    public function stack_questions_in_category($categoryid) {
+        global $DB;
 
         // See question/engine/bank.php around line 500, but this does not return the last version.
         $qcparams['readystatus'] = \core_question\local\bank\question_version_status::QUESTION_STATUS_READY;
@@ -97,6 +100,83 @@ class stack_bulk_tester {
     }
 
     /**
+     * Get a list of all the categories within the supplied contextid that
+     * contain stack questions in any state and any version.
+     * @return an associative array mapping from category id to an object
+     * with name and count fields for all question categories in the given context
+     * that contain one or more stack questions.
+     * The 'count' field is the number of stack questions in the given
+     * category.
+     */
+    public function get_categories_for_context($contextid) {
+        global $DB;
+
+        return $DB->get_records_sql("
+                SELECT qc.id, qc.parent, qc.name as name,
+                       (SELECT count(1)
+                        FROM {question} q
+                        JOIN {question_versions} qv ON qv.questionid = q.id
+                        JOIN {question_bank_entries} qbe ON qv.questionbankentryid = qbe.id
+                        WHERE qc.id = qbe.questioncategoryid and q.qtype='stack') AS count
+                FROM {question_categories} qc
+                WHERE qc.contextid = :contextid
+                ORDER BY qc.name",
+            ['contextid' => $contextid]);
+    }
+
+    /**
+     * Get all the stack questions in the given context.
+     *
+     * @param courseid The id of the course of interest.
+     * @param includeprototypes true to include prototypes in the returned list.
+     * @return array qid => question
+     */
+    public function get_all_stack_questions_in_context($contextid) {
+        global $DB;
+
+        return $DB->get_records_sql("
+            SELECT q.id, ctx.id as contextid, qc.id as category, qc.name as categoryname, q.*, opts.*
+              FROM {context} ctx
+              JOIN {question_categories} qc ON qc.contextid = ctx.id
+              JOIN {question_bank_entries} qbe ON qbe.questioncategoryid = qc.id
+              JOIN {question_versions} qv ON qv.questionbankentryid = qbe.id
+              JOIN {question} q ON q.id = qv.questionid
+              WHERE (qv.version = (SELECT MAX(v.version)
+                                FROM {question_versions} v
+                                JOIN {question_bank_entries} be ON be.id = v.questionbankentryid
+                                WHERE be.id = qbe.id and q.qtype='stack')
+                              )
+              AND ctx.id = :contextid
+              ORDER BY name", ['contextid' => $contextid]);
+    }
+
+    /**
+     * Get all the contexts that contain at least one STACK question, with a
+     * count of the number of those questions.
+     *
+     * @return array context id => number of STACK questions.
+     */
+    public function get_stack_questions_by_context() {
+        global $DB;
+
+        return $DB->get_records_sql_menu("
+                SELECT ctx.id, COUNT(q.id) AS numstackquestions
+                  FROM {context} ctx
+                  JOIN {question_categories} qc ON qc.contextid = ctx.id
+                  JOIN {question_bank_entries} qb ON qb.questioncategoryid = qc.id
+                  JOIN {question_versions} qv ON qv.questionbankentryid = qb.id
+                  JOIN {question} q ON q.id = qv.questionid
+                WHERE q.qtype = 'stack'
+                AND qv.version = (SELECT MAX(v.version)
+                                  FROM {question_versions} v
+                                  JOIN {question_bank_entries} be
+                                    ON be.id = v.questionbankentryid
+                                 WHERE be.id = qb.id)
+                GROUP BY ctx.id, ctx.path
+                ORDER BY ctx.path");
+    }
+
+    /**
      * Run all the question tests for all variants of all questions belonging to
      * a given context.
      *
@@ -110,58 +190,48 @@ class stack_bulk_tester {
      *              bool true if all the tests passed, else false.
      *              array of messages relating to the questions with failures.
      */
-    public function run_all_tests_for_context(context $context, $outputmode = 'web', $qidstart = null,
+    public function run_all_tests_for_context(context $context, $categoryid = null, $outputmode = 'web', $qidstart = null,
             $skippreviouspasses = false) {
         global $DB, $OUTPUT;
 
-        if (stack_determine_moodle_version() < 400) {
-            $categories = question_category_options(array($context));
-        } else {
-            $categories = qbank_managecategories\helper::question_category_options(array($context));
-        }
-        $categories = reset($categories);
+        // Load the necessary data.
+        $categories = $this->get_categories_for_context($context->id);
         $questiontestsurl = new moodle_url('/question/type/stack/questiontestrun.php');
         if ($context->contextlevel == CONTEXT_COURSE) {
             $questiontestsurl->param('courseid', $context->instanceid);
         } else if ($context->contextlevel == CONTEXT_MODULE) {
             $questiontestsurl->param('cmid', $context->instanceid);
+        } else {
+            $questiontestsurl->param('courseid', SITEID);
         }
+        $numpasses = 0;
         $allpassed = true;
-        $failingtests = array();
-        $notests = array();
-        $nogeneralfeedback = array();
-        $nodeployedseeds = array();
-        $failingupgrade = array();
+        $failingtests = [];
+        $missinganswers = [];
+        $notests = [];
+        $nogeneralfeedback = [];
+        $nodeployedseeds = [];
+        $failingupgrade = [];
 
-        $readytostart = true;
-        if ($qidstart) {
-            $readytostart = false;
-        }
+        foreach ($categories as $currentcategoryid => $nameandcount) {
+            if ($categoryid !== null && $currentcategoryid != $categoryid) {
+                continue;
+            }
+            $questions = $this->stack_questions_in_category($currentcategoryid);
+            if (!$questions) {
+                continue;
+            }
 
-        foreach ($categories as $key => $category) {
+            $readytostart = true;
+            if ($qidstart) {
+                $readytostart = false;
+            }
+
             $qdotoutput = 0;
-            list($categoryid) = explode(',', $key);
             if ($outputmode == 'web') {
-                echo $OUTPUT->heading($category, 3);
+                echo $OUTPUT->heading($nameandcount->name . ' (' . $nameandcount->count . ')', 3);
             }
-
-            if ($skippreviouspasses) {
-                // I think this is not strictly right. It will miss questions where
-                // you have run tests for some deployed seeds where all tests passed,
-                // but not yet run tests for some failing seeds. However, this
-                // is good enough for my needs now.
-                $questionids = $DB->get_records_sql_menu("
-                        SELECT q.id, q.name
-                          FROM {question} q
-                          LEFT JOIN {qtype_stack_qtest_results} res ON res.questionid = q.id
-                         WHERE q.category = ? AND q.qtype = ?
-                         GROUP BY q.id, q.name
-                        HAVING SUM(res.result) < COUNT(res.result) OR SUM(res.result) IS NULL
-                        ", [$categoryid, 'stack']);
-            } else {
-                $questionids = $this->get_stack_questions($categoryid);
-            }
-
+            $questionids = $this->stack_questions_in_category($currentcategoryid);
             if (!$questionids) {
                 continue;
             }
@@ -175,13 +245,6 @@ class stack_bulk_tester {
             }
             if (!$readytostart) {
                 continue;
-            }
-
-            if ($outputmode == 'web') {
-                echo html_writer::tag('p', stack_string('replacedollarscount', count($questionids)));
-            } else {
-                echo "\n\n## " . $category . "\n## ";
-                echo stack_string('replacedollarscount', count($questionids)) . ' ' . "\n";
             }
 
             foreach ($questionids as $questionid => $name) {
@@ -198,7 +261,7 @@ class stack_bulk_tester {
                 if ($outputmode == 'web') {
                     $questionname = format_string($name);
                     $questionnamelink = html_writer::link(new moodle_url($questiontestsurl,
-                        array('questionid' => $questionid)), $name);
+                        ['questionid' => $questionid]), $name);
                 } else {
                     $questionname = $questionid . ': ' . format_string($name);
                     $questionnamelink = $questionname;
@@ -208,18 +271,19 @@ class stack_bulk_tester {
 
                 // At this point we have no question context and so we can't possibly correctly evaluate URLs.
                 $question->castextprocessor = new castext2_qa_processor(new stack_outofcontext_process());
-                $upgradeerrors = $question->validate_against_stackversion();
+                $upgradeerrors = $question->validate_against_stackversion($context);
+
                 if ($upgradeerrors != '') {
                     if ($outputmode == 'web') {
                         echo $OUTPUT->heading($questionnamelink, 4);
-                        echo html_writer::tag('p', $upgradeerrors, array('class' => 'fail'));
+                        echo html_writer::tag('p', $upgradeerrors, ['class' => 'fail']);
                     }
                     $failingupgrade[] = $questionnamelink . ' ' . $upgradeerrors;
                     $allpassed = false;
                     continue;
                 }
 
-                $questionproblems = array();
+                $questionproblems = [];
                 if (trim($question->generalfeedback) === '') {
                     $nogeneralfeedback[] = $questionnamelink;
                     if ($outputmode == 'web') {
@@ -250,14 +314,14 @@ class stack_bulk_tester {
                     }
                 }
 
-                if ($questionproblems !== array()) {
+                if ($questionproblems !== []) {
                     if ($outputmode == 'web') {
                         echo $OUTPUT->heading($questionnamelink, 4);
                         echo html_writer::tag('ul', implode("\n", $questionproblems));
                     }
                 }
 
-                $previewurl = new moodle_url($questiontestsurl, array('questionid' => $questionid));
+                $previewurl = new moodle_url($questiontestsurl, ['questionid' => $questionid]);
                 if (empty($question->deployedseeds)) {
                     if ($outputmode == 'cli') {
                         echo '.';
@@ -329,13 +393,14 @@ class stack_bulk_tester {
                 }
             }
         }
-        $failing = array(
+        $failing = [
             'failingtests'      => $failingtests,
             'notests'           => $notests,
             'nogeneralfeedback' => $nogeneralfeedback,
             'nodeployedseeds'   => $nodeployedseeds,
-            'failingupgrades'   => $failingupgrade);
-        return array($allpassed, $failing);
+            'failingupgrades'   => $failingupgrade,
+        ];
+        return [$allpassed, $failing];
     }
 
     /**
@@ -374,7 +439,7 @@ class stack_bulk_tester {
             }
         }
 
-        $message = stack_string('testpassesandfails', array('passes' => $passes, 'fails' => $fails));
+        $message = stack_string('testpassesandfails', ['passes' => $passes, 'fails' => $fails]);
         $ok = ($fails === 0);
 
         // These lines are to seed the cache and to generate any runtime errors.
@@ -382,14 +447,13 @@ class stack_bulk_tester {
         try {
             $quba->start_question($slot);
         } catch (stack_exception $e) {
-            return array(false, "Attempting to start the question threw an exception!");
+            return [false, "Attempting to start the question threw an exception!"];
         }
 
         // Prepare the display options.
         $options = new question_display_options();
         $options->readonly = true;
         $options->flags = question_display_options::HIDDEN;
-        $options->suppressruntestslink = true;
         $question->castextprocessor = new castext2_qa_processor($quba->get_question_attempt($slot));
 
         // Create the question text, question note and worked solutions.
@@ -411,7 +475,8 @@ class stack_bulk_tester {
 
         if (!empty($question->runtimeerrors)) {
             $ok = false;
-            $s = stack_string('stackInstall_testsuite_errors') . implode(' ', array_keys($question->runtimeerrors));
+            $s = stack_string('stackInstall_testsuite_errors') . ' ' .
+                implode(' ', array_keys($question->runtimeerrors));
             if ($outputmode == 'web') {
                 $s = html_writer::tag('br', $s);
             }
@@ -426,12 +491,12 @@ class stack_bulk_tester {
             $flag = '* ';
         }
         if (!$quiet && $outputmode == 'web') {
-            echo html_writer::tag('p', $flag.$message, array('class' => $class));
+            echo html_writer::tag('p', $flag.$message, ['class' => $class]);
         }
 
         flush(); // Force output to prevent timeouts and to make progress clear.
 
-        return array($ok, $message);
+        return [$ok, $message];
     }
 
     /**
@@ -471,7 +536,6 @@ class stack_bulk_tester {
         $options = new question_display_options();
         $options->readonly = true;
         $options->flags = question_display_options::HIDDEN;
-        $options->suppressruntestslink = true;
 
         // Create the question text, question note and worked solutions.
         // This involves instantiation, which seeds the CAS cache in the cases when we have no tests.
@@ -498,10 +562,10 @@ class stack_bulk_tester {
         echo $OUTPUT->heading(stack_string('overallresult'), 2);
         if ($allpassed) {
             echo html_writer::tag('p', stack_string('stackInstall_testsuite_pass'),
-                    array('class' => 'overallresult pass'));
+                    ['class' => 'overallresult pass']);
         } else {
             echo html_writer::tag('p', stack_string('stackInstall_testsuite_fail'),
-                    array('class' => 'overallresult fail'));
+                    ['class' => 'overallresult fail']);
         }
 
         foreach ($failing as $key => $failarray) {
@@ -515,7 +579,7 @@ class stack_bulk_tester {
             }
         }
 
-        echo html_writer::tag('p', html_writer::link(new moodle_url('/question/type/stack/bulktestindex.php'),
+        echo html_writer::tag('p', html_writer::link(new moodle_url('/question/type/stack/adminui/bulktestindex.php'),
                 get_string('back')));
     }
 }

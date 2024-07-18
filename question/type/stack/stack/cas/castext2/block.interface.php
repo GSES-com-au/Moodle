@@ -17,6 +17,7 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once(__DIR__ . '/CTP_classes.php');
 require_once(__DIR__ . '/processor.class.php');
+require_once(__DIR__ . '/../../maximaparser/MP_classes.php');
 
 abstract class stack_cas_castext2_block {
 
@@ -30,8 +31,10 @@ abstract class stack_cas_castext2_block {
     public $mathmode = false;
     // Position data from the parser.
     public $position = null;
-    // Painter detected format. TODO: remove compile-function argument for this.
+    // Painter detected format. TO-DO: remove compile-function argument for this.
     public $paintformat = null;
+    // Store any errors.
+    public $err = [];
 
     public function __construct(
         $params,
@@ -49,6 +52,8 @@ abstract class stack_cas_castext2_block {
      * The compile function is supposed to generate a CAS expression that generates
      * the output of this block. Should this block not generate any output return NULL.
      * Otherwise the ouput should either create a string or a list as described elsewhere.
+     * The returned object is therefore typically a MP_List, a MP_String, or a NULL.
+     * However one could also see if-statements or MP_Groups.
      *
      * The format parameter defines the output format, currently either "MD" or
      * anything else. Basicallty some blocks may apply additional processing to
@@ -59,11 +64,14 @@ abstract class stack_cas_castext2_block {
      * identifiers to output though it as it cannot extract those from a session
      * like in the old times.
      */
-    abstract public function compile($format, $options):  ? string;
+    abstract public function compile($format, $options):  ? MP_Node;
 
     /**
      * Should this block generate something else than direct string values it needs to
      * tell about it here.
+     *
+     * Basically, a flat block promises that whatever it compiles to evaluates directly
+     * to a string value and does not require any post processing.
      */
     public function is_flat() : bool {
         return true;
@@ -86,7 +94,7 @@ abstract class stack_cas_castext2_block {
     abstract public function validate_extract_attributes(): array;
 
     /**
-     * Validates the parameters and potenttially the contents. Whatever matter to this
+     * Validates the parameters and potentially the contents. Whatever matters to this
      * block e.g. some blocks might want all their contents to be flat-blocks.
      *
      * Note that the error array is built of `stack_cas_error` objects the specific class
