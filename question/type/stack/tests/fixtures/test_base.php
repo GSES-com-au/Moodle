@@ -162,16 +162,28 @@ abstract class qtype_stack_testcase extends advanced_testcase {
 
     /**
      * Different versions of Maxima output floats in slighly different ways.
-     * Revert some of those irrelevant differences.
-     * We always expect the E in 3.0E8 to be upper case.
-     * Upper case is used to avoid a conflict with the base of the natural logarithms.
+     * Normalise some of those irrelevant differences.
+     *
+     * 1. Normalise E in 3.0E8 to be upper case (to avoid conflict with Euler's Number)
+     * 2. Normalise the coefficient to be < 10
+     *
+     * For example, the string: "Avogadro's number is 60.220e22 and the speed of light
+     * is about 30e7" will be normalised to "Avagardo's number is 6.022E23 and the speed
+     * of light is about 3E8".
+     *
+     * It also preserves the number of decimals and presence of a '+' sign.
+     * For example 30.0e9 becomes 3.0E10 and 3e+10 becomes 3E+11.
      */
     public static function prepare_actual_maths_floats($content) {
-
-        // We don't add in a trailing zero at this point as that would break a decimal places display function test.
-        $content = preg_replace('~(-?\b\d+(?:\.\d*)?)e([-+]?\d+\b)~', '$1E$2', $content);
-
-        return $content;
+        return preg_replace_callback(
+            '~(-?\b\d+(?:\.\d*)?)[eE]([-+]?\d+\b)~',
+            function(array $matches): string {
+                $decimals = strlen(explode('.', $matches[1])[1] ?? '') ?: 0;
+                $fixedbase = sprintf("%.{$decimals}E", (float)$matches[0]);
+                return strpos($matches[2], '+') !== false ? $fixedbase : str_replace('+', '', $fixedbase);
+            },
+            $content
+        );
     }
 
     /**
@@ -200,7 +212,7 @@ abstract class qtype_stack_testcase extends advanced_testcase {
 
     // phpcs:ignore moodle.NamingConventions.ValidFunctionName.LowercaseMethod
     public static function assertMatchesRegularExpression(string $pattern, string $string, string $message = '') : void {
-        // TODO remove this once Moodle 3.11 is the lowest supported version.
+        // TO-DO remove this once Moodle 3.11 is the lowest supported version.
         if (method_exists('advanced_testcase', 'assertMatchesRegularExpression')) {
             parent::assertMatchesRegularExpression($pattern, $string, $message);
         } else {
@@ -211,7 +223,7 @@ abstract class qtype_stack_testcase extends advanced_testcase {
 
     // phpcs:ignore moodle.NamingConventions.ValidFunctionName.LowercaseMethod
     public static function assertDoesNotMatchRegularExpression(string $pattern, string $string, string $message = '') : void {
-        // TODO remove this once Moodle 3.11 is the lowest supported version.
+        // TO-DO remove this once Moodle 3.11 is the lowest supported version.
         if (method_exists('advanced_testcase', 'assertDoesNotMatchRegularExpression')) {
             parent::assertDoesNotMatchRegularExpression($pattern, $string, $message);
         } else {
@@ -244,10 +256,10 @@ abstract class qtype_stack_walkthrough_test_base extends \qbehaviour_walkthrough
     }
 
     protected function get_tag_matcher($tag, $attributes) {
-        return array(
+        return [
             'tag' => $tag,
             'attributes' => $attributes,
-        );
+        ];
     }
 
     protected function check_prt_score($index, $score, $penalty, $finalsubmit = false) {
@@ -309,10 +321,10 @@ abstract class qtype_stack_walkthrough_test_base extends \qbehaviour_walkthrough
     }
 
     protected function check_output_contains_text_input($name, $value = null, $enabled = true) {
-        $attributes = array(
+        $attributes = [
             'type' => 'text',
             'name' => $this->quba->get_field_prefix($this->slot) . $name,
-        );
+        ];
         if (!is_null($value)) {
             $attributes['value'] = $value;
         }
@@ -333,9 +345,9 @@ abstract class qtype_stack_walkthrough_test_base extends \qbehaviour_walkthrough
     }
 
     protected function check_output_contains_textarea_input($name, $content = null, $enabled = true) {
-        $attributes = array(
-                'name' => $this->quba->get_field_prefix($this->slot) . $name,
-        );
+        $attributes = [
+            'name' => $this->quba->get_field_prefix($this->slot) . $name,
+        ];
         if (!$enabled) {
             $attributes['readonly'] = 'readonly';
         }
@@ -396,7 +408,7 @@ abstract class qtype_stack_walkthrough_test_base extends \qbehaviour_walkthrough
         if ($name) {
             $class .= ' stackprtfeedback-' . $name;
         }
-        $this->assertTag(array('tag' => 'div', 'attributes' => array('class' => $class)), $this->currentoutput,
+        $this->assertTag(['tag' => 'div', 'attributes' => ['class' => $class]], $this->currentoutput,
                 'PRT feedback for ' . $name . ' not found in ' . $this->currentoutput);
     }
 
@@ -405,7 +417,7 @@ abstract class qtype_stack_walkthrough_test_base extends \qbehaviour_walkthrough
         if ($name) {
             $class .= ' stackprtfeedback-' . $name;
         }
-        $this->assertNotTag(array('tag' => 'div', 'attributes' => array('class' => $class)), $this->currentoutput,
+        $this->assertNotTag(['tag' => 'div', 'attributes' => ['class' => $class]], $this->currentoutput,
                 'PRT feedback for ' . $name . ' should not be present in ' . $this->currentoutput);
     }
 
@@ -423,6 +435,11 @@ abstract class qtype_stack_walkthrough_test_base extends \qbehaviour_walkthrough
         $string = get_string($identifier, $component, $a);
         $this->assertStringNotContainsString($string, $this->currentoutput,
                 'The string ' . $string . ' should not be present in ' . $this->currentoutput);
+    }
+
+    protected function check_output_does_not_contain_text($str) {
+        $this->assertStringNotContainsString($str, $this->currentoutput,
+            'The string ' . $str . ' should not be present in ' . $this->currentoutput);
     }
 
     /**
@@ -463,7 +480,7 @@ abstract class qtype_stack_walkthrough_test_base extends \qbehaviour_walkthrough
 
     // phpcs:ignore moodle.NamingConventions.ValidFunctionName.LowercaseMethod
     public static function assertMatchesRegularExpression(string $pattern, string $string, string $message = '') : void {
-        // TODO remove this once Moodle 3.11 is the lowest supported version.
+        // TO-DO remove this once Moodle 3.11 is the lowest supported version.
         if (method_exists('advanced_testcase', 'assertMatchesRegularExpression')) {
             parent::assertMatchesRegularExpression($pattern, $string, $message);
         } else {
@@ -474,7 +491,7 @@ abstract class qtype_stack_walkthrough_test_base extends \qbehaviour_walkthrough
 
     // phpcs:ignore moodle.NamingConventions.ValidFunctionName.LowercaseMethod
     public static function assertDoesNotMatchRegularExpression(string $pattern, string $string, string $message = '') : void {
-        // TODO remove this once Moodle 3.11 is the lowest supported version.
+        // TO-DO remove this once Moodle 3.11 is the lowest supported version.
         if (method_exists('advanced_testcase', 'assertDoesNotMatchRegularExpression')) {
             parent::assertDoesNotMatchRegularExpression($pattern, $string, $message);
         } else {

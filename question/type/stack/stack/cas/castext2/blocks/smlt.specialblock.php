@@ -28,15 +28,15 @@ require_once(__DIR__ . '/../../../utils.class.php');
 class stack_cas_castext2_special_stack_maxima_latex_tidy extends stack_cas_castext2_block {
     public $content;
 
-    public function __construct($params, $children = array(), $mathmode = false, $value = '') {
+    public function __construct($params, $children = [], $mathmode = false, $value = '') {
         parent::__construct($params, $children, $mathmode);
         $this->content = $value;
     }
 
-    public function compile($format, $options): ?string {
+    public function compile($format, $options): ?MP_Node {
         // Should not even happen. This is not a block that makes sense for
         // end users.
-        return '["smlt",' . stack_utils::php_string_to_maxima_string($this->content) . ']';
+        return new MP_List([new MP_String('smlt'), new MP_String($this->content)]);
     }
 
     public function is_flat(): bool {
@@ -72,6 +72,6 @@ class stack_cas_castext2_special_stack_maxima_latex_tidy extends stack_cas_caste
     }
 
     public function validate_extract_attributes(): array {
-        return array();
+        return [];
     }
 }

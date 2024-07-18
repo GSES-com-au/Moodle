@@ -41,10 +41,10 @@ class graphlayout_test extends basic_testcase {
      */
     public function test_simple_graph() {
         $graph = new stack_abstract_graph();
-        $graph->add_node(1, 2, 3, '=1', '=0');
-        $graph->add_node(2, null, 4, '+0.1', '-0.1');
-        $graph->add_node(3, null, null, '+0.1', '-0.1');
-        $graph->add_node(4, null, null, '+0.1', '-0.1');
+        $graph->add_node(1, '', 2, 3, '=1', '=0');
+        $graph->add_node(2, '', null, 4, '+0.1', '-0.1');
+        $graph->add_node(3, '', null, null, '+0.1', '-0.1');
+        $graph->add_node(4, '', null, null, '+0.1', '-0.1');
         $graph->layout();
 
         $n = $graph->get(1);
@@ -78,8 +78,8 @@ class graphlayout_test extends basic_testcase {
      */
     public function test_linear_graph() {
         $graph = new stack_abstract_graph();
-        $graph->add_node(2, null, null, '+0.1', '-0.1');
-        $graph->add_node(1, 2, 2, '=1', '=0');
+        $graph->add_node(2, '', null, null, '+0.1', '-0.1');
+        $graph->add_node(1, '', 2, 2, '=1', '=0');
         $graph->layout();
 
         $n = $graph->get(1);
@@ -102,14 +102,14 @@ class graphlayout_test extends basic_testcase {
      */
     public function test_loop_detection() {
         $graph = new stack_abstract_graph();
-        $graph->add_node(1, 1, 1, '=1', '=0');
+        $graph->add_node(1, '', 1, 1, '=1', '=0');
         $graph->layout();
 
         $n = $graph->get(1);
         $this->assertEquals(1, $n->depth);
         $this->assertEquals(0, $n->x);
 
-        $this->assertEquals(array('1|-1' => true, '1|1' => true),
+        $this->assertEquals(['1|-1' => true, '1|1' => true],
                 $graph->get_broken_cycles());
 
         $roots = $graph->get_roots();
@@ -123,8 +123,8 @@ class graphlayout_test extends basic_testcase {
      */
     public function test_two_roots() {
         $graph = new stack_abstract_graph();
-        $graph->add_node(1, null, null, '=1', '=0');
-        $graph->add_node(2, null, null, '=1', '=0');
+        $graph->add_node(1, '', null, null, '=1', '=0');
+        $graph->add_node(2, '', null, null, '=1', '=0');
         $graph->layout();
 
         $n = $graph->get(1);
@@ -136,7 +136,7 @@ class graphlayout_test extends basic_testcase {
         $this->assertEquals(2, $n->x);
 
         $this->assertEmpty($graph->get_broken_cycles());
-        $this->assertSame(array(1, 2), array_keys($graph->get_roots()));
+        $this->assertSame([1, 2], array_keys($graph->get_roots()));
     }
 
     /**
@@ -145,7 +145,7 @@ class graphlayout_test extends basic_testcase {
     public function test_missing_node() {
         $this->expectException(\coding_exception::class);
         $graph = new stack_abstract_graph();
-        $graph->add_node(1, null, 2, '=1', '=0');
+        $graph->add_node(1, '', null, 2, '=1', '=0');
 
         $graph->layout();
     }
@@ -155,17 +155,17 @@ class graphlayout_test extends basic_testcase {
      */
     public function test_get_suggested_node_names() {
         $graph = new stack_abstract_graph();
-        $graph->add_node(1, 2, 3);
-        $graph->add_node(2, 7, null);
-        $graph->add_node(3, 2, 4);
-        $graph->add_node(4, 5, 6);
-        $graph->add_node(5, null, 9);
-        $graph->add_node(6, null, null);
-        $graph->add_node(7, null, null);
-        $graph->add_node(9, null, null);
+        $graph->add_node(1, '', 2, 3);
+        $graph->add_node(2, '', 7, null);
+        $graph->add_node(3, '', 2, 4);
+        $graph->add_node(4, '', 5, 6);
+        $graph->add_node(5, '', null, 9);
+        $graph->add_node(6, '', null, null);
+        $graph->add_node(7, '', null, null);
+        $graph->add_node(9, '', null, null);
         $graph->layout();
 
         $newnames = $graph->get_suggested_node_names();
-        $this->assertEquals(array(1 => 1, 3 => 2, 2 => 3, 7 => 4, 4 => 5, 5 => 6, 9 => 7, 6 => 8), $newnames);
+        $this->assertEquals([1 => 1, 3 => 2, 2 => 3, 7 => 4, 4 => 5, 5 => 6, 9 => 7, 6 => 8], $newnames);
     }
 }
