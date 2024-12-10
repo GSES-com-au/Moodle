@@ -43,14 +43,14 @@ class checklist_comment_student extends persistent {
      * @return array
      */
     protected static function define_properties() {
-        return array(
-            'itemid' => array(
+        return [
+            'itemid' => [
                 'type' => PARAM_INT,
-            ),
-            'text' => array(
+            ],
+            'text' => [
                 'type' => PARAM_TEXT,
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -67,7 +67,7 @@ class checklist_comment_student extends persistent {
             return $ret;
         }
 
-        list($isql, $params) = $DB->get_in_or_equal($itemids, SQL_PARAMS_NAMED);
+        [$isql, $params] = $DB->get_in_or_equal($itemids, SQL_PARAMS_NAMED);
         $params['usermodified'] = $userid;
         $studentcomments = self::get_records_select("usermodified = :usermodified AND itemid $isql", $params);
 
@@ -122,16 +122,17 @@ class checklist_comment_student extends persistent {
         }
     }
 
-    /** Update or create a comment for a student on the given checklist item.
+    /**
+     * Update or create a comment for a student on the given checklist item.
      * @param int $checklistitemid id of the item in the checklist.
      * @param string $commenttext text of the comment made by the student.
      * @param checklist_comment_student|null $existingcomment the comment to update or false to create a new comment record.
      * @return bool true if successful.
      */
     public static function update_or_create_student_comment(
-        int $checklistitemid,
-        string $commenttext,
-        checklist_comment_student $existingcomment = null
+        int                       $checklistitemid,
+        string                    $commenttext,
+        ?checklist_comment_student $existingcomment = null
     ): bool {
         if (!$existingcomment) {
             $newcomment = new checklist_comment_student();

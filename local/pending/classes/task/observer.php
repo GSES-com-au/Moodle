@@ -29,8 +29,8 @@ class observer //extends \core\task\scheduled_task                        //exte
             $table = 'groups';         //table name in database
             $name = $DB->get_field_select($table, $return, $select, $params, $strictness=IGNORE_MISSING); //query
 
-
-            if ($name == 'Pending')
+            // Ignore for e-books (course id: 290, 291, 292)
+            if ($name == 'Pending' && $event->courseid != 290 && $event->courseid != 291 && $event->courseid != 292)
             {
             //---------------------SQL Queries
                 $orderid = '';

@@ -37,19 +37,29 @@ class observer //extends \core\task\scheduled_task                        //exte
             "Design Task 1 Electrical Schematic and Site Plan Submission" => "Design Task 2 Electrical Schematic and Site Plan Submission",
             "Design Task 2 Electrical Schematic and Site Plan Submission" => "Design Task 1 Electrical Schematic and Site Plan Submission",
             "Design Task 1 Submission" => "Design Task 2 Submission",
-            "Design Task 2 Submission" => "Design Task 1 Submission"
+            "Design Task 2 Submission" => "Design Task 1 Submission",
+            "Part 7 of 7 Installer Documentation (Submit here)" => "Part 8 of 8 Installer Documentation (Submit here)",
+            "Part 8 of 8 Installer Documentation (Submit here)" => "Part 7 of 7 Installer Documentation (Submit here)",
         );
         $otherassignname = $designtaskmap[$assignname];
         $user = $event->relateduserid; 
         $otherassignid = $DB->get_record('assign', array('name' => $otherassignname, 'course' => $courseid), '*', MUST_EXIST);
         $submission = $DB->get_record('assign_submission', array('assignment' => $otherassignid->id, 'userid' => $user), '*', IGNORE_MISSING);
         $submission_status = $submission->status;
-        $do_extension = strpos($assignname, "Design Task Site A Submission (GCwB)") !== false || strpos($assignname, "Design Task Site B Submission (GCwB)") !== false || 
-        strpos($assignname, "Design Task 1 Electrical Schematic and Site Plan Submission") !== false || strpos($assignname, "Design Task 2 Electrical Schematic and Site Plan Submission") !== false || 
-        strpos($assignname, "Design Task 1 Submission") !== false || strpos($assignname, "Design Task 2 Submission") !== false;
-        $do_extension_8 = str_contains($assignname, "Design Task Site A Submission (GCwB)") || str_contains($assignname, "Design Task Site B Submission (GCwB)")|| 
-        str_contains($assignname, "Design Task 1 Electrical Schematic and Site Plan Submission") || str_contains($assignname, "Design Task 2 Electrical Schematic and Site Plan Submission") || 
-        str_contains($assignname, "Design Task 1 Submission") || str_contains($assignname, "Design Task 2 Submission");
+        $do_extension = false;
+        foreach (array_keys($designtaskmap) as $key) {
+            if (strpos($assignname, $key) !== false) {
+                $do_extension = true;
+                break;
+            }
+        }
+        $do_extension_8 = false;
+        foreach (array_keys($designtaskmap) as $key) {
+            if (str_contains($assignname, $key)) {
+                $do_extension_8 = true;
+                break;
+            }
+        }
         //String name for Design Task varies between courses, therefore we need a "str_contain"
         if (!function_exists('str_contains') && $submission_status == 'submitted' ) {
             //For older PHP versions

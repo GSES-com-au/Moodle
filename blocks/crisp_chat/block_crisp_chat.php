@@ -47,8 +47,8 @@
                 $this->content->text .= '"]]);</script>';
             }
             //send current module name to crisp
-            $this->content->text .= '<script>window.onload = function() {var currentcm = document.querySelector(\'a[href*="mod"]\'); if(currentcm){$crisp.push(["set", "session:data", ["current_module", ';
-            $this->content->text .=  'currentcm.innerHTML';
+            $this->content->text .= '<script>window.onload = function() {var currentmodule = document.querySelector(\'h1\'); if(currentmodule){$crisp.push(["set", "session:data", ["current_module", ';
+            $this->content->text .=  'currentmodule.innerHTML';
             $this->content->text .= ']]);}}</script>';
             //initatechat function
             $this->content->text .= '<script>function initiatechat() { if ($crisp.is("session:ongoing") == false) {$crisp.push(["set", "user:email", "';

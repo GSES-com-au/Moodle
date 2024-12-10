@@ -42,7 +42,7 @@ class checklist_item extends data_object {
     /** @var string[] */
     public $requiredfields = [
         'id', 'checklist', 'userid', 'displaytext', 'position', 'indent', 'itemoptional', 'duetime',
-        'eventid', 'colour', 'moduleid', 'hidden', 'groupingid', 'linkcourseid', 'linkurl', 'openlinkinnewwindow'
+        'eventid', 'colour', 'moduleid', 'hidden', 'groupingid', 'linkcourseid', 'linkurl', 'openlinkinnewwindow',
     ];
 
     // DB fields.
@@ -117,7 +117,7 @@ class checklist_item extends data_object {
      * @param bool $fetch
      * @throws \coding_exception
      */
-    public function __construct(array $params = null, $fetch = true) {
+    public function __construct(?array $params = null, $fetch = true) {
         // Really ugly hack to stop travis complaining about $required_fields.
         $this->{'required_fields'} = $this->requiredfields;
         parent::__construct($params, $fetch);
@@ -262,10 +262,7 @@ class checklist_item extends data_object {
      * @return moodle_url
      */
     private function image_url($imagename, $component) {
-        global $CFG, $OUTPUT;
-        if ($CFG->branch < 33) {
-            return $OUTPUT->pix_url($imagename, $component);
-        }
+        global $OUTPUT;
         return $OUTPUT->image_url($imagename, $component);
     }
 

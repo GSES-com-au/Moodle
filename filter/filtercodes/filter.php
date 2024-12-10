@@ -2746,7 +2746,7 @@ class filter_filtercodes extends moodle_text_filter {
             }
             
             // Custom filter code for course enrolment end date.
-            // Output: "Your course Battery Storage for Grid Connected PV (GCwB) Q2 2020 ends on October 11, 2022."
+            // Output: "Your online access to this course: Grid Connected PV Systems (GCPV) Q3 2022, ends on October 11, 2022."
             if (stripos($text, '{courseenrolmentend}') !== false) {
                 $userid = $USER->id;
                 $courseid = $PAGE->course->id;
@@ -2758,25 +2758,14 @@ class filter_filtercodes extends moodle_text_filter {
                                             'AND e.courseid= ?', array($userid, $courseid));
 
                 if ($duration && ($duration->timeend > time())) {
-                    $days = ceil(($duration->timeend - time())/ 86400);
-                    $weeks = $days / 7;
                     $date = getdate($duration->timeend);
-                    /* Future support for international date formats
-                    if($this->config->dateformat = 'mdy'){
-                        $fulldate = $date['month'] .' '. $date['mday'] .', '. $date['year'];
-                    } else {
-                        $fulldate = $date['mday'] .' '. $date['month'] .', '. $date['year'];
-                    }
-                    */
-
                     $daybefore = date("F j, Y", $date[0] - 86400); // day before calc using unix time. Formatted using date func.
-
                     $coursename = $PAGE->course->fullname;
-
-                    $replace['/\{courseenrolmentend\}/i'] = 'Your online access to this course: <b>'.$coursename.'</b>, ends on <mark style ="background-color:#ffd600;
-    border-radius: 4rem;"><b>'.$daybefore.'</b></mark>.';
+                    $replace['/\{courseenrolmentend\}/i'] = 'Your online access to this course: <b>'.$coursename.'</b>, ends on <mark style ="background-color:rgba(3,99,155,0.5);
+    border-radius: 0.5rem;"><b>'.$daybefore.'</b></mark>.';
                 }
             }
+
 
             // Tag: {coursecards} and {coursecards <categoryid>}.
             // Description: Courses in a category branch as cards

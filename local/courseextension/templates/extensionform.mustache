@@ -58,6 +58,9 @@
               <p>If sickness or illness has prevented you from completing a course for a <b>prolonged</b> period of time please send us an email <b>tutor@gses.com.au </b>. 
                 This exception only applies in special circumstances and is assessed on a case by case basis. 
                 You will need to provide documentation.</p>
+              <p>
+              If you are enrolled in any secondary courses (eg. bridging or site survey course), you do not need to purchase an extension for it separately.
+              </p>
               <div class="form-row">
                 <div class="form-group col-12 col-xl-6">
                   <label for="firstname"><b>First name</b></label>
@@ -195,7 +198,8 @@
                     '&expiration=' + btoa(expiration) +
                     '&new_expiration=' + btoa(newexpiration) +
                     '&timestart=' + btoa(get_start_date()) +
-                    '&maxexpiration=' + btoa(get_max_date());
+                    '&maxexpiration=' + btoa(get_max_date()) +
+                    '&secondary_ids_extension=' + btoa(get_secondary_courses());
 
                     // Open the new URL in a new window
                     window.open(url, '_blank');
@@ -354,6 +358,24 @@
                       return day + '/' + month + '/' + year;
                     }
                     document.getElementById("course").addEventListener("change", updateexpiration);
+
+                    // determines if any secondary courses exist by comparing the expiry date is within 1 day (86400s)
+                    function get_secondary_courses() {
+                      var selectedIndex = document.getElementById("course").selectedIndex;
+                      var option = document.getElementById("course").options;
+                      var currentEnd = option[selectedIndex].dataset.timeend;
+                      var secondaryCourses = '';
+                      for (let course of option) {
+                        if ((course.index !== selectedIndex) && 
+                        (Math.abs(course.dataset['timeend'] - currentEnd) <= 86400)) {
+                          if (secondaryCourses !== '') {
+                            secondaryCourses += ',';
+                          }
+                          secondaryCourses += course.value;
+                        }
+                      }
+                      return secondaryCourses;
+                    }
                     
                 </script>
               </div>
