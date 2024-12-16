@@ -61,12 +61,14 @@ if ($mform->is_cancelled()) {
         $obj = $DB->get_record('local_enrolment_rates', ['id'=>$id]);
         $obj->enrolmentrate = $fromform->enrolmentrate;
         $obj->flatcost = $fromform->flatcost;
+        $obj->nocoursehosted = $fromform->nocoursehosted;
         $DB->update_record('local_enrolment_rates', $obj);
     } else {
         //otherwise add new record
         $obj = new stdClass();
         $obj->enrolmentrate = $fromform->enrolmentrate;
         $obj->flatcost = $fromform->flatcost;
+        $obj->nocoursehosted = $fromform->nocoursehosted;
         $orgid = $DB->insert_record('local_enrolment_rates', $obj);
     }
     redirect("/local/studentmanager/rates.php?id=$id", 'Changes saved', 10,  \core\output\notification::NOTIFY_SUCCESS);
