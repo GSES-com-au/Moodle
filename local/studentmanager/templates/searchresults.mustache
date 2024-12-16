@@ -23,16 +23,9 @@
       </tr>
     {{/data}}
   </table>
-  {{^data}}
-    {{#startdate}}
-      {{#enddate}}
-      <div class="card-body"><p>There are no results from {{startdate}} to {{enddate}}.</p></div>
-      {{/enddate}}
-    {{/startdate}}
-    {{^startdate}}
-     <div class="card-body"><p>Please select a start and end date to query.</p></div>
-    {{/startdate}}
-  {{/data}}
+    {{^data}}
+      <div class="card-body"><p>There are no results for the selected dates.</p></div>
+    {{/data}}
 </div>
 <div>
   <br>
@@ -40,5 +33,4 @@
     {{#costdata}}
       <h3>${{{test}}}</h3>
     {{/costdata}}
-    
 </div>

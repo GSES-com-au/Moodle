@@ -24,6 +24,8 @@ $strpageheading = get_string('studentmanager', 'local_studentmanager');
 $PAGE->set_title($strpagetitle);
 $PAGE->set_heading($strpageheading);
 
+$db_prefix = $CFG->prefix;
+
 //  starting from this section copy pasted  into download.php 
 //grab url parameters
 $start_date = optional_param('startdate', '', PARAM_TEXT);
@@ -60,34 +62,70 @@ if (!empty($start_date)) {
     $totalcost = 0;
   
     if($course_filter != 0) {
-        $enrolled_users_test = $DB->get_records_sql('SELECT u.id, u.firstname, u.lastname, u.email, c.fullname, ue.timestart
-        FROM mdl_user u
-        INNER JOIN mdl_user_enrolments ue ON ue.userid = u.id
-        INNER JOIN mdl_enrol e ON e.id = ue.enrolid
-        INNER JOIN mdl_course c ON c.id = e.courseid
-        WHERE c.id = ?
-        AND u.id IN (
-            SELECT ra.userid
-            FROM mdl_role_assignments ra
-            INNER JOIN mdl_context ctx ON ctx.id = ra.contextid
-            INNER JOIN mdl_course course ON course.id = ctx.instanceid
-            WHERE course.id = ?
-            AND ra.roleid = 5
-            AND ue.timestart >= ? AND  ue.timestart <= ?)', array($course_filter, $course_filter, $start_date_query, $end_date_query));
-    } else {
-        $enrolled_users_test = $DB->get_records_sql('SELECT u.id, u.firstname, u.lastname, u.email, c.fullname, ue.timestart
-        FROM mdl_user u
-        INNER JOIN mdl_user_enrolments ue ON ue.userid = u.id
-        INNER JOIN mdl_enrol e ON e.id = ue.enrolid
-        INNER JOIN mdl_course c ON c.id = e.courseid
-        AND u.id IN (
-            SELECT ra.userid
-            FROM mdl_role_assignments ra
-            INNER JOIN mdl_context ctx ON ctx.id = ra.contextid
-            INNER JOIN mdl_course course ON course.id = ctx.instanceid
+        $enrolled_users_test = $DB->get_records_sql("
+            SELECT DISTINCT 
+                u.id, 
+                u.firstname, 
+                u.lastname, 
+                u.email, 
+                c.fullname, 
+                ue.timestart
+            FROM 
+                {$db_prefix}user u
+            INNER JOIN 
+                {$db_prefix}user_enrolments ue ON ue.userid = u.id
+            INNER JOIN 
+                {$db_prefix}enrol e ON e.id = ue.enrolid
+            INNER JOIN 
+                {$db_prefix}course c ON c.id = e.courseid
             WHERE 
-            ra.roleid = 5
-            AND ue.timestart >= ? AND  ue.timestart <= ?)', array($start_date_query, $end_date_query));
+                c.id = ?
+            AND 
+                ue.timestart >= ? 
+            AND 
+                ue.timestart <= ?", 
+            array($course_filter, $start_date_query, $end_date_query)
+        );
+    } else {
+        $enrolled_users_test = $DB->get_records_sql("
+        SELECT 
+            ue.id AS enrolment_id,
+            u.id AS user_id, 
+            u.firstname, 
+            u.lastname, 
+            u.email, 
+            c.fullname, 
+            ue.timestart
+        FROM 
+            {$db_prefix}user u
+        INNER JOIN 
+            {$db_prefix}user_enrolments ue ON ue.userid = u.id
+        INNER JOIN 
+            {$db_prefix}enrol e ON e.id = ue.enrolid
+        INNER JOIN 
+            {$db_prefix}course c ON c.id = e.courseid
+        WHERE 
+            ue.timestart >= ? 
+        AND 
+            ue.timestart <= ?", 
+        array($start_date_query, $end_date_query)
+    );
+        // $enrolled_users_test = $DB->get_records_sql("SELECT u.id, u.firstname, u.lastname, u.email, c.fullname, ue.timestart
+        // FROM {$db_prefix}user u
+        // INNER JOIN {$db_prefix}user_enrolments ue ON ue.userid = u.id
+        // INNER JOIN {$db_prefix}enrol e ON e.id = ue.enrolid
+        // INNER JOIN {$db_prefix}course c ON c.id = e.courseid
+        // WHERE u.id IN (
+        //     SELECT ra.userid
+        //     FROM {$db_prefix}role_assignments ra
+        //     INNER JOIN {$db_prefix}context ctx ON ctx.id = ra.contextid
+        //     INNER JOIN {$db_prefix}course course ON course.id = ctx.instanceid
+        //     WHERE 
+        //     ra.roleid = 5
+        //     AND ue.timestart >= ? AND  ue.timestart <= ?
+        // )
+        // GROUP BY u.id, u.firstname, u.lastname, u.email, c.fullname, ue.timestart
+        // ", array($start_date_query, $end_date_query));
     };
     foreach($enrolled_users_test as $user) {
         $user->startdate = date("d-m-Y", $user->timestart);
